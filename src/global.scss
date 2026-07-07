@@ -1,0 +1,78 @@
+@use "./styles/home";
+@use "./styles/demo";
+
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/**
+ * Ionic Dark Mode
+ * -----------------------------------------------------
+ * For more info, please see:
+ * https://ionicframework.com/docs/theming/dark-mode
+ */
+
+/* @import "@ionic/angular/css/palettes/dark.always.css"; */
+/* @import "@ionic/angular/css/palettes/dark.class.css"; */
+@import "@ionic/angular/css/palettes/dark.system.css";
+
+:root {
+  --canvas: #070c16;
+  --surface: #0d1727;
+  --soft: #111d30;
+  --line: #22324a;
+  --text: #f7f9fc;
+  --muted: #8fa0b8;
+  --accent: #67e8f9;
+  --success: #4ade80;
+  color-scheme: dark;
+}
+* {
+  box-sizing: border-box;
+}
+html,
+body,
+ion-app,
+ion-content {
+  background: var(--canvas);
+  color: var(--text);
+}
+body {
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  margin: 0;
+}
+ion-content {
+  --background: radial-gradient(
+      circle at 75% 10%,
+      rgb(37 99 235 / 12%),
+      transparent 30%
+    ),
+    var(--canvas);
+}
+::selection {
+  background: var(--accent);
+  color: #06101f;
+}

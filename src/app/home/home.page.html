@@ -1,0 +1,117 @@
+<ion-content [fullscreen]="true">
+  <header class="site-header">
+    <a class="identity" href="#top" aria-label="Ir al inicio"
+      ><span>IC</span> Irving Conde</a
+    >
+    <nav aria-label="Navegación principal">
+      <a href="#experience">Experiencia</a><a href="#projects">Proyectos</a
+      ><a href="#contact">Contacto</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero section">
+      <div>
+        <p class="eyebrow">Software Engineer · Full Stack Developer</p>
+        <h1>
+          Construyo sistemas que siguen funcionando cuando el escenario se
+          complica.
+        </h1>
+        <p class="hero-copy">
+          Más de cuatro años desarrollando aplicaciones móviles, servicios
+          backend e infraestructura cloud con Angular, Ionic, NestJS, Python y
+          AWS.
+        </p>
+        <div class="hero-actions">
+          <a class="primary" href="#projects">Explorar proyectos</a>
+          <a class="secondary" href="mailto:Irving.CondeM@gmail.com"
+            >Contactar</a
+          >
+        </div>
+      </div>
+      <aside class="system-card" aria-label="Especialidades">
+        <span class="pulse"></span><small>DISPONIBLE PARA COLABORAR</small>
+        <strong>Web · Mobile · Backend · Cloud</strong>
+        <div class="system-grid">
+          <span>Offline-first</span><span>APIs seguras</span><span>AWS</span
+          ><span>Arquitectura</span>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section skills" aria-labelledby="skills-title">
+      <p class="eyebrow">Herramientas</p>
+      <h2 id="skills-title">Tecnología aplicada a resultados</h2>
+      <div class="skill-list">
+        @for (skill of skills; track skill) { <span>{{ skill }}</span> }
+      </div>
+    </section>
+
+    <section id="experience" class="section" aria-labelledby="experience-title">
+      <p class="eyebrow">Trayectoria</p>
+      <h2 id="experience-title">Experiencia profesional</h2>
+      <div class="timeline">
+        @for (item of experiences; track item.company) {
+        <article>
+          <div class="timeline-meta">
+            <span>{{ item.period }}</span><strong>{{ item.company }}</strong>
+          </div>
+          <div>
+            <h3>{{ item.role }}</h3>
+            <p>{{ item.summary }}</p>
+            <div class="tags">
+              @for (technology of item.technologies; track technology) {
+              <span>{{ technology }}</span> }
+            </div>
+          </div>
+        </article>
+        }
+      </div>
+    </section>
+
+    <section id="projects" class="section" aria-labelledby="projects-title">
+      <p class="eyebrow">Trabajo seleccionado</p>
+      <h2 id="projects-title">Proyectos y arquitecturas</h2>
+      <p class="section-copy">
+        Representaciones sanitizadas: explican decisiones y flujos sin usar
+        datos ni infraestructura privada.
+      </p>
+      <div class="project-grid">
+        @for (project of projects; track project.name) {
+        <article class="project-card">
+          <small>{{ project.kind }}</small>
+          <h3>{{ project.name }}</h3>
+          <p>{{ project.summary }}</p>
+          <p class="impact">{{ project.impact }}</p>
+          <div class="architecture" aria-label="Flujo de arquitectura">
+            @for (node of project.architecture; track node; let last = $last) {
+            <span>{{ node }}</span>@if (!last) { <b>→</b> } }
+          </div>
+          <div class="tags">
+            @for (technology of project.technologies; track technology) {
+            <span>{{ technology }}</span> }
+          </div>
+          @if (project.slug) {
+          <a class="demo-link" [routerLink]="['/demos', project.slug]"
+            >Abrir demo navegable →</a
+          >
+          }
+        </article>
+        }
+      </div>
+    </section>
+
+    <section id="contact" class="section contact">
+      <p class="eyebrow">Contacto</p>
+      <h2>Convirtamos un problema complejo en un sistema claro.</h2>
+      <p>
+        Orizaba, Veracruz · Disponible para proyectos full stack, móviles y
+        cloud.
+      </p>
+      <a class="primary" href="mailto:Irving.CondeM@gmail.com"
+        >Irving.CondeM@gmail.com</a
+      >
+    </section>
+  </main>
+  <footer>© 2026 Irving Conde · Construido con Ionic y Angular.</footer>
+</ion-content>
