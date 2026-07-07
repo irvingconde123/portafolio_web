@@ -17,6 +17,16 @@ export interface SequenceStep {
   to: string;
 }
 
+export interface QualityAttribute {
+  name: string;
+  mechanism: string;
+}
+
+export interface FailureMode {
+  trigger: string;
+  response: string;
+}
+
 export interface ProjectItem {
   slug: string;
   name: string;
@@ -29,6 +39,13 @@ export interface ProjectItem {
   decisions: string[];
   preview: 'operations' | 'laboratory' | 'cms' | 'agency' | 'gateway' | 'cloud';
   hasDemo: boolean;
+  architectureType: string;
+  architectureScope: string;
+  patterns: string[];
+  qualityAttributes: QualityAttribute[];
+  failureModes: FailureMode[];
+  tradeoffs: string[];
+  observability: string[];
 }
 
 export const EXPERIENCES: ExperienceItem[] = [
@@ -77,6 +94,22 @@ export const PROJECTS: ProjectItem[] = [
     technologies: ['Ionic', 'Angular', 'NestJS', 'SQLite', 'IndexedDB', 'Electron'],
     preview: 'operations',
     hasDemo: true,
+    architectureType: 'Offline-first · Hexagonal · Eventual consistency',
+    architectureScope: 'C4 nivel contenedores · flujo de escritura offline y reconciliación',
+    patterns: ['Ports & adapters', 'Outbox local', 'Idempotency key', 'Repository', 'Strategy de persistencia'],
+    qualityAttributes: [
+      { name: 'Disponibilidad', mechanism: 'Captura local aunque API o red no estén disponibles.' },
+      { name: 'Integridad', mechanism: 'Lotes idempotentes, confirmación explícita y rollback del servidor.' },
+      { name: 'Confidencialidad', mechanism: 'SQLite cifrado y llaves fuera del almacenamiento de aplicación.' },
+      { name: 'Portabilidad', mechanism: 'Puertos de persistencia para SQLite e IndexedDB.' },
+    ],
+    failureModes: [
+      { trigger: 'Pérdida de red o cierre del proceso', response: 'El outbox conserva la intención y reanuda por correlationId.' },
+      { trigger: 'Token expira durante un lote', response: 'Se detiene el envío, conserva checkpoints y solicita reautenticación.' },
+      { trigger: 'Fallo parcial del backend', response: 'La transacción revierte; el cliente consulta estado antes de reintentar.' },
+    ],
+    tradeoffs: ['Consistencia eventual a cambio de continuidad offline.', 'Mayor complejidad local para evitar pérdida o duplicidad.', 'La caché es acotada y no sustituye la fuente de verdad.'],
+    observability: ['correlationId por operación', 'Estado del outbox', 'Métrica de reintentos', 'Auditoría de creador y sincronizador'],
     architecture: [
       { label: 'Cliente híbrido', detail: 'Una interfaz adaptable para web, Android y escritorio.' },
       { label: 'Router de persistencia', detail: 'Deriva preferencias a IndexedDB y operación compleja a SQLite.' },
@@ -103,6 +136,22 @@ export const PROJECTS: ProjectItem[] = [
     technologies: ['Angular', 'TypeScript', 'Responsive UI', 'REST API'],
     preview: 'laboratory',
     hasDemo: true,
+    architectureType: 'Frontend composable · Clean data access · Multi-tenant',
+    architectureScope: 'C4 nivel componentes · resolución de contenido, estilos y media',
+    patterns: ['Adapter', 'Repository', 'Facade', 'Renderer registry', 'Fallback source'],
+    qualityAttributes: [
+      { name: 'Modificabilidad', mechanism: 'Nuevos bloques mediante registro sin alterar el shell.' },
+      { name: 'Disponibilidad', mechanism: 'Fuente local tipada cuando el CMS público no responde.' },
+      { name: 'Rendimiento', mechanism: 'Activos responsivos, secciones lazy y modelo ya normalizado.' },
+      { name: 'Aislamiento', mechanism: 'Contexto de tenant aplicado antes de consultar contenido.' },
+    ],
+    failureModes: [
+      { trigger: 'CMS público no disponible', response: 'Repositorio selecciona snapshot local y marca contenido degradado.' },
+      { trigger: 'Bloque desconocido', response: 'Renderer seguro lo omite sin romper el resto de la página.' },
+      { trigger: 'Media inválida', response: 'Resolver sustituye por placeholder y registra diagnóstico.' },
+    ],
+    tradeoffs: ['Contrato visual estable limita propiedades arbitrarias.', 'Fallback mejora disponibilidad pero puede mostrar una versión anterior.', 'Composición dinámica exige validación estricta en CMS.'],
+    observability: ['Tenant resuelto', 'Fuente API/fallback', 'Bloques descartados', 'Core Web Vitals'],
     architecture: [
       { label: 'Contexto del sitio', detail: 'Resuelve la organización desde dominio o configuración.' },
       { label: 'Source', detail: 'Alterna entre API pública y contenido local de respaldo.' },
@@ -129,6 +178,22 @@ export const PROJECTS: ProjectItem[] = [
     technologies: ['Angular', 'NestJS', 'PostgreSQL', 'RBAC', 'Media'],
     preview: 'cms',
     hasDemo: true,
+    architectureType: 'Modular frontend · RBAC · Content lifecycle',
+    architectureScope: 'C4 nivel contenedores · edición, versionado y publicación',
+    patterns: ['Feature modules', 'Schema validation', 'Draft/publish', 'RBAC guard', 'Tenant context'],
+    qualityAttributes: [
+      { name: 'Seguridad', mechanism: 'Guardas por sesión, permiso, tenant y módulo habilitado.' },
+      { name: 'Auditabilidad', mechanism: 'Versiones editoriales y actor asociado a cada mutación.' },
+      { name: 'Usabilidad', mechanism: 'Formularios amigables con configuración avanzada progresiva.' },
+      { name: 'Consistencia', mechanism: 'Validación de esquema antes de activar una versión.' },
+    ],
+    failureModes: [
+      { trigger: 'Publicación inválida', response: 'La versión activa permanece intacta y se devuelve error por campo.' },
+      { trigger: 'Pérdida de autorización', response: 'Interceptor limpia sesión y bloquea nuevas mutaciones.' },
+      { trigger: 'Carga de media incompleta', response: 'Recurso no se asocia hasta recibir confirmación del almacenamiento.' },
+    ],
+    tradeoffs: ['Publicación explícita agrega un paso pero evita cambios accidentales.', 'RBAC granular aumenta configuración operativa.', 'JSON avanzado se conserva para extensibilidad técnica.'],
+    observability: ['Versión activa/borrador', 'Eventos de auditoría', 'Errores por schema', 'Latencia de publicación'],
     architecture: [
       { label: 'Editor CMS', detail: 'Organiza formularios y composición según el módulo habilitado.' },
       { label: 'Validación', detail: 'Aplica esquemas, permisos y reglas antes de enviar cambios.' },
@@ -155,6 +220,22 @@ export const PROJECTS: ProjectItem[] = [
     technologies: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'SEO'],
     preview: 'agency',
     hasDemo: true,
+    architectureType: 'SSR/SSG · Component-driven · SEO-first',
+    architectureScope: 'C4 nivel componentes · render, activos y conversión',
+    patterns: ['App Router', 'Server components', 'Typed content', 'Design tokens', 'Progressive enhancement'],
+    qualityAttributes: [
+      { name: 'Rendimiento', mechanism: 'Generación estática, imágenes optimizadas y mínimo JavaScript cliente.' },
+      { name: 'SEO', mechanism: 'Metadatos, semántica y sitemap construidos junto al contenido.' },
+      { name: 'Accesibilidad', mechanism: 'Jerarquía semántica, foco y controles táctiles consistentes.' },
+      { name: 'Conversión', mechanism: 'CTA trazables y formularios con validación progresiva.' },
+    ],
+    failureModes: [
+      { trigger: 'JavaScript bloqueado', response: 'Contenido principal y enlaces continúan disponibles desde HTML.' },
+      { trigger: 'Activo no disponible', response: 'Dimensiones reservadas y fallback visual evitan saltos de layout.' },
+      { trigger: 'Formulario externo falla', response: 'Conserva datos en pantalla y ofrece canales alternativos.' },
+    ],
+    tradeoffs: ['Contenido tipado requiere despliegue para cambios estructurales.', 'Animación se limita para proteger rendimiento.', 'Medición de conversión respeta consentimiento y privacidad.'],
+    observability: ['Core Web Vitals', 'Errores de formulario', 'CTA por sección', 'Estado del despliegue'],
     architecture: [
       { label: 'App Router', detail: 'Entrega la página y metadatos desde una estructura orientada a secciones.' },
       { label: 'Contenido tipado', detail: 'Separa textos y colecciones de los componentes de presentación.' },
@@ -181,6 +262,22 @@ export const PROJECTS: ProjectItem[] = [
     technologies: ['NestJS', 'NGINX', 'JWT', 'PostgreSQL', 'Docker'],
     preview: 'gateway',
     hasDemo: false,
+    architectureType: 'API Gateway · Resource registry · Policy pipeline',
+    architectureScope: 'C4 nivel contenedores · resolución dinámica y token one-shot',
+    patterns: ['Gateway', 'Registry', 'Strategy', 'Circuit breaker', 'Cache-aside', 'Fail-safe'],
+    qualityAttributes: [
+      { name: 'Desacoplamiento', mechanism: 'Negocio solicita recursos lógicos, no entidades ni conexiones físicas.' },
+      { name: 'Disponibilidad', mechanism: 'Cada contexto de datos falla de forma aislada con cooldown.' },
+      { name: 'Seguridad', mechanism: 'Firma, claims, plataforma, scopes y policy antes del upstream.' },
+      { name: 'Escalabilidad', mechanism: 'Instancias stateless detrás de balanceador y configuración cacheada.' },
+    ],
+    failureModes: [
+      { trigger: 'Contexto SQL no disponible', response: 'Invalida DataSource, aplica cooldown y mantiene los otros contextos.' },
+      { trigger: 'Blacklist one-shot inaccesible', response: 'Política explícita fail-closed para operaciones sensibles.' },
+      { trigger: 'Upstream excede timeout', response: 'Corta la solicitud, registra dependencia y evita saturar workers.' },
+    ],
+    tradeoffs: ['Registro dinámico reduce despliegues pero exige gobierno de configuración.', 'Fail-closed protege seguridad sacrificando disponibilidad parcial.', 'Compatibilidad multi-driver se restringe a capacidades comunes.'],
+    observability: ['x-request-id extremo a extremo', 'Salud por contexto SQL', 'Latencia por upstream', 'Rechazos por policy'],
     architecture: [
       { label: 'Balanceador', detail: 'Distribuye tráfico y mantiene health checks de las instancias.' },
       { label: 'Guard de plataforma', detail: 'Valida identidad, alcance y tipo de token.' },
@@ -207,6 +304,22 @@ export const PROJECTS: ProjectItem[] = [
     technologies: ['Python', 'NestJS', 'Lambda', 'S3', 'DynamoDB', 'CloudFront'],
     preview: 'cloud',
     hasDemo: false,
+    architectureType: 'Event-driven · Serverless · Asynchronous processing',
+    architectureScope: 'C4 nivel contenedores · comando, evento, worker y consulta de estado',
+    patterns: ['Queue-based load leveling', 'Idempotent consumer', 'Dead-letter queue', 'Object storage', 'CQRS ligero'],
+    qualityAttributes: [
+      { name: 'Elasticidad', mechanism: 'Workers escalan con la profundidad de la cola.' },
+      { name: 'Resiliencia', mechanism: 'Reintentos acotados y DLQ para mensajes no recuperables.' },
+      { name: 'Costo', mechanism: 'Cómputo bajo demanda y políticas de ciclo de vida para activos.' },
+      { name: 'Trazabilidad', mechanism: 'CorrelationId preservado entre API, evento, worker y resultado.' },
+    ],
+    failureModes: [
+      { trigger: 'Worker interrumpido', response: 'Visibilidad del mensaje expira y otro worker reanuda con idempotencia.' },
+      { trigger: 'Payload inválido', response: 'Se rechaza antes de publicar o termina en DLQ con causa estructurada.' },
+      { trigger: 'Dependencia externa lenta', response: 'Timeout, backoff con jitter y circuito abierto temporal.' },
+    ],
+    tradeoffs: ['Procesamiento asíncrono requiere consultar estado.', 'Entrega al menos una vez exige consumidor idempotente.', 'Serverless reduce operación pero introduce límites de plataforma.'],
+    observability: ['Profundidad y edad de cola', 'Tasa de DLQ', 'Duración de workers', 'Costo por operación'],
     architecture: [
       { label: 'Cliente', detail: 'Consume un contrato pequeño y versionado.' },
       { label: 'API / evento', detail: 'Valida la entrada y desacopla el inicio del proceso.' },

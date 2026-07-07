@@ -5,11 +5,13 @@ import { PROJECTS, ProjectItem } from '../data/portfolio-content';
 @Component({
   selector: 'app-architecture',
   templateUrl: './architecture.page.html',
+  styleUrls: ['./architecture.page.scss'],
   standalone: false,
 })
 export class ArchitecturePage implements OnInit {
   private readonly route = inject(ActivatedRoute);
   protected project: ProjectItem = PROJECTS[0];
+  protected activeView: 'containers' | 'sequence' | 'resilience' = 'containers';
 
   ngOnInit(): void {
     const slug = this.route.snapshot.paramMap.get('slug');

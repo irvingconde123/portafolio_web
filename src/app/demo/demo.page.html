@@ -1,9 +1,19 @@
 <ion-content [fullscreen]="true">
-  <header class="demo-header"><a routerLink="/home">← Portafolio</a><span>Demo interactiva · datos ficticios</span></header>
+  <header class="demo-header">
+    <a routerLink="/home">← Portafolio</a>
+    <span>Demo interactiva · datos ficticios</span>
+  </header>
+
   <main class="demo-page">
     <section class="demo-intro">
-      <p>{{ project?.kind }}</p><h1>{{ project?.name }}</h1><span>{{ project?.summary }}</span>
-      <div class="flow">@for (node of project?.architecture; track node.label; let last = $last) { <b>{{ node.label }}</b>@if (!last) { <i>→</i> } }</div>
+      <p>{{ project?.kind }}</p>
+      <h1>{{ project?.name }}</h1>
+      <span>{{ project?.summary }}</span>
+      <div class="flow">
+        @for (node of project?.architecture; track node.label; let last = $last) {
+          <b>{{ node.label }}</b>@if (!last) { <i>→</i> }
+        }
+      </div>
     </section>
 
     @switch (slug) {
@@ -11,45 +21,144 @@
         <section class="demo-window operations-demo">
           <aside class="ops-sidebar">
             <div class="ops-brand"><strong>AA</strong><span>AD ASTRA<small>OPERACIONES</small></span></div>
-            <nav><button class="active">⌂ <span>Resumen</span></button><button>□ <span>Reportes</span></button></nav>
+            <nav aria-label="Pantallas de la aplicación">
+              <button type="button" [class.active]="appView === 'home'" (click)="selectAppView('home')">⌂ <span>Resumen</span></button>
+              <button type="button" [class.active]="appView === 'reports'" (click)="selectAppView('reports')">□ <span>Reportes</span></button>
+              <button type="button" [class.active]="appView === 'capture'" (click)="selectAppView('capture')">＋ <span>Nueva muestra</span></button>
+              <button type="button" [class.active]="appView === 'drafts'" (click)="selectAppView('drafts')">◇ <span>Borradores</span></button>
+            </nav>
             <div class="connection-card"><i [class.offline]="offline"></i><b>{{ offline ? 'Modo offline' : 'En línea' }}</b><small>{{ offline ? 'Cambios protegidos localmente' : 'Sincronización disponible' }}</small></div>
-            <button class="offline-button" (click)="toggleConnection()">{{ offline ? 'Restaurar conexión' : 'Forzar modo offline' }}</button>
+            <button class="offline-button" type="button" (click)="toggleConnection()">{{ offline ? 'Restaurar conexión' : 'Forzar modo offline' }}</button>
+            <button class="sync-button" type="button" (click)="syncDrafts()">Sincronizar {{ drafts.length }} pendiente(s)</button>
           </aside>
+
           <div class="ops-workspace">
-            <header><div><small>Laboratorista</small><b>Buen día, bienvenido</b></div><div class="session-chip">Sesión 07:48:21</div><span class="avatar">IC</span></header>
-            <div class="update-strip">↑ <span><b>Actualización Android disponible</b><small>Puedes continuar trabajando.</small></span><button>Descargar</button></div>
+            <header>
+              <div><small>Laboratorista</small><b>Buen día, bienvenido</b></div>
+              <div class="session-chip">Sesión 07:48:21</div><span class="avatar">IC</span>
+            </header>
+            <div class="update-strip">↑ <span><b>Actualización Android disponible</b><small>Puedes continuar trabajando.</small></span><button type="button" (click)="demoAction('Descarga mock iniciada.')">Descargar</button></div>
+
             <section class="ops-content">
-              <p class="ops-eyebrow">JORNADA · 07 JUL 2026</p><h2>Bandeja de laboratorio</h2><span>Recepción técnica, análisis y resultados de su área.</span>
-              <div class="metrics"><article><small>Pendientes</small><b>5</b><span>Por iniciar</span></article><article><small>Activos</small><b>2</b><span>En análisis</span></article><article><small>Cerrados</small><b>18</b><span>Concluidos</span></article></div>
-              <article class="report-queue"><div><small>COLA PRIORIZADA</small><h3>Reportes para revisión</h3></div><div class="report-row"><span><b>Análisis de muestra ambiental</b><small>AA-20260707-0042 · Laboratorio 1</small></span><button (click)="advanceReport()">{{ reportStatus }} →</button></div></article>
-              @if (offline) { <p class="notice">Modo offline activo. El cambio se cifra y queda pendiente hasta recuperar conexión.</p> }
+              @switch (appView) {
+                @case ('home') {
+                  <p class="ops-eyebrow">JORNADA · 07 JUL 2026</p><h2>Bandeja de laboratorio</h2><span>Recepción técnica, análisis y resultados de su área.</span>
+                  <div class="metrics">
+                    <article><small>Pendientes</small><b>{{ countReports('Pendiente') }}</b><span>Por iniciar</span></article>
+                    <article><small>Activos</small><b>{{ countReports('En curso') }}</b><span>En análisis</span></article>
+                    <article><small>Cerrados</small><b>{{ countReports('Cerrado') }}</b><span>Concluidos</span></article>
+                  </div>
+                  <article class="report-queue">
+                    <div><small>COLA PRIORIZADA</small><h3>Reportes para revisión</h3></div>
+                    @for (report of reports.slice(0, 2); track report.id) {
+                      <button class="report-row" type="button" (click)="openReport(report.id)"><span><b>{{ report.title }}</b><small>{{ report.folio }} · {{ report.owner }}</small></span><em>{{ report.status }}</em><i>→</i></button>
+                    }
+                  </article>
+                  @if (offline) { <p class="notice">Modo offline activo. Cada cambio se cifra y queda pendiente hasta recuperar conexión.</p> }
+                }
+
+                @case ('reports') {
+                  <div class="screen-heading"><div><p class="ops-eyebrow">SEGUIMIENTO OPERATIVO</p><h2>Reportes activos y pendientes</h2></div><span>{{ filteredReports.length }} visibles</span></div>
+                  <div class="report-filters">
+                    <label>Buscar<input name="reportSearch" [(ngModel)]="reportSearch" placeholder="Nombre, folio o creador"></label>
+                    <label>Estado<select name="reportStatus" [(ngModel)]="reportStatusFilter"><option>Todos</option><option>Pendiente</option><option>En curso</option><option>Cerrado</option><option>Rechazado</option></select></label>
+                  </div>
+                  <div class="report-summary"><span>Pendientes <b>{{ countReports('Pendiente') }}</b></span><span>En curso <b>{{ countReports('En curso') }}</b></span><span>Cerrados <b>{{ countReports('Cerrado') }}</b></span></div>
+                  <div class="report-list-demo">
+                    @for (report of filteredReports; track report.id) {
+                      <article><div><strong>{{ report.title }}</strong><small>{{ report.sampleType }} · {{ report.owner }} · {{ report.folio }}</small><div class="report-tags">@for (tag of report.tags; track tag) { <span>{{ tag }}</span> }</div></div><select [value]="report.status" (change)="changeReportStatus(report, $any($event.target).value)" aria-label="Estado del reporte"><option>Pendiente</option><option>En curso</option><option>Cerrado</option><option>Rechazado</option></select><button type="button" (click)="openReport(report.id)">Ver detalle</button></article>
+                    } @empty { <div class="empty-state"><b>No hay coincidencias</b><span>Ajusta la búsqueda o el estado.</span></div> }
+                  </div>
+                }
+
+                @case ('capture') {
+                  <div class="screen-heading"><div><p class="ops-eyebrow">CAPTURA LOCAL</p><h2>Nueva muestra</h2></div><span class="secure-chip">◆ Cifrado</span></div>
+                  <form class="capture-form" (submit)="$event.preventDefault(); saveDraft()">
+                    <label>Cliente o instalación<input name="customer" [(ngModel)]="captureModel.customer" placeholder="Ej. Industrias Nova"></label>
+                    <div><label>Tipo de muestra<select name="sampleType" [(ngModel)]="captureModel.sampleType"><option>Agua residual</option><option>Agua potable</option><option>Suelo</option><option>Calidad del aire</option></select></label><label>Fecha y hora<input name="collectedAt" type="datetime-local" [(ngModel)]="captureModel.collectedAt"></label></div>
+                    <label>Asignación de laboratorio<select name="assignmentMode" [(ngModel)]="captureModel.assignmentMode"><option>Disponible para laboratoristas</option><option>Solicitar asignación del administrador</option></select></label>
+                    <label>Ubicación<input name="location" [(ngModel)]="captureModel.location" placeholder="Dirección o coordenadas"></label>
+                    <label>Observaciones<textarea name="notes" [(ngModel)]="captureModel.notes" placeholder="Condiciones, preservación, incidencias…"></textarea></label>
+                    <div class="capture-evidence"><span>◎</span><div><b>Fotografías y archivos</b><small>{{ captureModel.evidence }} de 8 imágenes · guardadas cifradas</small></div><button type="button" (click)="addCaptureEvidence()">Agregar foto</button></div>
+                    @if (captureModel.evidence) { <div class="capture-thumbnail"><i></i><span>Evidencia de muestra</span><button type="button" (click)="captureModel.evidence = captureModel.evidence - 1">Quitar</button></div> }
+                    <button class="form-submit" type="submit">Guardar formulario seguro →</button>
+                  </form>
+                }
+
+                @case ('drafts') {
+                  <div class="screen-heading"><div><p class="ops-eyebrow">ALMACENAMIENTO CIFRADO</p><h2>Formularios en este dispositivo</h2></div><span>{{ drafts.length }} por sincronizar</span></div>
+                  <div class="draft-list-demo">
+                    @for (draft of drafts; track draft.id; let index = $index) {
+                      <article><span class="draft-state">{{ draft.state }}</span><div><b>{{ draft.customer }}</b><small>{{ draft.sampleType }} · {{ draft.location }}</small></div><button type="button" (click)="editDraft(draft)">Ver / editar</button><button class="danger" type="button" (click)="removeDraft(index)">Eliminar</button></article>
+                    } @empty { <div class="empty-state"><b>No hay formularios pendientes</b><span>Las nuevas capturas aparecerán aquí, incluso sin sesión.</span></div> }
+                  </div>
+                  <button class="form-submit" type="button" (click)="syncDrafts()">Sincronizar ahora</button>
+                }
+              }
             </section>
+
+            @if (selectedReport; as report) {
+              <div class="mock-modal-backdrop" (click)="closeReport()"></div>
+              <aside class="report-detail-demo" aria-label="Detalle del reporte">
+                <header><div><small>DETALLE DEL REPORTE</small><h3>{{ report.title }}</h3><span>{{ report.folio }}</span></div><button type="button" (click)="closeReport()">×</button></header>
+                @if (editingReport) {
+                  <form class="report-edit-form" (submit)="$event.preventDefault(); saveReport(report)"><label>Título<input name="editTitle" [(ngModel)]="report.title"></label><div><label>Cliente<input name="editCustomer" [(ngModel)]="report.customer"></label><label>Ubicación<input name="editLocation" [(ngModel)]="report.location"></label></div><label>Notas<textarea name="editNotes" [(ngModel)]="report.notes"></textarea></label><section class="evidence-editor"><div><b>Evidencia multimedia</b><button type="button" (click)="addEvidence(report)">Agregar otra</button></div>@for (item of report.evidence; track $index; let index = $index) { <article><i></i><span>{{ item }}</span><button type="button" (click)="replaceEvidence(report, index)">Reemplazar</button><button type="button" (click)="removeEvidence(report, index)">Quitar</button></article> }</section><footer><button type="button" (click)="editingReport = false">Cancelar</button><button class="primary-action" type="submit">Guardar cambios</button></footer></form>
+                } @else {
+                  <div class="report-detail-grid"><article><small>Estado</small><b>{{ report.status }}</b></article><article><small>Muestra</small><b>{{ report.sampleType }}</b></article><article><small>Responsable</small><b>{{ report.owner }}</b></article><article><small>Cliente</small><b>{{ report.customer }}</b></article><article><small>Ubicación</small><b>{{ report.location }}</b></article><article><small>Etiquetas</small><b>{{ report.tags.join(', ') }}</b></article></div><section class="detail-notes"><small>NOTAS</small><p>{{ report.notes }}</p></section><section class="evidence-view"><small>EVIDENCIA ASOCIADA</small><div>@for (item of report.evidence; track item) { <figure><i></i><figcaption>{{ item }}</figcaption></figure> }</div></section><footer><button type="button" (click)="closeReport()">Cerrar</button><button type="button" (click)="editingReport = true">Editar reporte</button><button class="primary-action" type="button" (click)="demoAction('PDF mock generado correctamente.')">Descargar PDF</button></footer>
+                }
+              </aside>
+            }
           </div>
         </section>
       }
+
       @case ('landing') {
         <section class="demo-window laboratory-demo">
-          <nav><strong><i></i> ASTRALAB</strong><div>@for (section of ['Inicio','Nosotros','Servicios','Calidad','Contacto']; track section) { <button [class.active]="selectedSection === section" (click)="selectedSection = section">{{ section }}</button> }</div><button class="lab-cta">Solicitar análisis</button></nav>
-          <div class="laboratory-hero">
-            <div><small>LABORATORIO AMBIENTAL ACREDITADO</small><h2>{{ selectedSection === 'Inicio' ? 'Ciencia precisa para decisiones responsables.' : selectedSection + ' con evidencia y claridad.' }}</h2><p>Análisis confiables de agua, suelo y ambiente con procesos documentados y atención especializada.</p><div><button>Conocer servicios</button><button class="outline">Hablar con un especialista</button></div><footer><b>+15 años</b><span>Experiencia técnica</span><b>48 h</b><span>Respuesta inicial</span></footer></div>
-            <figure><img src="assets/laboratory-hero.png" alt="Muestra visual ficticia de laboratorio" loading="lazy"><figcaption>CONTROL DE CALIDAD · TRAZABILIDAD</figcaption></figure>
-          </div>
+          <nav><strong><i>AA</i><span>AD ASTRA LABS<small>PROFESSIONAL</small></span></strong><div><button type="button" (click)="jumpToDemoSection('Inicio')">Inicio</button><button type="button" (click)="jumpToDemoSection('Servicios')">Servicios</button><button type="button" (click)="jumpToDemoSection('Acreditaciones')">Acreditaciones</button><button type="button" (click)="jumpToDemoSection('Nosotros')">Nosotros</button><button type="button" (click)="jumpToDemoSection('Contacto')">Contacto</button></div><button class="lab-cta" type="button" (click)="jumpToDemoSection('Contacto')">Solicitar análisis</button></nav>
+          <section id="demo-landing-inicio" class="laboratory-hero full-landing-section"><div><small>● LABORATORIO AMBIENTAL ACREDITADO</small><h2>Ad Astra<br>Professional <mark>Labs</mark></h2><p>Laboratorio mexicano especializado en análisis ambientales certificados bajo ISO/IEC 17025 y acreditado ante la EMA.</p><div class="lab-tags"><span>ISO/IEC 17025</span><span>EMA · AC-017</span><span>NOM-001-SEMARNAT</span></div><div class="lab-actions"><button type="button" (click)="jumpToDemoSection('Contacto')">Cotizar análisis →</button><button class="outline" type="button" (click)="jumpToDemoSection('Acreditaciones')">Ver acreditaciones</button></div><footer><span><b>18+</b>Años de experiencia</span><span><b>50K+</b>Análisis anuales</span><span><b>120+</b>Métodos acreditados</span></footer></div><figure><img src="assets/laboratory-hero.png" alt="Muestra visual ficticia de laboratorio" loading="lazy"><figcaption><b>99.8%</b> Precisión analítica certificada</figcaption><figcaption><b>24–72 h</b> Entrega de resultados</figcaption></figure></section>
+          <div class="lab-accreditation-strip"><span>EMA<small>Entidad Mexicana de Acreditación</small></span><span>SEMARNAT<small>Secretaría de Medio Ambiente</small></span><span>CONAGUA<small>Comisión Nacional del Agua</small></span><span>SSA<small>Secretaría de Salud</small></span><span>ISO/IEC 17025<small>Estándar de calidad</small></span></div>
+          <section id="demo-landing-servicios" class="lab-section"><p>ÁREAS DE ANÁLISIS</p><h2>Capacidad analítica integral</h2><span>Equipamiento de última generación y personal técnico certificado para garantizar resultados trazables y confiables.</span><div class="lab-service-grid">@for (service of ['Aguas residuales','Agua potable','Análisis de suelos','Calidad del aire','Análisis químico','Microbiología ambiental']; track service; let index = $index) { <article><i>0{{ index + 1 }}</i><h3>{{ service }}</h3><p>{{ index % 2 ? 'Verificación fisicoquímica y microbiológica conforme a normativa vigente.' : 'Caracterización completa, parámetros acreditados y trazabilidad documental.' }}</p><button type="button" (click)="demoAction('Se abrió el catálogo mock de ' + service + '.')">Ver métodos →</button></article> }</div></section>
+          <section id="demo-landing-nosotros" class="lab-mission"><figure><div class="cell-visual"><i></i><i></i><i></i><i></i><i></i></div><figcaption><b>18</b> AÑOS DE EXPERIENCIA</figcaption><figcaption><b>80+</b> CIENTÍFICOS CERTIFICADOS</figcaption></figure><div><p>NUESTRA MISIÓN</p><h2>Rigor científico al servicio del medio ambiente</h2><span>Fundado en 2007, AD ASTRA Professional Labs nació con la visión de ofrecer servicios analíticos ambientales de clase mundial.</span><ul><li>Personal técnico con doctorado y maestría</li><li>Equipos calibrados con patrones NIST trazables</li><li>Sistema LIMS integrado para seguimiento</li><li>Resultados en 24–72 horas hábiles</li></ul></div></section>
+          <section id="demo-landing-acreditaciones" class="lab-section lab-certifications"><p>CERTIFICACIONES</p><h2>Acreditaciones y normas vigentes</h2><span>Procedimientos alineados a estándares internacionales y normativa ambiental mexicana.</span><div><article class="featured"><i>♜</i><small>EMA · AC-017</small><h3>Acreditación EMA</h3><p>Laboratorio acreditado para ensayos ambientales y métodos normalizados.</p></article><article class="featured"><i>◈</i><small>ISO/IEC 17025:2017</small><h3>Norma Internacional</h3><p>Competencia técnica, calibración y gestión de calidad.</p></article>@for (cert of ['Límites de Descarga','Agua para Uso Humano','Métodos EPA']; track cert) { <article><i>✓</i><small>NORMA VIGENTE</small><h3>{{ cert }}</h3><p>Aplicación de métodos reconocidos y criterios regulatorios.</p></article> }</div></section>
+          <section id="demo-landing-contacto" class="lab-contact"><h2>¿Necesita validar sus resultados ante autoridades regulatorias?</h2><p>Nuestros informes son aceptados por SEMARNAT, CONAGUA y la SSA.</p><div><button type="button" (click)="demoAction('Solicitud de cotización mock enviada.')">Solicitar cotización →</button><button class="outline" type="button" (click)="demoAction('Chat mock con un consultor abierto.')">Hablar con un consultor</button></div></section>
+          <footer class="lab-footer"><strong><i>AA</i><span>AD ASTRA LABS<small>Rigor científico y precisión analítica.</small></span></strong><div><b>SERVICIOS</b><span>Aguas residuales</span><span>Agua potable</span><span>Análisis de suelos</span></div><div><b>EMPRESA</b><span>Nosotros</span><span>Acreditaciones</span><span>Contacto</span></div></footer>
         </section>
       }
+
       @case ('cms') {
         <section class="demo-window cms-demo">
-          <aside><div class="cms-brand"><b>Lab CMS</b><small>Astra Laboratorios</small></div><span class="cms-user">Bienvenido<b>Irving Conde</b><small>editor&#64;demo.test</small></span><nav>@for (section of ['Resumen','Landing','Composición','Medios','Estilos','SEO']; track section) { <button [class.active]="selectedSection === section" (click)="selectedSection = section"><i></i>{{ section }}</button> }</nav><button class="cms-logout">Cerrar sesión</button></aside>
-          <div class="cms-workspace"><header><div><small>CONTENIDO PÚBLICO</small><h2>{{ selectedSection }}</h2></div><button>Publicar versión</button></header><div class="cms-summary"><article><small>Secciones</small><b>6</b><span>5 visibles</span></article><article><small>Medios</small><b>24</b><span>Optimizados</span></article><article><small>Estado</small><b class="published">Publicado</b><span>Hace 12 minutos</span></article></div><section class="cms-editor"><header><b>Composición de página</b><span>Arrastra para reordenar</span></header>@for (block of ['Hero principal','Sobre el laboratorio','Certificaciones','Preguntas frecuentes']; track block; let index = $index) { <article><i>⠿</i><span><b>{{ block }}</b><small>Orden {{ index + 1 }} · Visible</small></span><button>Editar</button></article> }</section></div>
+          <aside><div class="cms-brand"><b>Lab CMS</b><small>Astra Laboratorios</small></div><span class="cms-user">Bienvenido<b>Irving Conde</b><small>editor&#64;demo.test</small></span><nav>@for (view of ['Resumen','Páginas y menú','Landing','Medios','Estilos','SEO']; track view) { <button type="button" [class.active]="cmsView === view" (click)="setCmsView($any(view))"><i></i>{{ view }}</button> }</nav><button class="cms-logout" type="button" (click)="demoAction('Sesión demo reiniciada; no se cerró el portafolio.')">Cerrar sesión</button></aside>
+          <div class="cms-workspace"><header><div><small>CONTENIDO PÚBLICO</small><h2>{{ cmsView }}</h2></div><span class="version-chip">Borrador v{{ cmsVersion }}</span><button type="button" (click)="publishCms()">Publicar versión</button></header>
+            @switch (cmsView) {
+              @case ('Resumen') { <div class="cms-summary"><article><small>Páginas</small><b>{{ cmsPages.length }}</b><span>{{ cmsPages.length }} activas</span></article><article><small>Medios</small><b>{{ cmsMedia.length }}</b><span>Optimizados</span></article><article><small>Versión pública</small><b class="published">v{{ cmsVersion }}</b><span>Sin errores</span></article></div><section class="cms-dashboard"><div><p>RESUMEN</p><h3>Panel de administración</h3><span>La sesión opera dentro del contexto resuelto por la API.</span></div><dl><div><dt>Negocio</dt><dd>Astra Laboratorios</dd></div><div><dt>Identificador</dt><dd>astra-labs</dd></div><div><dt>Entorno</dt><dd>Demostración</dd></div></dl><h4>Módulos habilitados</h4><div class="module-pills"><span>LANDING</span><span>MEDIA</span><span>STYLES</span><span>SEO</span></div></section> }
+              @case ('Páginas y menú') { <div class="cms-section-heading"><div><h3>Páginas del sitio</h3><span>Organiza las páginas y enlaces visibles.</span></div><button type="button" (click)="addCmsPage()">Agregar página</button></div><div class="cms-table"><div class="cms-table-head"><span>Nombre visible</span><span>Dirección</span><span>Estado</span><span>Acciones</span></div>@for (page of cmsPages; track page.route) { <div><b>{{ page.label }}</b><code>{{ page.route }}</code><span [class.enabled]="page.active">{{ page.active ? 'Activa' : 'Inactiva' }}</span><span><button type="button" (click)="openCmsEditor('Editar página', page.label)">Editar</button><button type="button" (click)="toggleCmsPage(page)">{{ page.active ? 'Ocultar' : 'Activar' }}</button></span></div> }</div> }
+              @case ('Landing') { <div class="cms-section-heading"><div><h3>Composición de página</h3><span>Ordena, edita y publica los bloques de la landing.</span></div><button type="button" (click)="cmsBlocks.push({ title: 'Nuevo bloque', type: 'Contenido', visible: false })">Agregar bloque</button></div><div class="cms-editor">@for (block of cmsBlocks; track block.title; let index = $index) { <article><i>⠿</i><span><b>{{ block.title }}</b><small>{{ block.type }} · {{ block.visible ? 'Visible' : 'Oculto' }}</small></span><button type="button" [disabled]="index === 0" (click)="moveCmsBlock(index, -1)">↑</button><button type="button" [disabled]="index === cmsBlocks.length - 1" (click)="moveCmsBlock(index, 1)">↓</button><button type="button" (click)="block.visible = !block.visible">{{ block.visible ? 'Ocultar' : 'Mostrar' }}</button><button type="button" (click)="openCmsEditor('Editar bloque', block.title)">Editar</button></article> }</div> }
+              @case ('Medios') { <div class="cms-section-heading"><div><h3>Biblioteca de medios</h3><span>Recursos locales y externos de la landing.</span></div><button type="button" (click)="addCmsMedia()">Subir recurso</button></div><div class="media-grid">@for (media of cmsMedia; track media.name) { <article><i></i><div><b>{{ media.name }}</b><span>{{ media.type }} · {{ media.size }}</span></div><button type="button" (click)="openCmsEditor('Editar texto alternativo', media.name)">Editar</button></article> }</div> }
+              @case ('Estilos') { <div class="cms-section-heading"><div><h3>Tokens visuales</h3><span>Variables estructuradas del negocio activo.</span></div><button type="button" (click)="demoAction('Vista previa actualizada con los tokens actuales.')">Vista previa</button></div><div class="token-list">@for (token of cmsTokens; track token.key) { <article><code>{{ token.key }}</code><span>{{ token.value }}</span><button type="button" (click)="openCmsEditor('Editar token', token.value)">Editar</button></article> }</div> }
+              @case ('SEO') { <form class="seo-form" (submit)="$event.preventDefault(); demoAction('Metadatos SEO guardados como borrador.')"><label>Título del sitio<input name="seoTitle" value="Ad Astra Professional Labs"></label><label>Descripción<textarea name="seoDescription">Laboratorio ambiental acreditado para análisis de agua, suelo y aire.</textarea></label><div><label>Idioma<select name="seoLanguage"><option>Español (México)</option><option>English</option></select></label><label>Indexación<select name="seoIndex"><option>Permitir indexación</option><option>No indexar</option></select></label></div><label>Imagen social<button type="button" (click)="demoAction('Selector mock de imagen social abierto.')">Seleccionar desde medios</button></label><button class="cms-form-submit" type="submit">Guardar SEO</button></form> }
+            }
+          </div>
+          @if (cmsEditing) { <div class="cms-modal-backdrop" (click)="cmsEditing = null"></div><aside class="cms-modal"><header><h3>{{ cmsEditing }}</h3><button type="button" (click)="cmsEditing = null">×</button></header><label>Valor<input name="cmsDraftValue" [(ngModel)]="cmsDraftValue"></label><label>Descripción<textarea name="cmsDraftDescription">Contenido demostrativo editable desde el CMS.</textarea></label><footer><button type="button" (click)="cmsEditing = null">Cancelar</button><button type="button" (click)="saveCmsEditor()">Guardar cambios</button></footer></aside> }
         </section>
       }
+
       @case ('hostlyc') {
         <section class="demo-window hostlyc-demo">
-          <nav><strong><i>✦</i> Hostlyc</strong><div>@for (section of ['Inicio','Servicios','Proyectos','Nosotros','Proceso','Contacto']; track section) { <button [class.active]="selectedSection === section" (click)="selectedSection = section">{{ section }}</button> }</div><button class="hostlyc-contact">Contáctanos</button></nav>
-          <div class="hostlyc-hero"><small>— AGENCIA DIGITAL EN MÉXICO —</small><h2>{{ selectedSection === 'Inicio' ? 'Tu negocio, visible y creciendo.' : selectedSection + ' que impulsa tu presencia digital.' }}</h2><p>Creamos páginas web, tiendas en línea y experiencias digitales para marcas que quieren verse profesionales y crecer.</p><div><button>Quiero crecer en digital</button><button class="hostlyc-outline">Ver proyectos →</button></div><footer><b>★★★★★</b><span>Calidad garantizada</span></footer></div>
-          <div class="hostlyc-marquee"><span>Páginas web profesionales</span><i>•</i><span>Tiendas en línea</span><i>•</i><span>Presencia digital</span><i>•</i><span>Atención personalizada</span></div>
+          <nav><strong><i>✦</i> Hostlyc</strong><div><button type="button" (click)="jumpToDemoSection('Inicio')">Inicio</button><button type="button" (click)="jumpToDemoSection('Servicios')">Servicios</button><button type="button" (click)="jumpToDemoSection('Proyectos')">Proyectos</button><button type="button" (click)="jumpToDemoSection('Nosotros')">Nosotros</button><button type="button" (click)="jumpToDemoSection('Proceso')">Proceso</button><button type="button" (click)="jumpToDemoSection('Contacto')">Contacto</button></div><button class="hostlyc-contact" type="button" (click)="jumpToDemoSection('Contacto')">Contáctanos</button></nav>
+          <section id="demo-hostlyc-inicio" class="hostlyc-hero"><small>— AGENCIA DIGITAL EN MÉXICO —</small><h2>Tu negocio,<br><mark>visible</mark> y creciendo.</h2><p>Creamos páginas web, tiendas en línea y presencia digital para marcas que quieren verse profesionales y crecer.</p><div><button type="button" (click)="jumpToDemoSection('Contacto')">Quiero crecer en digital</button><button class="hostlyc-outline" type="button" (click)="jumpToDemoSection('Proyectos')">Ver proyectos →</button></div><footer><b>★★★★★</b><span>Calidad garantizada</span></footer></section>
+          <div class="hostlyc-marquee"><span>Páginas web profesionales</span><i>•</i><span>Tiendas en línea</span><i>•</i><span>Posicionamiento en Google</span><i>•</i><span>Presencia en redes sociales</span><i>•</i><span>Atención personalizada</span></div>
+          <section id="demo-hostlyc-servicios" class="hostlyc-section"><p>LO QUE HACEMOS</p><h2>Soluciones digitales que hacen avanzar tu negocio.</h2><div class="hostlyc-services">@for (service of ['Soluciones a la medida','Publicidad digital','Correos profesionales','Automatización de procesos']; track service; let index = $index) { <article><span>0{{ index + 1 }}</span><i>{{ ['⌘','↗','✉','⚙'][$index] }}</i><h3>{{ service }}</h3><p>{{ index === 0 ? 'Sistemas adaptados a tus procesos para mejorar productividad y crecimiento.' : index === 1 ? 'Estrategias para aumentar visibilidad y atraer nuevos clientes.' : index === 2 ? 'Identidad profesional y comunicación confiable con tu propio dominio.' : 'Menos tareas repetitivas, menos errores y más tiempo para tu equipo.' }}</p><button type="button" (click)="demoAction('Detalle mock de ' + service + ' abierto.')">Conocer solución →</button></article> }</div></section>
+          <section id="demo-hostlyc-proyectos" class="hostlyc-section hostlyc-projects"><p>PROYECTOS</p><h2>Productos diseñados para resolver, crecer y medir.</h2><div><article class="large"><span>OPTIMIZA TUS VENTAS</span><div class="project-art pos-art"><i></i><i></i><i></i></div><h3>Sistema de punto de venta</h3><p>Operación comercial, inventario y experiencia de cliente en un solo flujo.</p><button type="button" (click)="demoAction('Caso de estudio mock abierto.')">Ver caso →</button></article><article><span>PAGOS Y FIDELIDAD</span><div class="project-art fidelity-art"><i></i><i></i></div><h3>Sistema de fidelidad</h3><button type="button" (click)="demoAction('Caso de fidelidad mock abierto.')">Explorar →</button></article><article><span>ANALYTICS</span><div class="project-art analytics-art"><b>+24%</b><i></i><i></i><i></i></div><h3>Data Insights Pro</h3><button type="button" (click)="demoAction('Dashboard analítico mock abierto.')">Explorar →</button></article><article class="wide"><span>FINANZAS PERSONALES</span><div class="project-art mobile-art"><i></i><i></i><i></i></div><h3>Gestor de gastos móvil</h3><button type="button" (click)="demoAction('Demo móvil mock abierta.')">Explorar →</button></article></div></section>
+          <section id="demo-hostlyc-nosotros" class="hostlyc-impact"><div><p>IMPACTO MEDIBLE</p><h2>Tecnología con resultados de negocio.</h2><span>Cada solución parte de un objetivo, se construye con datos y se acompaña después del lanzamiento.</span></div><div>@for (metric of [['98%','Clientes satisfechos'],['+150','Procesos automatizados'],['+100','Proyectos entregados'],['24/7','Soporte estratégico']]; track metric[1]) { <article><b>{{ metric[0] }}</b><span>{{ metric[1] }}</span></article> }</div></section>
+          <section id="demo-hostlyc-proceso" class="hostlyc-section hostlyc-process"><p>CÓMO TRABAJAMOS</p><h2>De una idea clara a un producto en producción.</h2><div>@for (step of [['01','Conexión','Entendemos visión, usuarios y objetivos comerciales.'],['02','Desarrollo','Construimos por entregas, validamos y medimos avances.'],['03','Despliegue','Lanzamos, observamos y acompañamos la evolución.']]; track step[0]) { <article><b>{{ step[0] }}</b><i></i><h3>{{ step[1] }}</h3><p>{{ step[2] }}</p></article> }</div></section>
+          <section id="demo-hostlyc-contacto" class="hostlyc-contact-section"><div><p>HABLEMOS</p><h2>¿Qué quieres hacer crecer?</h2><span>Cuéntanos el reto. Te ayudamos a convertirlo en una ruta técnica y comercial clara.</span><button type="button" (click)="demoAction('Conversación mock de WhatsApp iniciada.')">Hablemos por WhatsApp →</button><button class="hostlyc-outline" type="button" (click)="demoAction('Correo mock preparado para hola@hostlyc.com.')">hola&#64;hostlyc.com</button></div><form (submit)="$event.preventDefault(); demoAction('Diagnóstico mock enviado; gracias por compartir tu proyecto.')"><label>Nombre<input name="hostlycName" placeholder="Tu nombre"></label><label>Empresa<input name="hostlycCompany" placeholder="Nombre de tu negocio"></label><label>¿Qué necesitas?<select name="hostlycNeed"><option>Sitio web profesional</option><option>Tienda en línea</option><option>Automatización</option><option>Software a la medida</option></select></label><label>Cuéntanos brevemente<textarea name="hostlycMessage" placeholder="Objetivo, contexto y plazo"></textarea></label><button type="submit">Enviar diagnóstico →</button></form></section>
+          <footer class="hostlyc-footer"><strong><i>✦</i> Hostlyc</strong><span>Soluciones digitales para negocios que quieren crecer.</span><div><button type="button" (click)="jumpToDemoSection('Servicios')">Servicios</button><button type="button" (click)="jumpToDemoSection('Proyectos')">Proyectos</button><button type="button" (click)="jumpToDemoSection('Contacto')">Contacto</button></div><small>© 2026 Hostlyc · Demostración sanitizada</small></footer>
         </section>
       }
     }
+
     <p class="disclaimer">Esta simulación no se conecta a sistemas reales. Los nombres, métricas y registros son demostrativos.</p>
   </main>
+
+  @if (feedback) { <div class="demo-feedback" role="status"><span>{{ feedback }}</span><button type="button" (click)="clearFeedback()" aria-label="Cerrar mensaje">×</button></div> }
 </ion-content>

@@ -16,8 +16,8 @@ exponer código, datos, credenciales o nombres internos de clientes.
   - landing multi-tenant administrada por contenido;
   - panel CMS para composición de páginas.
   - landing comercial Hostlyc.
-- [x] Dibujar arquitecturas sanitizadas que expliquen cliente, API, persistencia,
-      sincronización y despliegue sin revelar infraestructura real.
+- [x] Dibujar arquitecturas sanitizadas para audiencia técnica con contenedores C4,
+      secuencia runtime, resiliencia, NFR, patrones y trade-offs.
 - [x] Mantener todo el contenido en una fuente local tipada para poder sustituirla
       después por un CMS público.
 - [x] Configurar rutas SPA, build de producción y despliegue en Vercel.
@@ -35,7 +35,8 @@ exponer código, datos, credenciales o nombres internos de clientes.
 
 1. `npm run build` genera un artefacto desplegable.
 2. Las rutas directas funcionan con el rewrite de Vercel.
-3. Las cuatro demos permiten navegar y cambiar estado local ficticio.
+3. Las cuatro demos permiten navegar, editar y cambiar estado local ficticio.
 4. El contenido profesional puede modificarse desde un único archivo TypeScript.
 5. No existen URLs privadas, credenciales ni datos productivos en el repositorio.
 6. Cada proyecto dispone de un diagrama funcional y de secuencia sanitizado.
+7. Adastra y CMS cubren sus flujos principales mediante estado mock comprobable.

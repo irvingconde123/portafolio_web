@@ -3,8 +3,9 @@
 Actualizado: 7 de julio de 2026.
 
 - [x] Corregir “Explorar proyectos” en móvil. Ahora desplaza el contenedor real de `ion-content` y tiene una prueba automatizada.
-- [x] Replicar con mayor fidelidad las interfaces originales. Se reconstruyeron demos navegables para Adastra, landing de laboratorio, Lab CMS y Hostlyc con datos ficticios.
-- [x] Agregar una arquitectura por proyecto. Cada ficha abre un diagrama funcional, una secuencia principal, decisiones y resultado sin revelar topología privada.
+- [x] Replicar con mayor fidelidad las interfaces originales. Las landings de laboratorio y Hostlyc incluyen hero, servicios, contenido institucional, evidencia, CTA, contacto y footer.
+- [x] Hacer funcionales Adastra y Lab CMS. Adastra permite navegar, capturar, guardar borradores, filtrar y editar reportes, administrar evidencia, simular offline y sincronizar. El CMS permite editar páginas, bloques, medios, tokens y SEO, además de publicar versiones.
+- [x] Agregar una arquitectura por proyecto. Cada ficha abre vistas de contenedores C4, secuencia runtime, fallas/NFR, patrones, trade-offs y señales operativas sin revelar topología privada.
 - [x] Incorporar miniaturas. Son composiciones HTML/CSS ligeras para evitar imágenes pesadas y conservar nitidez en cualquier pantalla.
 - [x] Agregar el CV descargable en `src/assets/Irving_Conde_CV.pdf`.
 - [x] Revisar la referencia `portafolio-frontend-8w82.vercel.app`. Se incorporaron las ideas útiles de header, sección “Sobre mí” y descarga de CV sin copiar su paleta o identidad.
@@ -25,3 +26,5 @@ Actualizado: 7 de julio de 2026.
 ## Seguridad de las demos
 
 Todos los nombres operativos, métricas y registros son ficticios. No se incluyeron endpoints, credenciales, contratos privados ni detalles de infraestructura productiva.
+
+La presentación técnica se basó en los ejemplos descargados de `Arquitecturas/VPC-FRONT`: resolución por recurso lógico, aislamiento de contextos, políticas fail-open/fail-closed y token one-shot. La implementación pública conserva los conceptos, pero elimina nombres físicos y configuración sensible.
