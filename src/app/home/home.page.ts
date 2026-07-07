@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { IonContent } from '@ionic/angular';
 import { EXPERIENCES, PROJECTS, SKILLS } from '../data/portfolio-content';
 
 @Component({
@@ -7,7 +8,26 @@ import { EXPERIENCES, PROJECTS, SKILLS } from '../data/portfolio-content';
   standalone: false,
 })
 export class HomePage {
+  @ViewChild(IonContent) private content?: IonContent;
+
   protected readonly experiences = EXPERIENCES;
   protected readonly projects = PROJECTS;
   protected readonly skills = SKILLS;
+
+  protected async scrollTo(sectionId: string): Promise<void> {
+    const target = document.getElementById(sectionId);
+    const scrollElement = await this.content?.getScrollElement();
+
+    if (!target || !scrollElement || !this.content) {
+      return;
+    }
+
+    const top =
+      target.getBoundingClientRect().top -
+      scrollElement.getBoundingClientRect().top +
+      scrollElement.scrollTop -
+      72;
+
+    await this.content.scrollToPoint(0, Math.max(0, top), 420);
+  }
 }

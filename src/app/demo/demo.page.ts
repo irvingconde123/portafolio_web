@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PROJECTS, ProjectItem } from '../data/portfolio-content';
 
-type DemoSlug = 'adastra' | 'landing' | 'cms';
+type DemoSlug = 'adastra' | 'landing' | 'cms' | 'hostlyc';
 
 @Component({
   selector: 'app-demo',
@@ -20,7 +20,9 @@ export class DemoPage implements OnInit {
   ngOnInit(): void {
     const candidate = this.route.snapshot.paramMap.get('slug');
     this.slug =
-      candidate === 'landing' || candidate === 'cms' ? candidate : 'adastra';
+      candidate === 'landing' || candidate === 'cms' || candidate === 'hostlyc'
+        ? candidate
+        : 'adastra';
     this.project = PROJECTS.find((item) => item.slug === this.slug);
   }
 

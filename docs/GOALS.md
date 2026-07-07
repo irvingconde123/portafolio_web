@@ -11,16 +11,18 @@ exponer código, datos, credenciales o nombres internos de clientes.
 - [x] Presentar perfil profesional y experiencia a partir del CV vigente.
 - [x] Mostrar competencias en Angular, Ionic, NestJS, Python, AWS y bases de datos.
 - [x] Documentar proyectos mediante problemas, decisiones, responsabilidades y resultados.
-- [x] Incluir tres demos navegables con datos completamente ficticios:
+- [x] Incluir cuatro demos navegables con datos completamente ficticios:
   - operación híbrida online/offline;
   - landing multi-tenant administrada por contenido;
   - panel CMS para composición de páginas.
+  - landing comercial Hostlyc.
 - [x] Dibujar arquitecturas sanitizadas que expliquen cliente, API, persistencia,
       sincronización y despliegue sin revelar infraestructura real.
 - [x] Mantener todo el contenido en una fuente local tipada para poder sustituirla
       después por un CMS público.
 - [x] Configurar rutas SPA, build de producción y despliegue en Vercel.
-- [x] Verificar accesibilidad básica, navegación móvil/escritorio y build limpio.
+- [x] Agregar CV descargable, GitHub público, sección Sobre mí y miniaturas ligeras.
+- [x] Verificar accesibilidad, navegación móvil/tablet/escritorio y build limpio.
 
 ## Límites de seguridad
 
@@ -33,6 +35,7 @@ exponer código, datos, credenciales o nombres internos de clientes.
 
 1. `npm run build` genera un artefacto desplegable.
 2. Las rutas directas funcionan con el rewrite de Vercel.
-3. Las tres demos permiten navegar y cambiar estado local ficticio.
+3. Las cuatro demos permiten navegar y cambiar estado local ficticio.
 4. El contenido profesional puede modificarse desde un único archivo TypeScript.
 5. No existen URLs privadas, credenciales ni datos productivos en el repositorio.
+6. Cada proyecto dispone de un diagrama funcional y de secuencia sanitizado.

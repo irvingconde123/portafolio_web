@@ -1,0 +1,50 @@
+<ion-content [fullscreen]="true">
+  <header class="architecture-header">
+    <a routerLink="/home">← Proyectos</a>
+    <span>Arquitectura sanitizada</span>
+  </header>
+  <main class="architecture-page">
+    <section class="architecture-intro">
+      <p>{{ project.kind }}</p>
+      <h1>{{ project.name }}</h1>
+      <span>{{ project.summary }}</span>
+    </section>
+
+    <section class="architecture-panel" aria-labelledby="functional-title">
+      <div class="panel-heading">
+        <div><p>Vista funcional</p><h2 id="functional-title">Responsabilidades y límites</h2></div>
+        <span>Los nombres internos y la topología productiva fueron omitidos.</span>
+      </div>
+      <ol class="functional-flow">
+        @for (node of project.architecture; track node.label; let index = $index; let last = $last) {
+          <li>
+            <span>{{ index + 1 }}</span>
+            <div><b>{{ node.label }}</b><p>{{ node.detail }}</p></div>
+          </li>
+          @if (!last) { <i aria-hidden="true">→</i> }
+        }
+      </ol>
+    </section>
+
+    <div class="architecture-detail-grid">
+      <section class="architecture-panel sequence-panel" aria-labelledby="sequence-title">
+        <div class="panel-heading"><div><p>Secuencia principal</p><h2 id="sequence-title">Cómo viaja una operación</h2></div></div>
+        <ol>
+          @for (step of project.sequence; track $index; let index = $index) {
+            <li><span>{{ index + 1 }}</span><div><b>{{ step.from }}</b><p>{{ step.action }}</p><small>Destino: {{ step.to }}</small></div></li>
+          }
+        </ol>
+      </section>
+      <aside class="architecture-panel decision-panel">
+        <div class="panel-heading"><div><p>Criterios</p><h2>Decisiones de diseño</h2></div></div>
+        <ul>@for (decision of project.decisions; track decision) { <li>{{ decision }}</li> }</ul>
+        <p class="architecture-result"><b>Resultado</b>{{ project.impact }}</p>
+      </aside>
+    </div>
+
+    <nav class="architecture-actions" aria-label="Acciones del proyecto">
+      @if (project.hasDemo) { <a class="primary" [routerLink]="['/demos', project.slug]">Abrir demo navegable</a> }
+      <a class="secondary" routerLink="/home">Volver al portafolio</a>
+    </nav>
+  </main>
+</ion-content>

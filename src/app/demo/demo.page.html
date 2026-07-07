@@ -1,120 +1,55 @@
 <ion-content [fullscreen]="true">
-  <header class="demo-header">
-    <a routerLink="/home">← Portafolio</a><span>Demo con datos ficticios</span>
-  </header>
-  <main>
-    <section class="intro">
-      <p>{{ project?.kind }}</p>
-      <h1>{{ project?.name }}</h1>
-      <span>{{ project?.summary }}</span>
-      <div class="flow">
-        @for (node of project?.architecture; track node; let last = $last) {
-        <b>{{ node }}</b>@if (!last) { <i>→</i> } }
-      </div>
+  <header class="demo-header"><a routerLink="/home">← Portafolio</a><span>Demo interactiva · datos ficticios</span></header>
+  <main class="demo-page">
+    <section class="demo-intro">
+      <p>{{ project?.kind }}</p><h1>{{ project?.name }}</h1><span>{{ project?.summary }}</span>
+      <div class="flow">@for (node of project?.architecture; track node.label; let last = $last) { <b>{{ node.label }}</b>@if (!last) { <i>→</i> } }</div>
     </section>
 
-    @switch (slug) { @case ('adastra') {
-    <section class="device-frame operations">
-      <aside>
-        <strong>AA</strong>
-        <nav>
-          <button class="active">Resumen</button><button>Reportes</button
-          ><button>Captura</button>
-        </nav>
-        <small [class.offline]="offline"
-          >● {{ offline ? 'Offline' : 'En línea' }}</small
-        >
-      </aside>
-      <div class="workspace">
-        <header>
-          <span>Buen día, bienvenido</span
-          ><button (click)="toggleConnection()">
-            {{ offline ? 'Restaurar conexión' : 'Forzar offline' }}
-          </button>
-        </header>
-        <div class="metrics">
-          <article><small>Pendientes</small><b>5</b></article>
-          <article><small>Activos</small><b>2</b></article>
-          <article><small>Cerrados</small><b>18</b></article>
-        </div>
-        <article class="mock-list">
-          <div>
-            <small>Reporte AA-2048</small
-            ><strong>Análisis de muestra ambiental</strong>
+    @switch (slug) {
+      @case ('adastra') {
+        <section class="demo-window operations-demo">
+          <aside class="ops-sidebar">
+            <div class="ops-brand"><strong>AA</strong><span>AD ASTRA<small>OPERACIONES</small></span></div>
+            <nav><button class="active">⌂ <span>Resumen</span></button><button>□ <span>Reportes</span></button></nav>
+            <div class="connection-card"><i [class.offline]="offline"></i><b>{{ offline ? 'Modo offline' : 'En línea' }}</b><small>{{ offline ? 'Cambios protegidos localmente' : 'Sincronización disponible' }}</small></div>
+            <button class="offline-button" (click)="toggleConnection()">{{ offline ? 'Restaurar conexión' : 'Forzar modo offline' }}</button>
+          </aside>
+          <div class="ops-workspace">
+            <header><div><small>Laboratorista</small><b>Buen día, bienvenido</b></div><div class="session-chip">Sesión 07:48:21</div><span class="avatar">IC</span></header>
+            <div class="update-strip">↑ <span><b>Actualización Android disponible</b><small>Puedes continuar trabajando.</small></span><button>Descargar</button></div>
+            <section class="ops-content">
+              <p class="ops-eyebrow">JORNADA · 07 JUL 2026</p><h2>Bandeja de laboratorio</h2><span>Recepción técnica, análisis y resultados de su área.</span>
+              <div class="metrics"><article><small>Pendientes</small><b>5</b><span>Por iniciar</span></article><article><small>Activos</small><b>2</b><span>En análisis</span></article><article><small>Cerrados</small><b>18</b><span>Concluidos</span></article></div>
+              <article class="report-queue"><div><small>COLA PRIORIZADA</small><h3>Reportes para revisión</h3></div><div class="report-row"><span><b>Análisis de muestra ambiental</b><small>AA-20260707-0042 · Laboratorio 1</small></span><button (click)="advanceReport()">{{ reportStatus }} →</button></div></article>
+              @if (offline) { <p class="notice">Modo offline activo. El cambio se cifra y queda pendiente hasta recuperar conexión.</p> }
+            </section>
           </div>
-          <button (click)="advanceReport()">{{ reportStatus }} →</button>
-        </article>
-        @if (offline) {
-        <p class="notice">
-          Cambios guardados localmente. Se sincronizarán al recuperar conexión.
-        </p>
-        }
-      </div>
-    </section>
-    } @case ('landing') {
-    <section class="device-frame landing">
-      <nav>
-        <strong>LAB</strong>@for (section of
-        ['Inicio','Servicios','Calidad','Contacto']; track section) {
-        <button
-          [class.active]="selectedSection === section"
-          (click)="selectedSection = section"
-        >
-          {{ section }}
-        </button>
-        }
-      </nav>
-      <div class="landing-hero">
-        <small>LABORATORIO AMBIENTAL</small>
-        <h2>
-          {{ selectedSection === 'Inicio' ? 'Ciencia precisa para decisiones
-          responsables.' : selectedSection }}
-        </h2>
-        <p>
-          Contenido ficticio resuelto por tenant, página y sección mediante un
-          registro de renderers.
-        </p>
-        <button>Conocer servicios</button>
-      </div>
-    </section>
-    } @case ('cms') {
-    <section class="device-frame cms">
-      <aside>
-        <strong>CMS</strong>@for (section of
-        ['Páginas','Navegación','Medios','Estilos']; track section) {
-        <button
-          [class.active]="selectedSection === section"
-          (click)="selectedSection = section"
-        >
-          {{ section }}
-        </button>
-        }
-      </aside>
-      <div class="cms-editor">
-        <header>
-          <div>
-            <small>EDITOR VISUAL</small>
-            <h2>{{ selectedSection }}</h2>
+        </section>
+      }
+      @case ('landing') {
+        <section class="demo-window laboratory-demo">
+          <nav><strong><i></i> ASTRALAB</strong><div>@for (section of ['Inicio','Nosotros','Servicios','Calidad','Contacto']; track section) { <button [class.active]="selectedSection === section" (click)="selectedSection = section">{{ section }}</button> }</div><button class="lab-cta">Solicitar análisis</button></nav>
+          <div class="laboratory-hero">
+            <div><small>LABORATORIO AMBIENTAL ACREDITADO</small><h2>{{ selectedSection === 'Inicio' ? 'Ciencia precisa para decisiones responsables.' : selectedSection + ' con evidencia y claridad.' }}</h2><p>Análisis confiables de agua, suelo y ambiente con procesos documentados y atención especializada.</p><div><button>Conocer servicios</button><button class="outline">Hablar con un especialista</button></div><footer><b>+15 años</b><span>Experiencia técnica</span><b>48 h</b><span>Respuesta inicial</span></footer></div>
+            <figure><img src="assets/laboratory-hero.png" alt="Muestra visual ficticia de laboratorio" loading="lazy"><figcaption>CONTROL DE CALIDAD · TRAZABILIDAD</figcaption></figure>
           </div>
-          <button>Publicar versión</button>
-        </header>
-        <div class="editor-grid">
-          <article>
-            <span>Hero principal</span><small>Orden 1 · Visible</small>
-          </article>
-          <article>
-            <span>Servicios</span><small>Orden 2 · Colección</small>
-          </article>
-          <article>
-            <span>Certificaciones</span><small>Orden 3 · Dinámico</small>
-          </article>
-        </div>
-      </div>
-    </section>
-    } }
-    <p class="disclaimer">
-      Esta simulación no se conecta a sistemas reales. Los nombres, métricas y
-      registros son demostrativos.
-    </p>
+        </section>
+      }
+      @case ('cms') {
+        <section class="demo-window cms-demo">
+          <aside><div class="cms-brand"><b>Lab CMS</b><small>Astra Laboratorios</small></div><span class="cms-user">Bienvenido<b>Irving Conde</b><small>editor&#64;demo.test</small></span><nav>@for (section of ['Resumen','Landing','Composición','Medios','Estilos','SEO']; track section) { <button [class.active]="selectedSection === section" (click)="selectedSection = section"><i></i>{{ section }}</button> }</nav><button class="cms-logout">Cerrar sesión</button></aside>
+          <div class="cms-workspace"><header><div><small>CONTENIDO PÚBLICO</small><h2>{{ selectedSection }}</h2></div><button>Publicar versión</button></header><div class="cms-summary"><article><small>Secciones</small><b>6</b><span>5 visibles</span></article><article><small>Medios</small><b>24</b><span>Optimizados</span></article><article><small>Estado</small><b class="published">Publicado</b><span>Hace 12 minutos</span></article></div><section class="cms-editor"><header><b>Composición de página</b><span>Arrastra para reordenar</span></header>@for (block of ['Hero principal','Sobre el laboratorio','Certificaciones','Preguntas frecuentes']; track block; let index = $index) { <article><i>⠿</i><span><b>{{ block }}</b><small>Orden {{ index + 1 }} · Visible</small></span><button>Editar</button></article> }</section></div>
+        </section>
+      }
+      @case ('hostlyc') {
+        <section class="demo-window hostlyc-demo">
+          <nav><strong><i>✦</i> Hostlyc</strong><div>@for (section of ['Inicio','Servicios','Proyectos','Nosotros','Proceso','Contacto']; track section) { <button [class.active]="selectedSection === section" (click)="selectedSection = section">{{ section }}</button> }</div><button class="hostlyc-contact">Contáctanos</button></nav>
+          <div class="hostlyc-hero"><small>— AGENCIA DIGITAL EN MÉXICO —</small><h2>{{ selectedSection === 'Inicio' ? 'Tu negocio, visible y creciendo.' : selectedSection + ' que impulsa tu presencia digital.' }}</h2><p>Creamos páginas web, tiendas en línea y experiencias digitales para marcas que quieren verse profesionales y crecer.</p><div><button>Quiero crecer en digital</button><button class="hostlyc-outline">Ver proyectos →</button></div><footer><b>★★★★★</b><span>Calidad garantizada</span></footer></div>
+          <div class="hostlyc-marquee"><span>Páginas web profesionales</span><i>•</i><span>Tiendas en línea</span><i>•</i><span>Presencia digital</span><i>•</i><span>Atención personalizada</span></div>
+        </section>
+      }
+    }
+    <p class="disclaimer">Esta simulación no se conecta a sistemas reales. Los nombres, métricas y registros son demostrativos.</p>
   </main>
 </ion-content>
