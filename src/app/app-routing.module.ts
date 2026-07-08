@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { legacyArchitectureRedirect } from './seo/legacy-route.redirect';
 
 const routes: Routes = [
   {
-    path: 'home',
+    path: '',
     loadChildren: () =>
       import('./home/home.module').then((m) => m.HomePageModule),
   },
   {
-    path: '',
-    redirectTo: 'home',
+    path: 'home',
+    redirectTo: '',
     pathMatch: 'full',
   },
   {
@@ -19,15 +20,28 @@ const routes: Routes = [
   },
   {
     path: 'arquitecturas/:slug',
+    redirectTo: legacyArchitectureRedirect,
+  },
+  {
+    path: 'casos/:slug',
     loadChildren: () =>
-      import('./architecture/architecture.module').then(
-        (module) => module.ArchitectureModule,
+      import('./case-study/case-study.module').then(
+        (module) => module.CaseStudyModule,
       ),
+  },
+  {
+    path: '**',
+    redirectTo: '',
   },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes, {
+      anchorScrolling: 'enabled',
+      scrollPositionRestoration: 'enabled',
+    }),
+  ],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
