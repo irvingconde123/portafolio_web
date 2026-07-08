@@ -1,0 +1,141 @@
+<ion-content [fullscreen]="true">
+  <header class="case-header">
+    <a routerLink="/home" fragment="projects">← Casos seleccionados</a>
+    <span>Caso técnico · datos sanitizados</span>
+  </header>
+
+  @if (caseStudy; as item) {
+    <main class="case-page">
+      <section class="case-hero">
+        <p>{{ item.eyebrow }}</p>
+        <h1>{{ item.name }}</h1>
+        <strong>{{ item.summary }}</strong>
+        <div class="case-tags">
+          @for (technology of item.technologies; track technology) {
+            <span>{{ technology }}</span>
+          }
+        </div>
+      </section>
+
+      <section class="case-overview" aria-label="Contexto del caso">
+        <article>
+          <span>Problema</span>
+          <p>{{ item.problem }}</p>
+        </article>
+        <article>
+          <span>Contexto</span>
+          <p>{{ item.context }}</p>
+        </article>
+        <article>
+          <span>Responsabilidad</span>
+          <p>{{ item.role }}</p>
+        </article>
+        <article>
+          <span>Estado verificable</span>
+          <p>{{ item.status }}</p>
+        </article>
+      </section>
+
+      <section class="case-section solution">
+        <p class="section-label">Solución</p>
+        <h2>Cómo se aborda el problema</h2>
+        <p>{{ item.solution }}</p>
+        <div class="constraint-list">
+          @for (constraint of item.constraints; track constraint) {
+            <span>✓ {{ constraint }}</span>
+          }
+        </div>
+      </section>
+
+      <section id="arquitectura" class="architecture-section">
+        <header>
+          <div>
+            <p class="section-label">Arquitectura de solución</p>
+            <h2>Límites, responsabilidades y contratos</h2>
+          </div>
+          <span [class.invalid]="!architectureIsValid">
+            {{ architectureIsValid ? 'Modelo consistente' : 'Modelo por revisar' }}
+          </span>
+        </header>
+
+        <div class="architecture-nodes">
+          @for (node of item.nodes; track node.id) {
+            <article [attr.data-kind]="node.kind">
+              <small>{{ kindLabel(node.kind) }}</small>
+              <h3>{{ node.label }}</h3>
+              <p>{{ node.detail }}</p>
+              @if (node.technology) { <code>{{ node.technology }}</code> }
+            </article>
+          }
+        </div>
+
+        <div class="architecture-edges" aria-label="Contratos entre elementos">
+          <header><span>Origen → destino</span><span>Contrato</span><span>Propósito</span></header>
+          @for (edge of item.edges; track edge.from + edge.to) {
+            <article>
+              <b>{{ edge.from }} → {{ edge.to }}</b>
+              <code>{{ edge.protocol }}</code>
+              <p>{{ edge.purpose }}</p>
+            </article>
+          }
+        </div>
+      </section>
+
+      <section class="case-section">
+        <p class="section-label">Atributos de calidad</p>
+        <h2>Comportamiento ante escenarios concretos</h2>
+        <div class="scenario-grid">
+          @for (scenario of item.qualityScenarios; track scenario.attribute) {
+            <article>
+              <span>{{ scenario.attribute }}</span>
+              <p><b>Cuando:</b> {{ scenario.stimulus }}</p>
+              <p><b>Respuesta:</b> {{ scenario.response }}</p>
+              @if (scenario.measure) { <small>{{ scenario.measure }}</small> }
+            </article>
+          }
+        </div>
+      </section>
+
+      <section class="case-section">
+        <p class="section-label">Decisiones</p>
+        <h2>Compensaciones explícitas</h2>
+        <div class="decision-list">
+          @for (decision of item.decisions; track decision.id) {
+            <article>
+              <header><code>{{ decision.id }}</code><span>{{ decision.status }}</span></header>
+              <p><b>Contexto:</b> {{ decision.context }}</p>
+              <p><b>Decisión:</b> {{ decision.decision }}</p>
+              <p><b>Consecuencias:</b> {{ decision.consequences }}</p>
+            </article>
+          }
+        </div>
+      </section>
+
+      <section class="case-section evidence-section">
+        <p class="section-label">Evidencia pública</p>
+        <h2>Qué puede verificarse en este repositorio</h2>
+        <div>
+          @for (evidence of item.evidence; track evidence.source) {
+            <article>
+              <span aria-hidden="true">✓</span>
+              <p><b>{{ evidence.label }}</b><code>{{ evidence.source }}</code></p>
+            </article>
+          }
+        </div>
+      </section>
+
+      <nav class="case-actions" aria-label="Acciones del caso">
+        @for (demo of item.demos; track demo.slug) {
+          <a class="primary" [routerLink]="['/demos', demo.slug]">{{ demo.label }}</a>
+        }
+        <a class="secondary" routerLink="/home" fragment="projects">Volver al portafolio</a>
+      </nav>
+    </main>
+  } @else {
+    <main class="case-page not-found">
+      <p class="section-label">Caso no encontrado</p>
+      <h1>La solución solicitada no está publicada.</h1>
+      <a class="primary" routerLink="/home" fragment="projects">Ver casos disponibles</a>
+    </main>
+  }
+</ion-content>
