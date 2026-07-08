@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Output } from '@angular/core';
 import { INITIAL_CAPTURE, INITIAL_DRAFTS, INITIAL_REPORTS } from './demo.fixtures';
 import { AppView, DemoDraft, DemoReport, ReportStatus } from './demo.models';
 
@@ -24,6 +24,7 @@ export class AdastraDemoComponent {
     evidence: [...report.evidence],
   }));
   protected drafts = INITIAL_DRAFTS.map((draft) => ({ ...draft }));
+  private dialogTrigger: HTMLElement | null = null;
 
   protected get filteredReports(): DemoReport[] {
     const term = this.reportSearch.trim().toLowerCase();
@@ -60,13 +61,22 @@ export class AdastraDemoComponent {
   }
 
   protected openReport(reportId: string): void {
+    this.dialogTrigger = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     this.selectedReportId = reportId;
     this.editingReport = false;
+    setTimeout(() => document.querySelector<HTMLElement>('.report-detail-demo')?.focus());
   }
 
   protected closeReport(): void {
     this.selectedReportId = null;
     this.editingReport = false;
+    this.dialogTrigger?.focus();
+    this.dialogTrigger = null;
+  }
+
+  @HostListener('document:keydown.escape')
+  protected closeReportWithKeyboard(): void {
+    if (this.selectedReportId) this.closeReport();
   }
 
   protected changeReportStatus(report: DemoReport, status: string): void {

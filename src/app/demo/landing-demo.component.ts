@@ -7,8 +7,10 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class LandingDemoComponent {
   @Output() readonly feedback = new EventEmitter<string>();
+  protected selectedSection = 'Inicio';
 
   protected jumpToSection(section: string): void {
+    this.selectedSection = section;
     document
       .getElementById(`demo-landing-${section.toLowerCase()}`)
       ?.scrollIntoView({ behavior: 'smooth', block: 'start' });

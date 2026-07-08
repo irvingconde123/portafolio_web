@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Output } from '@angular/core';
 import {
   INITIAL_CMS_BLOCKS,
   INITIAL_CMS_MEDIA,
@@ -23,10 +23,11 @@ export class CmsDemoComponent {
   protected cmsBlocks = INITIAL_CMS_BLOCKS.map((block) => ({ ...block }));
   protected cmsMedia = INITIAL_CMS_MEDIA.map((media) => ({ ...media }));
   protected cmsTokens = INITIAL_CMS_TOKENS.map((token) => ({ ...token }));
+  private dialogTrigger: HTMLElement | null = null;
 
   protected setCmsView(view: CmsView): void {
     this.cmsView = view;
-    this.cmsEditing = null;
+    this.closeCmsEditor();
   }
 
   protected publishCms(): void {
@@ -35,13 +36,26 @@ export class CmsDemoComponent {
   }
 
   protected openCmsEditor(label: string, value: string): void {
+    this.dialogTrigger = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     this.cmsEditing = label;
     this.cmsDraftValue = value;
+    setTimeout(() => document.querySelector<HTMLElement>('.cms-modal')?.focus());
   }
 
   protected saveCmsEditor(): void {
-    this.cmsEditing = null;
+    this.closeCmsEditor();
     this.notify('Cambio guardado como borrador editorial.');
+  }
+
+  protected closeCmsEditor(): void {
+    this.cmsEditing = null;
+    this.dialogTrigger?.focus();
+    this.dialogTrigger = null;
+  }
+
+  @HostListener('document:keydown.escape')
+  protected closeEditorWithKeyboard(): void {
+    if (this.cmsEditing) this.closeCmsEditor();
   }
 
   protected addCmsPage(): void {

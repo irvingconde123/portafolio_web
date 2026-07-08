@@ -10,3 +10,13 @@
 .hostlyc-contact-section { align-items: start; background: #191919; display: grid; gap: 3rem; grid-template-columns: 1fr 1fr; padding: clamp(3rem,7vw,6rem) clamp(1.5rem,7vw,6rem); scroll-margin-top: 4.3rem; }.hostlyc-contact-section > div > span { color: #979797; display: block; font-size: 0.7rem; line-height: 1.6; margin-bottom: 1.2rem; }.hostlyc-contact-section > div button { background: #ff003d; border: 1px solid #ff003d; border-radius: 0.4rem; color: #fff; display: block; font-size: 0.58rem; margin-top: 0.5rem; padding: 0.7rem; }.hostlyc-contact-section > div .hostlyc-outline { background: transparent; }.hostlyc-contact-section form { background: #101010; border: 1px solid #303030; border-radius: 0.6rem; display: grid; gap: 0.7rem; padding: 1.2rem; }.hostlyc-contact-section form label { color: #aaa; display: grid; font-size: 0.55rem; gap: 0.35rem; }.hostlyc-contact-section input,.hostlyc-contact-section select,.hostlyc-contact-section textarea { background: #1a1a1a; border: 1px solid #393939; border-radius: 0.35rem; color: #fff; font: inherit; font-size: 0.65rem; min-height: 2.4rem; padding: 0.55rem; }.hostlyc-contact-section textarea { min-height: 5rem; }.hostlyc-contact-section form button { background: #ff003d; border: 0; border-radius: 0.4rem; color: #fff; font-size: 0.62rem; font-weight: 900; min-height: 2.7rem; }
 .hostlyc-footer { align-items: center; background: #0d0d0d; border-top: 1px solid #292929; display: grid; gap: 1rem; grid-template-columns: auto 1fr auto; padding: 2rem clamp(1.5rem,7vw,6rem); }.hostlyc-footer > strong i { color: #ff003d; font-style: normal; }.hostlyc-footer > span,.hostlyc-footer small { color: #777; font-size: 0.55rem; }.hostlyc-footer > div { display: flex; gap: 0.4rem; }.hostlyc-footer button { background: transparent; border: 0; color: #bbb; font-size: 0.55rem; }.hostlyc-footer small { grid-column: 1/-1; }
 
+/* Accessible interaction baseline */
+.hostlyc-demo :is(small,span,label,button,input,select,textarea) { font-size: 0.75rem; }
+.hostlyc-demo :is(button,input,select) { min-height: 2.75rem; }
+.hostlyc-demo button:focus-visible,.hostlyc-demo :is(input,select,textarea):focus-visible { outline: 3px solid #ff668a; outline-offset: 2px; }
+.hostlyc-demo :is(h2,h3,p,span,label) { overflow-wrap: anywhere; }
+@media (max-width: 560px) {
+  .hostlyc-demo .hostlyc-section,.hostlyc-demo .hostlyc-impact,.hostlyc-demo .hostlyc-contact-section { padding-inline: 0.95rem; }
+  .hostlyc-demo .hostlyc-footer > div { flex-wrap: wrap; }
+}
+

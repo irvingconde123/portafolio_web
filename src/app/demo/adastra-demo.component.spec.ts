@@ -8,7 +8,10 @@ interface AdastraHarness {
   demoPlatform: 'web' | 'android' | 'desktop';
   drafts: unknown[];
   offline: boolean;
+  selectedReportId: string | null;
   reports: Array<{ status: string; evidence: string[] }>;
+  closeReportWithKeyboard(): void;
+  openReport(reportId: string): void;
   saveDraft(): void;
   syncDrafts(): void;
   changeReportStatus(report: unknown, status: string): void;
@@ -63,5 +66,19 @@ describe('AdastraDemoComponent', () => {
     harness.demoPlatform = 'android';
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('.update-strip')).not.toBeNull();
+  });
+
+  it('exposes report detail as a modal dialog and closes it from the keyboard', () => {
+    harness.openReport('r-1');
+    fixture.detectChanges();
+
+    const dialog = fixture.nativeElement.querySelector('.report-detail-demo');
+    expect(dialog.getAttribute('role')).toBe('dialog');
+    expect(dialog.getAttribute('aria-modal')).toBe('true');
+
+    harness.closeReportWithKeyboard();
+    fixture.detectChanges();
+    expect(harness.selectedReportId).toBeNull();
+    expect(fixture.nativeElement.querySelector('.report-detail-demo')).toBeNull();
   });
 });
