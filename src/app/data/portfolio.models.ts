@@ -32,6 +32,78 @@ export interface ProjectEvidence {
   label: string;
 }
 
+export type ArchitectureNodeKind =
+  | 'actor'
+  | 'system'
+  | 'container'
+  | 'component'
+  | 'datastore'
+  | 'external';
+
+export interface ArchitectureNode {
+  id: string;
+  label: string;
+  kind: ArchitectureNodeKind;
+  detail: string;
+  boundary?: string;
+  technology?: string;
+}
+
+export interface ArchitectureEdge {
+  from: string;
+  to: string;
+  protocol: string;
+  purpose: string;
+}
+
+export interface QualityScenario {
+  attribute: string;
+  stimulus: string;
+  response: string;
+  measure?: string;
+}
+
+export interface DecisionRecord {
+  id: string;
+  status: 'accepted' | 'proposed' | 'superseded';
+  context: string;
+  decision: string;
+  consequences: string;
+}
+
+export interface EvidenceItem {
+  label: string;
+  source: string;
+  verified: boolean;
+  value?: string;
+  verifiedAt?: string;
+}
+
+export interface CaseDemoLink {
+  label: string;
+  slug: 'adastra' | 'landing' | 'cms' | 'hostlyc';
+}
+
+export interface CaseStudy {
+  slug: 'adastra' | 'plataforma-contenido' | 'gateway-datos' | 'hostlyc';
+  name: string;
+  eyebrow: string;
+  summary: string;
+  problem: string;
+  context: string;
+  role: string;
+  status: string;
+  solution: string;
+  constraints: string[];
+  technologies: string[];
+  evidence: EvidenceItem[];
+  demos: CaseDemoLink[];
+  nodes: ArchitectureNode[];
+  edges: ArchitectureEdge[];
+  qualityScenarios: QualityScenario[];
+  decisions: DecisionRecord[];
+}
+
 export interface ProjectItem {
   slug: string;
   name: string;
