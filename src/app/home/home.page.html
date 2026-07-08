@@ -1,13 +1,15 @@
 <ion-content [fullscreen]="true">
   <header class="site-header">
     <button class="identity" type="button" (click)="scrollTo('top')" aria-label="Ir al inicio">
-      <b>Irving Conde</b>
+      Irving Conde
     </button>
-    <button class="menu-toggle" type="button" [attr.aria-expanded]="mobileMenuOpen" aria-controls="main-navigation" (click)="toggleMobileMenu()"><span></span><span></span><span></span><b>Menú</b></button>
+    <button class="menu-toggle" type="button" [attr.aria-expanded]="mobileMenuOpen" aria-controls="main-navigation" (click)="toggleMobileMenu()">
+      <span></span><span></span><span></span><b>Menú</b>
+    </button>
     <nav id="main-navigation" [class.open]="mobileMenuOpen" aria-label="Navegación principal">
-      <button type="button" (click)="scrollTo('about')">Sobre mí</button>
+      <button type="button" (click)="scrollTo('projects')">Casos</button>
       <button type="button" (click)="scrollTo('experience')">Experiencia</button>
-      <button type="button" (click)="scrollTo('projects')">Proyectos</button>
+      <button type="button" (click)="scrollTo('skills')">Capacidades</button>
       <button type="button" (click)="scrollTo('contact')">Contacto</button>
     </nav>
     <div class="header-actions">
@@ -15,128 +17,93 @@
       <a class="header-cv" href="assets/Irving_Conde_CV.pdf" download>Descargar CV</a>
     </div>
   </header>
-  @if (mobileMenuOpen) { <button class="navigation-backdrop" type="button" (click)="toggleMobileMenu()" aria-label="Cerrar menú"></button> }
+  @if (mobileMenuOpen) {
+    <button class="navigation-backdrop" type="button" (click)="toggleMobileMenu()" aria-label="Cerrar menú"></button>
+  }
 
   <main id="top">
-    <section class="hero section">
-      <div class="hero-content">
-        <p class="eyebrow">Arquitecto y desarrollador full stack</p>
-        <h1>Operación sin conexión y plataformas multi-tenant.</h1>
-        <p class="hero-copy">
-          Diseño y ejecuto productos completos para web, Android y escritorio: desde el flujo de usuario y el contrato API hasta persistencia, seguridad, pruebas y entrega continua.
-        </p>
-        <div class="hero-actions">
-          <button class="primary" type="button" (click)="scrollTo('projects')">Explorar proyectos</button>
-          <a class="secondary" href="mailto:Irving.CondeM@gmail.com">Contactar</a>
-        </div>
+    <section class="hero section" aria-labelledby="hero-title">
+      <p class="eyebrow">Full Stack Engineer · Angular · Ionic · NestJS</p>
+      <h1 id="hero-title">Construyo productos que siguen operando cuando la red falla.</h1>
+      <p class="hero-copy">
+        Desarrollo aplicaciones web y móviles, APIs y plataformas de contenido. Mi enfoque conecta experiencia de usuario, seguridad, persistencia y operación mantenible.
+      </p>
+      <div class="hero-actions">
+        <button class="primary" type="button" (click)="scrollTo('projects')">Ver casos de estudio</button>
+        <a class="secondary" href="mailto:Irving.CondeM@gmail.com">Contactar</a>
       </div>
-      <aside class="system-card" aria-label="Especialidades">
-        <div class="availability"><span class="pulse"></span><small>DISPONIBLE PARA COLABORAR</small></div>
-        <strong>Web · Android · Escritorio · Servicios</strong>
-        <p>Diseño soluciones que cuidan la operación, los datos y la experiencia de quien las utiliza.</p>
-        <div class="system-grid">
-          <span>Offline-first</span><span>APIs seguras</span><span>AWS</span><span>Arquitectura</span>
-        </div>
-      </aside>
     </section>
 
-    <section id="about" class="section about" aria-labelledby="about-title">
+    <section class="proof-strip" aria-label="Áreas de experiencia demostradas">
       <div>
-        <p class="eyebrow">Sobre mí</p>
-        <h2 id="about-title">Del flujo de usuario a la arquitectura que lo sostiene.</h2>
-      </div>
-      <div class="about-copy">
-        <p>
-          Soy Irving, desarrollador full stack enfocado en aplicaciones híbridas, APIs y plataformas cloud. Trabajo de punta a punta: entiendo el problema, diseño el contrato, construyo la interfaz y dejo mecanismos claros para operar y evolucionar el sistema.
-        </p>
-        <div class="profile-metrics" aria-label="Resumen profesional">
-          <span><b>4+</b> años de experiencia</span>
-          <span><b>3</b> superficies: web, móvil y escritorio</span>
-          <span><b>1</b> criterio: continuidad operativa</span>
-        </div>
+        <span>Aplicaciones híbridas</span>
+        <span>Operación offline-first</span>
+        <span>APIs y persistencia</span>
+        <span>CMS y multi-tenant</span>
       </div>
     </section>
 
-    <section class="section skills" aria-labelledby="skills-title">
-      <p class="eyebrow">Capacidades con evidencia</p>
-      <h2 id="skills-title">Tecnología conectada a decisiones reales</h2>
-      <div class="skill-groups">
-        @for (group of skillGroups; track group.name) {
-          <article>
-            <header><h3>{{ group.name }}</h3><p>{{ group.description }}</p></header>
-            <div>
-              @for (skill of group.skills; track skill.name) {
-                @if (skill.projectSlug) {
-                  <a [routerLink]="['/arquitecturas', skill.projectSlug]"><b>{{ skill.name }}</b><span>{{ skill.evidence }} ↗</span></a>
-                } @else {
-                  <span class="skill-private"><b>{{ skill.name }}</b><small>{{ skill.evidence }}</small></span>
-                }
-              }
+    <section id="projects" class="section projects" aria-labelledby="projects-title">
+      <header class="section-heading">
+        <div><p class="eyebrow">Trabajo seleccionado</p><h2 id="projects-title">Cuatro soluciones, explicadas desde el problema.</h2></div>
+        <p>Casos sanitizados con contexto, decisiones técnicas, fallos contemplados y demostraciones navegables cuando están disponibles.</p>
+      </header>
+      <div class="case-grid">
+        @for (caseStudy of caseStudies; track caseStudy.slug) {
+          <article class="case-card">
+            <div class="case-topline"><span>{{ caseStudy.eyebrow }}</span><small>{{ caseStudy.status }}</small></div>
+            <h3>{{ caseStudy.name }}</h3>
+            <p>{{ caseStudy.summary }}</p>
+            <div class="tags" aria-label="Tecnologías principales">
+              @for (technology of caseStudy.technologies.slice(0, 4); track technology) { <span>{{ technology }}</span> }
+            </div>
+            <div class="case-actions">
+              <a class="case-link" [routerLink]="['/casos', caseStudy.slug]">Ver caso <span>→</span></a>
+              @for (demo of caseStudy.demos; track demo.slug) { <a class="demo-link" [routerLink]="['/demos', demo.slug]">{{ demo.label }}</a> }
             </div>
           </article>
         }
       </div>
     </section>
 
-    <section id="experience" class="section" aria-labelledby="experience-title">
-      <p class="eyebrow">Trayectoria</p>
-      <h2 id="experience-title">Experiencia profesional</h2>
+    <section id="experience" class="section experience" aria-labelledby="experience-title">
+      <header class="section-heading compact-heading">
+        <div><p class="eyebrow">Trayectoria</p><h2 id="experience-title">Experiencia profesional</h2></div>
+        <p>Desarrollo de producto, integración y continuidad operativa en equipos y colaboraciones independientes.</p>
+      </header>
       <div class="timeline">
         @for (item of experiences; track item.company) {
           <article>
             <div class="timeline-meta"><span>{{ item.period }}</span><strong>{{ item.company }}</strong></div>
-            <div>
-              <h3>{{ item.role }}</h3><p>{{ item.summary }}</p>
-              <div class="tags">@for (technology of item.technologies; track technology) { <span>{{ technology }}</span> }</div>
-            </div>
+            <div><h3>{{ item.role }}</h3><p>{{ item.summary }}</p><div class="tags">@for (technology of item.technologies; track technology) { <span>{{ technology }}</span> }</div></div>
           </article>
         }
       </div>
     </section>
 
-    <section id="projects" class="section" aria-labelledby="projects-title">
-      <p class="eyebrow">Trabajo seleccionado</p>
-      <h2 id="projects-title">Proyectos y arquitecturas</h2>
-      <p class="section-copy">Demostraciones y diagramas sanitizados que explican decisiones, experiencia y flujos sin exponer datos ni infraestructura privada.</p>
-      <div class="project-grid">
-        @for (project of projects; track project.slug) {
-          <article class="project-card" [attr.data-accent]="project.accent">
-            <div class="project-preview" [attr.data-preview]="project.preview" aria-hidden="true">
-              <div class="preview-bar"><i></i><i></i><i></i><span>{{ project.kind }}</span></div>
-              @switch (project.preview) {
-                @case ('operations') { <div class="mini-app"><aside><b>AA</b><i></i><i></i><i></i></aside><section><header><small>Laboratorista</small><span>IC</span></header><em>JORNADA · 07 JUL</em><b>Bandeja de laboratorio</b><div><strong>1<small>Pendiente</small></strong><strong>1<small>Activo</small></strong><strong>1<small>Cerrado</small></strong></div><p></p><p></p></section></div> }
-                @case ('laboratory') { <div class="mini-lab"><nav><b>AA · AD ASTRA LABS</b><span>Inicio&nbsp;&nbsp; Servicios&nbsp;&nbsp; Contacto</span></nav><section><div><small>LABORATORIO AMBIENTAL ACREDITADO</small><b>Ad Astra</b><p>Resultados confiables para decisiones responsables.</p><i></i></div><figure></figure></section></div> }
-                @case ('cms') { <div class="mini-app mini-cms"><aside><b>CMS</b><i></i><i></i><i></i></aside><section><header><small>Lab CMS</small><span>Publicar</span></header><em>RESUMEN EDITORIAL</em><b>Contenido del sitio</b><div><strong>4<small>Páginas</small></strong><strong>5<small>Bloques</small></strong><strong>12<small>Versión</small></strong></div><p></p><p></p></section></div> }
-                @case ('agency') { <div class="mini-agency"><nav><b>✦ Hostlyc</b><span>Servicios&nbsp;&nbsp; Proyectos&nbsp;&nbsp; Contacto</span></nav><section><small>AGENCIA DIGITAL</small><b>Tu negocio, <i>visible</i><br>y creciendo.</b><p>Diseño, software y automatización.</p><span></span></section></div> }
-                @case ('gateway') { <div class="mini-flow"><b>Clientes</b><i>→</i><b>Gateway</b><i>→</i><b>Servicios</b></div> }
-                @case ('cloud') { <div class="mini-cloud"><b>API</b><i></i><b>EVENTOS</b><i></i><b>DATOS</b></div> }
-              }
-            </div>
-            <div class="project-body">
-              <small>{{ project.kind }}</small><h3>{{ project.name }}</h3><p>{{ project.summary }}</p>
-              <div class="project-authorship"><span>CONTRIBUCIONES REALIZADAS</span><b>{{ project.ownership }}</b></div>
-              <div class="project-evidence" aria-label="Evidencia del proyecto">@for (item of project.evidence; track item.label) { <span><b>{{ item.value }}</b>{{ item.label }}</span> }</div>
-              <p class="impact">{{ project.impact }}</p>
-              <dl class="project-facts"><div><dt>Estado</dt><dd>{{ project.status }}</dd></div><div><dt>Uso</dt><dd>{{ project.solutionFor }}</dd></div></dl>
-              <div class="tags">@for (technology of project.technologies; track technology) { <span>{{ technology }}</span> }</div>
-              <div class="project-actions">
-                @if (project.hasDemo) { <a class="demo-link" [routerLink]="['/demos', project.slug]">Abrir demostración <span>→</span></a> }
-                <a class="architecture-link" [routerLink]="['/arquitecturas', project.slug]">Ver arquitectura <span>↗</span></a>
-              </div>
-            </div>
+    <section id="skills" class="section skills" aria-labelledby="skills-title">
+      <header class="section-heading compact-heading">
+        <div><p class="eyebrow">Capacidades</p><h2 id="skills-title">Herramientas conectadas a decisiones.</h2></div>
+        <p>El detalle técnico y la evidencia verificable viven dentro de cada caso de estudio.</p>
+      </header>
+      <div class="skill-groups">
+        @for (group of skillGroups; track group.name) {
+          <article>
+            <h3>{{ group.name }}</h3><p>{{ group.description }}</p>
+            <div>@for (skill of group.skills; track skill.name) { <span>{{ skill.name }}</span> }</div>
           </article>
         }
       </div>
     </section>
 
-    <section id="contact" class="section contact">
+    <section id="contact" class="section contact" aria-labelledby="contact-title">
       <div>
         <p class="eyebrow">Contacto</p>
-        <h2>Convirtamos un problema complejo en un sistema claro.</h2>
-        <p>Orizaba, Veracruz · Disponible para proyectos full stack, móviles y cloud.</p>
+        <h2 id="contact-title">¿Necesitas convertir un flujo complejo en un producto mantenible?</h2>
+        <p>Orizaba, Veracruz · Disponible para oportunidades Full Stack y proyectos de producto.</p>
       </div>
       <div class="contact-actions">
-        <a class="primary" href="mailto:Irving.CondeM@gmail.com">Irving.CondeM@gmail.com</a>
+        <a class="primary" href="mailto:Irving.CondeM@gmail.com">Enviar correo</a>
         <a class="secondary" href="https://github.com/irvingconde123" target="_blank" rel="noreferrer">Ver GitHub</a>
       </div>
     </section>

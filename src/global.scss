@@ -1,89 +1,53 @@
 @use "./styles/home";
 @use "./styles/home-responsive";
 
-/*
- * App Global CSS
- * ----------------------------------------------------------------------------
- * Put style rules here that you want to apply globally. These styles are for
- * the entire app and not just one component. Additionally, this file can be
- * used as an entry point to import other CSS/Sass files to be included in the
- * output CSS.
- * For more information on global stylesheets, visit the documentation:
- * https://ionicframework.com/docs/layout/global-stylesheets
- */
-
-/* Core CSS required for Ionic components to work properly */
 @import "@ionic/angular/css/core.css";
-
-/* Basic CSS for apps built with Ionic */
 @import "@ionic/angular/css/normalize.css";
 @import "@ionic/angular/css/structure.css";
 @import "@ionic/angular/css/typography.css";
 @import "@ionic/angular/css/display.css";
 
 :root {
-  --canvas: #070c16;
-  --surface: #0d1727;
+  --canvas: #f8fafc;
+  --surface: #ffffff;
+  --soft: #eef4f8;
+  --line: #cbd5e1;
+  --line-strong: #94a3b8;
+  --text: #0f172a;
+  --muted: #475569;
+  --primary: #0f4c81;
+  --accent: #0891b2;
+  --success: #15803d;
+  --ion-background-color: var(--canvas);
+  --ion-text-color: var(--text);
+  color-scheme: light;
+}
+
+app-demo,
+app-architecture {
+  --canvas: #07111f;
+  --surface: #0d1b2a;
   --soft: #111d30;
   --line: #22324a;
   --line-strong: #304663;
   --text: #f7f9fc;
   --muted: #9aabc2;
+  --primary: #67e8f9;
   --accent: #67e8f9;
   --success: #4ade80;
-  --ion-background-color: var(--canvas);
-  --ion-text-color: var(--text);
   color-scheme: dark;
 }
-* {
-  box-sizing: border-box;
-}
-html,
-body,
-ion-app,
-ion-content {
-  background: var(--canvas);
-  color: var(--text);
-}
-html,
-body { overflow-x: hidden; }
-body {
-  font-family: Inter, "Segoe UI", Arial, sans-serif;
-  margin: 0;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-strong,
-b { color: inherit; }
-ion-content {
-  --color: var(--text);
-  --background: radial-gradient(
-      circle at 75% 10%,
-      rgb(37 99 235 / 12%),
-      transparent 30%
-    ),
-    var(--canvas);
-}
-::selection {
-  background: var(--accent);
-  color: #06101f;
-}
 
-a,
-button { -webkit-tap-highlight-color: transparent; }
-a:focus-visible,
-button:focus-visible {
-  outline: 3px solid var(--accent);
-  outline-offset: 3px;
-}
+* { box-sizing: border-box; }
+html, body, ion-app, ion-content { background: var(--canvas); color: var(--text); }
+html, body { overflow-x: hidden; }
+body { font-family: Inter, "Segoe UI", Arial, sans-serif; font-size: 16px; margin: 0; }
+h1, h2, h3, h4, h5, h6, strong, b { color: inherit; }
+ion-content { --background: var(--canvas); --color: var(--text); }
+::selection { background: #bae6fd; color: var(--text); }
+a, button { -webkit-tap-highlight-color: transparent; }
+a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    scroll-behavior: auto !important;
-    transition-duration: 0.01ms !important;
-  }
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; }
 }
