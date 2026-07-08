@@ -5,6 +5,15 @@
   "outputDirectory": "dist/app/browser",
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    { "source": "/home", "destination": "/", "permanent": true },
+    { "source": "/arquitecturas/adastra", "destination": "/casos/adastra#arquitectura", "permanent": true },
+    { "source": "/arquitecturas/landing", "destination": "/casos/plataforma-contenido#arquitectura", "permanent": true },
+    { "source": "/arquitecturas/cms", "destination": "/casos/plataforma-contenido#arquitectura", "permanent": true },
+    { "source": "/arquitecturas/edge-gateway", "destination": "/casos/gateway-datos#arquitectura", "permanent": true },
+    { "source": "/arquitecturas/cloud-automation", "destination": "/casos/gateway-datos#arquitectura", "permanent": true },
+    { "source": "/arquitecturas/hostlyc", "destination": "/casos/hostlyc#arquitectura", "permanent": true }
+  ],
   "headers": [
     {
       "source": "/assets/(.*)",

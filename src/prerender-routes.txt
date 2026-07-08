@@ -1,9 +1,0 @@
-/
-/casos/adastra
-/casos/plataforma-contenido
-/casos/gateway-datos
-/casos/hostlyc
-/demos/adastra
-/demos/landing
-/demos/cms
-/demos/hostlyc

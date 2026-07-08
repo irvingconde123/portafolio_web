@@ -21,10 +21,6 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "outputMode": "static",
-            "prerender": {
-              "discoverRoutes": false,
-              "routesFile": "src/prerender-routes.txt"
-            },
             "assets": [
               {
                 "glob": "**/*",
