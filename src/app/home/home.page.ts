@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonContent } from '@ionic/angular';
-import { EXPERIENCES, PROJECTS, SKILLS } from '../data/portfolio-content';
+import { EXPERIENCES, PROJECTS, SKILL_GROUPS } from '../data/portfolio-content';
 
 @Component({
   selector: 'app-home',
@@ -12,9 +12,15 @@ export class HomePage {
 
   protected readonly experiences = EXPERIENCES;
   protected readonly projects = PROJECTS;
-  protected readonly skills = SKILLS;
+  protected readonly skillGroups = SKILL_GROUPS;
+  protected mobileMenuOpen = false;
+
+  protected toggleMobileMenu(): void {
+    this.mobileMenuOpen = !this.mobileMenuOpen;
+  }
 
   protected async scrollTo(sectionId: string): Promise<void> {
+    this.mobileMenuOpen = false;
     const target = document.getElementById(sectionId);
     const scrollElement = await this.content?.getScrollElement();
 

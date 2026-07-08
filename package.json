@@ -10,7 +10,8 @@
     "build:pages": "ng build --base-href /portafolio_web/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "quality:size": "node scripts/check-source-size.mjs"
   },
   "private": true,
   "dependencies": {

@@ -9,7 +9,7 @@ Portafolio profesional construido con Ionic y Angular. Presenta experiencia full
 ## Contenido
 
 - Perfil profesional, experiencia, capacidades, GitHub y CV descargable.
-- Demos responsive con estado local ficticio:
+- Demostraciones adaptables con estado local ficticio:
   - operación híbrida Adastra;
   - landing pública de laboratorio;
   - CMS de composición de contenido;
@@ -37,10 +37,13 @@ La aplicación se sirve por defecto en `http://localhost:4200`.
 ## Verificación
 
 ```bash
+npm run quality:size
 npm run lint
 npm test -- --watch=false --browsers=ChromeHeadless
 npm run build
 ```
+
+La norma de mantenibilidad limita a 300 líneas los archivos TypeScript, HTML y SCSS bajo `src`.
 
 ## Build para GitHub Pages
 
@@ -52,9 +55,10 @@ El build usa `/portafolio_web/` como ruta base. El workflow copia `index.html` c
 
 ## Estructura relevante
 
-- `src/app/data/portfolio-content.ts`: experiencia, proyectos y decisiones técnicas.
+- `src/app/data`: perfil, proyectos, evidencia y decisiones técnicas.
 - `src/app/home`: presentación principal.
-- `src/app/demo`: demos navegables con información ficticia.
+- `src/app/demo`: shell y componentes independientes para cada demostración.
+- `src/styles/demo`: estilos desacoplados por demostración.
 - `src/app/architecture`: vistas técnicas por proyecto.
 - `docs/DEMO-COVERAGE.md`: cobertura funcional de las demos.
 - `docs/GOALS.md`: alcance y límites de seguridad.

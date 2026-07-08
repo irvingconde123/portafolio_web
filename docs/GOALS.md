@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Publicar en Vercel una aplicación Ionic responsive que explique experiencia,
+Publicar mediante GitHub Pages una aplicación Ionic adaptable que explique experiencia,
 capacidades técnicas y arquitectura sin depender de servicios privados ni
 exponer código, datos, credenciales o nombres internos de clientes.
 
@@ -20,7 +20,7 @@ exponer código, datos, credenciales o nombres internos de clientes.
       secuencia runtime, resiliencia, NFR, patrones y trade-offs.
 - [x] Mantener todo el contenido en una fuente local tipada para poder sustituirla
       después por un CMS público.
-- [x] Configurar rutas SPA, build de producción y despliegue en Vercel.
+- [x] Configurar rutas SPA, build de producción y despliegue con GitHub Actions y Pages.
 - [x] Agregar CV descargable, GitHub público, sección Sobre mí y miniaturas ligeras.
 - [x] Verificar accesibilidad, navegación móvil/tablet/escritorio y build limpio.
 
@@ -34,9 +34,9 @@ exponer código, datos, credenciales o nombres internos de clientes.
 ## Criterios de terminado
 
 1. `npm run build` genera un artefacto desplegable.
-2. Las rutas directas funcionan con el rewrite de Vercel.
+2. Las rutas directas funcionan mediante el respaldo `404.html` de GitHub Pages.
 3. Las cuatro demos permiten navegar, editar y cambiar estado local ficticio.
 4. El contenido profesional puede modificarse desde un único archivo TypeScript.
 5. No existen URLs privadas, credenciales ni datos productivos en el repositorio.
 6. Cada proyecto dispone de un diagrama funcional y de secuencia sanitizado.
-7. Adastra y CMS cubren sus flujos principales mediante estado mock comprobable.
+7. Adastra y CMS cubren sus flujos principales mediante estado simulado comprobable.

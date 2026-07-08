@@ -1,0 +1,57 @@
+<section class="demo-window operations-demo">
+  <aside class="ops-sidebar">
+    <div class="ops-brand"><strong>AA</strong><span>AD ASTRA<small>OPERACIONES</small></span></div>
+    <nav aria-label="Pantallas de la aplicación">
+      <button type="button" [class.active]="appView === 'home'" (click)="selectAppView('home')">⌂ <span>Resumen</span></button>
+      <button type="button" [class.active]="appView === 'reports'" (click)="selectAppView('reports')">□ <span>Reportes</span></button>
+      <button type="button" [class.active]="appView === 'capture'" (click)="selectAppView('capture')">＋ <span>Nueva muestra</span></button>
+      <button type="button" [class.active]="appView === 'drafts'" (click)="selectAppView('drafts')">◇ <span>Borradores</span></button>
+    </nav>
+    <div class="connection-card"><i [class.offline]="offline"></i><b>{{ offline ? 'Modo sin conexión' : 'En línea' }}</b><small>{{ offline ? 'Cambios protegidos localmente' : 'Sincronización disponible' }}</small></div>
+    <button class="offline-button" type="button" (click)="toggleConnection()">{{ offline ? 'Restaurar conexión' : 'Forzar modo sin conexión' }}</button>
+    <button class="sync-button" type="button" (click)="syncDrafts()">Sincronizar {{ drafts.length }} pendiente(s)</button>
+  </aside>
+
+  <div class="ops-workspace">
+    <header><div><small>Laboratorista</small><b>Buen día, bienvenido</b></div><div class="session-chip">Sesión 07:48:21</div><span class="avatar">IC</span></header>
+    <div class="update-strip">↑ <span><b>Actualización Android disponible</b><small>Puedes continuar trabajando.</small></span><button type="button" (click)="notify('Descarga simulada iniciada.')">Descargar</button></div>
+
+    <section class="ops-content">
+      @switch (appView) {
+        @case ('home') {
+          <p class="ops-eyebrow">JORNADA · 07 JUL 2026</p><h2>Bandeja de laboratorio</h2><span>Recepción técnica, análisis y resultados de su área.</span>
+          <div class="metrics"><article><small>Pendientes</small><b>{{ countReports('Pendiente') }}</b><span>Por iniciar</span></article><article><small>Activos</small><b>{{ countReports('En curso') }}</b><span>En análisis</span></article><article><small>Cerrados</small><b>{{ countReports('Cerrado') }}</b><span>Concluidos</span></article></div>
+          <article class="report-queue"><div><small>COLA PRIORIZADA</small><h3>Reportes para revisión</h3></div>@for (report of reports.slice(0, 2); track report.id) { <button class="report-row" type="button" (click)="openReport(report.id)"><span><b>{{ report.title }}</b><small>{{ report.folio }} · {{ report.owner }}</small></span><em>{{ report.status }}</em><i>→</i></button> }</article>
+          @if (offline) { <p class="notice">Modo sin conexión activo. Cada cambio se cifra y queda pendiente hasta recuperar conexión.</p> }
+        }
+        @case ('reports') {
+          <div class="screen-heading"><div><p class="ops-eyebrow">SEGUIMIENTO OPERATIVO</p><h2>Reportes activos y pendientes</h2></div><span>{{ filteredReports.length }} visibles</span></div>
+          <div class="report-filters"><label>Buscar<input name="reportSearch" [(ngModel)]="reportSearch" placeholder="Nombre, folio o creador"></label><label>Estado<select name="reportStatus" [(ngModel)]="reportStatusFilter"><option>Todos</option><option>Pendiente</option><option>En curso</option><option>Cerrado</option><option>Rechazado</option></select></label></div>
+          <div class="report-summary"><span>Pendientes <b>{{ countReports('Pendiente') }}</b></span><span>En curso <b>{{ countReports('En curso') }}</b></span><span>Cerrados <b>{{ countReports('Cerrado') }}</b></span></div>
+          <div class="report-list-demo">@for (report of filteredReports; track report.id) { <article><div><strong>{{ report.title }}</strong><small>{{ report.sampleType }} · {{ report.owner }} · {{ report.folio }}</small><div class="report-tags">@for (tag of report.tags; track tag) { <span>{{ tag }}</span> }</div></div><select [value]="report.status" (change)="changeReportStatus(report, $any($event.target).value)" aria-label="Estado del reporte"><option>Pendiente</option><option>En curso</option><option>Cerrado</option><option>Rechazado</option></select><button type="button" (click)="openReport(report.id)">Ver detalle</button></article> } @empty { <div class="empty-state"><b>No hay coincidencias</b><span>Ajusta la búsqueda o el estado.</span></div> }</div>
+        }
+        @case ('capture') {
+          <div class="screen-heading"><div><p class="ops-eyebrow">CAPTURA LOCAL</p><h2>Nueva muestra</h2></div><span class="secure-chip">◆ Cifrado</span></div>
+          <form class="capture-form" (submit)="$event.preventDefault(); saveDraft()"><label>Cliente o instalación<input name="customer" [(ngModel)]="captureModel.customer" placeholder="Ej. Industrias Nova"></label><div><label>Tipo de muestra<select name="sampleType" [(ngModel)]="captureModel.sampleType"><option>Agua residual</option><option>Agua potable</option><option>Suelo</option><option>Calidad del aire</option></select></label><label>Fecha y hora<input name="collectedAt" type="datetime-local" [(ngModel)]="captureModel.collectedAt"></label></div><label>Asignación de laboratorio<select name="assignmentMode" [(ngModel)]="captureModel.assignmentMode"><option>Disponible para laboratoristas</option><option>Solicitar asignación del administrador</option></select></label><label>Ubicación<input name="location" [(ngModel)]="captureModel.location" placeholder="Dirección o coordenadas"></label><label>Observaciones<textarea name="notes" [(ngModel)]="captureModel.notes" placeholder="Condiciones, preservación, incidencias…"></textarea></label><div class="capture-evidence"><span>◎</span><div><b>Fotografías y archivos</b><small>{{ captureModel.evidence }} de 8 imágenes · guardadas cifradas</small></div><button type="button" (click)="addCaptureEvidence()">Agregar foto</button></div>@if (captureModel.evidence) { <div class="capture-thumbnail"><i></i><span>Evidencia de muestra</span><button type="button" (click)="captureModel.evidence = captureModel.evidence - 1">Quitar</button></div> }<button class="form-submit" type="submit">Guardar formulario seguro →</button></form>
+        }
+        @case ('drafts') {
+          <div class="screen-heading"><div><p class="ops-eyebrow">ALMACENAMIENTO CIFRADO</p><h2>Formularios en este dispositivo</h2></div><span>{{ drafts.length }} por sincronizar</span></div>
+          <div class="draft-list-demo">@for (draft of drafts; track draft.id; let index = $index) { <article><span class="draft-state">{{ draft.state }}</span><div><b>{{ draft.customer }}</b><small>{{ draft.sampleType }} · {{ draft.location }}</small></div><button type="button" (click)="editDraft(draft)">Ver / editar</button><button class="danger" type="button" (click)="removeDraft(index)">Eliminar</button></article> } @empty { <div class="empty-state"><b>No hay formularios pendientes</b><span>Las nuevas capturas aparecerán aquí, incluso sin sesión.</span></div> }</div>
+          <button class="form-submit" type="button" (click)="syncDrafts()">Sincronizar ahora</button>
+        }
+      }
+    </section>
+
+    @if (selectedReport; as report) {
+      <div class="mock-modal-backdrop" (click)="closeReport()"></div>
+      <aside class="report-detail-demo" aria-label="Detalle del reporte">
+        <header><div><small>DETALLE DEL REPORTE</small><h3>{{ report.title }}</h3><span>{{ report.folio }}</span></div><button type="button" (click)="closeReport()">×</button></header>
+        @if (editingReport) {
+          <form class="report-edit-form" (submit)="$event.preventDefault(); saveReport(report)"><label>Título<input name="editTitle" [(ngModel)]="report.title"></label><div><label>Cliente<input name="editCustomer" [(ngModel)]="report.customer"></label><label>Ubicación<input name="editLocation" [(ngModel)]="report.location"></label></div><label>Notas<textarea name="editNotes" [(ngModel)]="report.notes"></textarea></label><section class="evidence-editor"><div><b>Evidencia multimedia</b><button type="button" (click)="addEvidence(report)">Agregar otra</button></div>@for (item of report.evidence; track $index; let index = $index) { <article><i></i><span>{{ item }}</span><button type="button" (click)="replaceEvidence(report, index)">Reemplazar</button><button type="button" (click)="removeEvidence(report, index)">Quitar</button></article> }</section><footer><button type="button" (click)="editingReport = false">Cancelar</button><button class="primary-action" type="submit">Guardar cambios</button></footer></form>
+        } @else {
+          <div class="report-detail-grid"><article><small>Estado</small><b>{{ report.status }}</b></article><article><small>Muestra</small><b>{{ report.sampleType }}</b></article><article><small>Responsable</small><b>{{ report.owner }}</b></article><article><small>Cliente</small><b>{{ report.customer }}</b></article><article><small>Ubicación</small><b>{{ report.location }}</b></article><article><small>Etiquetas</small><b>{{ report.tags.join(', ') }}</b></article></div><section class="detail-notes"><small>NOTAS</small><p>{{ report.notes }}</p></section><section class="evidence-view"><small>EVIDENCIA ASOCIADA</small><div>@for (item of report.evidence; track item) { <figure><i></i><figcaption>{{ item }}</figcaption></figure> }</div></section><footer><button type="button" (click)="closeReport()">Cerrar</button><button type="button" (click)="editingReport = true">Editar reporte</button><button class="primary-action" type="button" (click)="notify('PDF simulado generado correctamente.')">Descargar PDF</button></footer>
+        }
+      </aside>
+    }
+  </div>
+</section>

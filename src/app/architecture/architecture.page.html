@@ -1,39 +1,46 @@
 <ion-content [fullscreen]="true">
-  <header class="architecture-header"><a routerLink="/home">← Proyectos</a><span>Architecture review · sanitized</span></header>
+  <header class="architecture-header"><a routerLink="/home">← Proyectos</a><span>Revisión de arquitectura · sanitizada</span></header>
   <main class="architecture-page">
     <section class="architecture-intro">
       <div><p>{{ project.kind }}</p><h1>{{ project.name }}</h1><span>{{ project.summary }}</span></div>
       <aside><small>ESTILO PRINCIPAL</small><b>{{ project.architectureType }}</b><small>ALCANCE DEL DIAGRAMA</small><span>{{ project.architectureScope }}</span></aside>
     </section>
 
+    <section class="project-context" aria-label="Contexto verificable del proyecto">
+      <article><small>AUTORÍA</small><b>{{ project.ownership }}</b><span>{{ project.team }}</span></article>
+      <article><small>ESTADO</small><b>{{ project.status }}</b><span>Representación pública sanitizada</span></article>
+      <article><small>SOLUCIÓN PARA</small><b>{{ project.solutionFor }}</b></article>
+      <article class="context-evidence"><small>EVIDENCIA</small><div>@for (item of project.evidence; track item.label) { <span><b>{{ item.value }}</b>{{ item.label }}</span> }</div></article>
+    </section>
+
     <nav class="architecture-tabs" aria-label="Vistas de arquitectura">
       <button type="button" [class.active]="activeView === 'containers'" (click)="activeView = 'containers'"><span>01</span>Contenedores y límites</button>
-      <button type="button" [class.active]="activeView === 'sequence'" (click)="activeView = 'sequence'"><span>02</span>Secuencia runtime</button>
-      <button type="button" [class.active]="activeView === 'resilience'" (click)="activeView = 'resilience'"><span>03</span>Resiliencia y NFR</button>
+      <button type="button" [class.active]="activeView === 'sequence'" (click)="activeView = 'sequence'"><span>02</span>Secuencia de ejecución</button>
+      <button type="button" [class.active]="activeView === 'resilience'" (click)="activeView = 'resilience'"><span>03</span>Resiliencia y requisitos</button>
     </nav>
 
     @switch (activeView) {
       @case ('containers') {
         <section class="architecture-panel technical-panel">
-          <div class="panel-heading"><div><p>C4 · CONTAINER VIEW</p><h2>Responsabilidades, puertos y dependencias</h2></div><span>Vista conceptual. Nombres de recursos, hosts y topología productiva fueron omitidos.</span></div>
+          <div class="panel-heading"><div><p>C4 · VISTA DE CONTENEDORES</p><h2>Responsabilidades, puertos y dependencias</h2></div><span>Vista conceptual. Se omitieron nombres de recursos, hosts y topología productiva.</span></div>
           <div class="c4-diagram">
-            <section class="c4-zone client-zone"><header><b>TRUST ZONE 01</b><span>Canal / actor</span></header><article><i>ACTOR</i><b>{{ project.architecture[0].label }}</b><p>{{ project.architecture[0].detail }}</p></article></section>
-            <div class="c4-connector"><span>HTTPS / local port</span><i>→</i></div>
-            <section class="c4-zone application-zone"><header><b>SYSTEM BOUNDARY</b><span>Aplicación, control y adaptadores</span></header><div>@for (node of project.architecture.slice(1, -1); track node.label; let index = $index) { <article><i>C{{ index + 1 }}</i><b>{{ node.label }}</b><p>{{ node.detail }}</p><small>{{ project.patterns[index] || 'Application service' }}</small></article> }</div></section>
-            <div class="c4-connector"><span>Port / contract</span><i>→</i></div>
-            <section class="c4-zone data-zone"><header><b>DEPENDENCY ZONE</b><span>Datos / servicios</span></header><article><i>STORE</i><b>{{ project.architecture[project.architecture.length - 1].label }}</b><p>{{ project.architecture[project.architecture.length - 1].detail }}</p></article></section>
+            <section class="c4-zone client-zone"><header><b>ZONA DE CONFIANZA 01</b><span>Canal / actor</span></header><article><i>ACTOR</i><b>{{ project.architecture[0].label }}</b><p>{{ project.architecture[0].detail }}</p></article></section>
+            <div class="c4-connector"><span>HTTPS / puerto local</span><i>→</i></div>
+            <section class="c4-zone application-zone"><header><b>LÍMITE DEL SISTEMA</b><span>Aplicación, control y adaptadores</span></header><div>@for (node of project.architecture.slice(1, -1); track node.label; let index = $index) { <article><i>C{{ index + 1 }}</i><b>{{ node.label }}</b><p>{{ node.detail }}</p><small>{{ project.patterns[index] || 'Servicio de aplicación' }}</small></article> }</div></section>
+            <div class="c4-connector"><span>Puerto / contrato</span><i>→</i></div>
+            <section class="c4-zone data-zone"><header><b>ZONA DE DEPENDENCIAS</b><span>Datos / servicios</span></header><article><i>DESTINO</i><b>{{ project.architecture[project.architecture.length - 1].label }}</b><p>{{ project.architecture[project.architecture.length - 1].detail }}</p></article></section>
           </div>
-          <div class="contract-flow"><span>Input contract</span><i>→</i><span>Application port</span><i>→</i><span>Domain policy</span><i>→</i><span>Output port</span><i>→</i><span>Adapter</span></div>
+          <div class="contract-flow"><span>Contrato de entrada</span><i>→</i><span>Puerto de aplicación</span><i>→</i><span>Política de dominio</span><i>→</i><span>Puerto de salida</span><i>→</i><span>Adaptador</span></div>
           <div class="diagram-legend"><span><i class="legend-boundary"></i>Límite de confianza</span><span><i class="legend-container"></i>Contenedor / componente</span><span><i class="legend-contract"></i>Contrato explícito</span></div>
         </section>
       }
       @case ('sequence') {
         <section class="architecture-panel technical-panel">
-          <div class="panel-heading"><div><p>RUNTIME VIEW</p><h2>Camino principal y puntos de control</h2></div><span>La secuencia muestra ownership y confirmaciones, no endpoints internos.</span></div>
+          <div class="panel-heading"><div><p>VISTA DE EJECUCIÓN</p><h2>Camino principal y puntos de control</h2></div><span>La secuencia muestra responsabilidades y confirmaciones, no endpoints internos.</span></div>
           <div class="uml-sequence">
             <div class="uml-actors" [style.grid-template-columns]="'repeat(' + sequenceActors.length + ', minmax(7rem, 1fr))'">
               @for (actor of sequenceActors; track actor; let index = $index) {
-                <article><i>{{ index === 0 ? 'ACTOR' : index === sequenceActors.length - 1 ? 'DEPENDENCY' : 'PARTICIPANT' }}</i><b>{{ actor }}</b></article>
+                <article><i>{{ index === 0 ? 'ACTOR' : index === sequenceActors.length - 1 ? 'DEPENDENCIA' : 'PARTICIPANTE' }}</i><b>{{ actor }}</b></article>
               }
             </div>
             <div class="uml-runtime" [style.--actor-count]="sequenceActors.length">
@@ -53,12 +60,12 @@
               </ol>
             </div>
           </div>
-          <div class="sequence-notes"><article><b>Idempotencia</b><span>La identidad de operación viaja entre reintentos para distinguir repetición de una nueva intención.</span></article><article><b>Ownership / ACK</b><span>Cada flecha nombra quién entrega el control y qué participante debe confirmar antes de avanzar.</span></article><article><b>Timeout y backpressure</b><span>Colas, dependencias y adaptadores tienen presupuesto de tiempo; una saturación no se propaga sin límite.</span></article></div>
+          <div class="sequence-notes"><article><b>Idempotencia</b><span>La identidad de operación viaja entre reintentos para distinguir una repetición de una nueva intención.</span></article><article><b>Responsabilidad / confirmación</b><span>Cada flecha nombra quién entrega el control y qué participante debe confirmar antes de avanzar.</span></article><article><b>Tiempo límite y contrapresión</b><span>Colas, dependencias y adaptadores tienen un presupuesto de tiempo; una saturación no se propaga sin límite.</span></article></div>
         </section>
       }
       @case ('resilience') {
         <section class="architecture-panel technical-panel">
-          <div class="panel-heading"><div><p>QUALITY ATTRIBUTE VIEW</p><h2>Fallas esperadas y comportamiento diseñado</h2></div><span>La disponibilidad se decide por caso; seguridad sensible nunca hereda un fail-open accidental.</span></div>
+          <div class="panel-heading"><div><p>VISTA DE ATRIBUTOS DE CALIDAD</p><h2>Fallas esperadas y comportamiento diseñado</h2></div><span>La disponibilidad se decide por caso; una validación sensible nunca permite el acceso por accidente.</span></div>
           <div class="failure-matrix"><header><span>Disparador</span><span>Detección / respuesta</span><span>Resultado esperado</span></header>@for (mode of project.failureModes; track mode.trigger) { <article><b>{{ mode.trigger }}</b><p>{{ mode.response }}</p><span>Degradación controlada</span></article> }</div>
           <div class="quality-grid">@for (attribute of project.qualityAttributes; track attribute.name) { <article><span>{{ attribute.name }}</span><p>{{ attribute.mechanism }}</p></article> }</div>
         </section>
@@ -66,12 +73,13 @@
     }
 
     <section class="engineering-review">
-      <article><header><span>PATTERNS</span><h2>Patrones aplicados</h2></header><div class="pattern-list">@for (pattern of project.patterns; track pattern) { <code>{{ pattern }}</code> }</div></article>
-      <article><header><span>TRADE-OFFS</span><h2>Costos aceptados</h2></header><ol>@for (tradeoff of project.tradeoffs; track tradeoff; let index = $index) { <li><b>ADR-0{{ index + 1 }}</b><span>{{ tradeoff }}</span></li> }</ol></article>
-      <article><header><span>OBSERVABILITY</span><h2>Señales operativas</h2></header><ul>@for (signal of project.observability; track signal) { <li>{{ signal }}</li> }</ul></article>
+      <article><header><span>PATRONES</span><h2>Patrones aplicados</h2></header><div class="pattern-list">@for (pattern of project.patterns; track pattern) { <code>{{ pattern }}</code> }</div></article>
+      <article><header><span>COMPENSACIONES</span><h2>Costos aceptados</h2></header><ol>@for (tradeoff of project.tradeoffs; track tradeoff; let index = $index) { <li><b>ADR-0{{ index + 1 }}</b><span>{{ tradeoff }}</span></li> }</ol></article>
+      <article><header><span>OBSERVABILIDAD</span><h2>Señales operativas</h2></header><ul>@for (signal of project.observability; track signal) { <li>{{ signal }}</li> }</ul></article>
     </section>
 
-    <section class="architecture-result"><div><span>OUTCOME</span><h2>Decisión sobre tecnología</h2><p>{{ project.impact }}</p></div><div>@for (decision of project.decisions; track decision) { <span>✓ {{ decision }}</span> }</div></section>
-    <nav class="architecture-actions" aria-label="Acciones del proyecto">@if (project.hasDemo) { <a class="primary" [routerLink]="['/demos', project.slug]">Abrir demo funcional</a> }<a class="secondary" routerLink="/home">Volver al portafolio</a></nav>
+    <section class="architecture-result"><div><span>RESULTADO</span><h2>Decisión sobre tecnología</h2><p>{{ project.impact }}</p></div><div>@for (decision of project.decisions; track decision) { <span>✓ {{ decision }}</span> }</div></section>
+    <section class="architecture-constraints"><span>RESTRICCIONES DISEÑADAS</span><div>@for (constraint of project.constraints; track constraint) { <p>✓ {{ constraint }}</p> }</div></section>
+    <nav class="architecture-actions" aria-label="Acciones del proyecto">@if (project.hasDemo) { <a class="primary" [routerLink]="['/demos', project.slug]">Abrir demostración funcional</a> }<a class="secondary" routerLink="/home">Volver al portafolio</a></nav>
   </main>
 </ion-content>

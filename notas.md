@@ -8,7 +8,7 @@ Actualizado: 7 de julio de 2026.
 - [x] Agregar una arquitectura por proyecto. Cada ficha abre vistas de contenedores C4, secuencia runtime, fallas/NFR, patrones, trade-offs y señales operativas sin revelar topología privada.
 - [x] Incorporar miniaturas. Son composiciones HTML/CSS ligeras para evitar imágenes pesadas y conservar nitidez en cualquier pantalla.
 - [x] Agregar el CV descargable en `src/assets/Irving_Conde_CV.pdf`.
-- [x] Revisar la referencia `portafolio-frontend-8w82.vercel.app`. Se incorporaron las ideas útiles de header, sección “Sobre mí” y descarga de CV sin copiar su paleta o identidad.
+- [x] Revisar una referencia visual externa. Se incorporaron las ideas útiles de cabecera, sección “Sobre mí” y descarga de CV sin copiar su paleta o identidad.
 - [x] Agregar el perfil público de GitHub: `github.com/irvingconde123`.
 - [x] Agregar Hostlyc y una demo basada en la rama remota más reciente `origin/feature/landing`.
 - [x] Incorporar la arquitectura vigente de Hostlyc VPC Front como “Gateway dinámico multi-plataforma”. Se leyó en modo seguro porque ese repositorio conserva cambios locales sin confirmar.

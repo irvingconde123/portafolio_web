@@ -1,87 +1,8 @@
-export interface ExperienceItem {
-  company: string;
-  period: string;
-  role: string;
-  summary: string;
-  technologies: string[];
-}
+import { ProjectItem } from './portfolio.models';
+import { DATA_ACCESS_PROJECT } from './data-access-project';
 
-export interface ArchitectureStep {
-  label: string;
-  detail: string;
-}
-
-export interface SequenceStep {
-  from: string;
-  action: string;
-  to: string;
-}
-
-export interface QualityAttribute {
-  name: string;
-  mechanism: string;
-}
-
-export interface FailureMode {
-  trigger: string;
-  response: string;
-}
-
-export interface ProjectItem {
-  slug: string;
-  name: string;
-  kind: string;
-  summary: string;
-  impact: string;
-  technologies: string[];
-  architecture: ArchitectureStep[];
-  sequence: SequenceStep[];
-  decisions: string[];
-  preview: 'operations' | 'laboratory' | 'cms' | 'agency' | 'gateway' | 'cloud';
-  hasDemo: boolean;
-  architectureType: string;
-  architectureScope: string;
-  patterns: string[];
-  qualityAttributes: QualityAttribute[];
-  failureModes: FailureMode[];
-  tradeoffs: string[];
-  observability: string[];
-}
-
-export const EXPERIENCES: ExperienceItem[] = [
-  {
-    company: 'DISH México · MVSHUB',
-    period: 'Ago 2024 — Actualidad',
-    role: 'Full Stack Developer',
-    summary:
-      'Desarrollo móvil y full stack, automatizaciones Python, integraciones, soporte productivo y validación de entregas sobre servicios AWS.',
-    technologies: ['Python', 'Ionic', 'Angular', 'Lambda', 'S3', 'DynamoDB', 'CloudFront'],
-  },
-  {
-    company: 'Hostlyc',
-    period: 'Oct 2025 — Actualidad',
-    role: 'Full Stack Developer',
-    summary:
-      'Diseño de arquitecturas, APIs REST y aplicaciones multiplataforma con operación resiliente para web, Android y escritorio.',
-    technologies: ['NestJS', 'Ionic', 'Angular', 'Electron', 'Prisma', 'TypeORM', 'PostgreSQL'],
-  },
-  {
-    company: 'GECOSOFT',
-    period: 'Mar 2022 — May 2024',
-    role: 'Backend Developer',
-    summary:
-      'Servicios backend, bases de datos y administración de infraestructura Linux y Windows en AWS y Azure.',
-    technologies: ['Python', 'Java', 'Node.js', 'SQL Server', 'PostgreSQL', 'AWS', 'Azure'],
-  },
-  {
-    company: 'Proyectos independientes',
-    period: '2022 — 2024',
-    role: 'Full Stack Developer',
-    summary:
-      'Aplicaciones móviles y web para punto de venta, asistencia, clientes y análisis visual con modelos de IA.',
-    technologies: ['Ionic', 'Angular', 'NestJS', 'Firebase', 'MySQL', 'TensorFlow'],
-  },
-];
+export * from './portfolio.models';
+export { EXPERIENCES, SKILL_GROUPS } from './portfolio-profile';
 
 export const PROJECTS: ProjectItem[] = [
   {
@@ -91,29 +12,36 @@ export const PROJECTS: ProjectItem[] = [
     summary:
       'Aplicación operativa con captura offline cifrada, caché local, sincronización idempotente y continuidad de sesión.',
     impact: 'El flujo puede continuar sin red y reconciliar cambios sin duplicar información.',
+    ownership: 'Arquitectura, planeación y ejecución integral por Irving Conde.',
+    team: 'Ejecución individual',
+    status: 'Producto funcional en evolución',
+    solutionFor: 'Operación de campo y laboratorio con conectividad intermitente.',
+    constraints: ['Sincronizar únicamente con sesión válida.', 'No eliminar datos locales sin confirmación completa.', 'Mantener una base común para tres plataformas.'],
+    evidence: [{ value: '3', label: 'plataformas' }, { value: '14', label: 'pruebas automatizadas' }, { value: '8', label: 'evidencias por formulario' }],
+    accent: 'blue',
     technologies: ['Ionic', 'Angular', 'NestJS', 'SQLite', 'IndexedDB', 'Electron'],
     preview: 'operations',
     hasDemo: true,
-    architectureType: 'Offline-first · Hexagonal · Eventual consistency',
+    architectureType: 'Operación sin conexión · Hexagonal · Consistencia eventual',
     architectureScope: 'C4 nivel contenedores · flujo de escritura offline y reconciliación',
-    patterns: ['Ports & adapters', 'Outbox local', 'Idempotency key', 'Repository', 'Strategy de persistencia'],
+    patterns: ['Puertos y adaptadores', 'Bandeja de salida local', 'Clave de idempotencia', 'Repositorio', 'Estrategia de persistencia'],
     qualityAttributes: [
       { name: 'Disponibilidad', mechanism: 'Captura local aunque API o red no estén disponibles.' },
-      { name: 'Integridad', mechanism: 'Lotes idempotentes, confirmación explícita y rollback del servidor.' },
+      { name: 'Integridad', mechanism: 'Lotes idempotentes, confirmación explícita y reversión del servidor.' },
       { name: 'Confidencialidad', mechanism: 'SQLite cifrado y llaves fuera del almacenamiento de aplicación.' },
       { name: 'Portabilidad', mechanism: 'Puertos de persistencia para SQLite e IndexedDB.' },
     ],
     failureModes: [
-      { trigger: 'Pérdida de red o cierre del proceso', response: 'El outbox conserva la intención y reanuda por correlationId.' },
+      { trigger: 'Pérdida de red o cierre del proceso', response: 'La bandeja de salida conserva la intención y reanuda por identificador de correlación.' },
       { trigger: 'Token expira durante un lote', response: 'Se detiene el envío, conserva checkpoints y solicita reautenticación.' },
       { trigger: 'Fallo parcial del backend', response: 'La transacción revierte; el cliente consulta estado antes de reintentar.' },
     ],
     tradeoffs: ['Consistencia eventual a cambio de continuidad offline.', 'Mayor complejidad local para evitar pérdida o duplicidad.', 'La caché es acotada y no sustituye la fuente de verdad.'],
-    observability: ['correlationId por operación', 'Estado del outbox', 'Métrica de reintentos', 'Auditoría de creador y sincronizador'],
+    observability: ['Identificador de correlación por operación', 'Estado de la bandeja de salida', 'Métrica de reintentos', 'Auditoría de creador y sincronizador'],
     architecture: [
       { label: 'Cliente híbrido', detail: 'Una interfaz adaptable para web, Android y escritorio.' },
       { label: 'Router de persistencia', detail: 'Deriva preferencias a IndexedDB y operación compleja a SQLite.' },
-      { label: 'Outbox cifrado', detail: 'Conserva cambios pendientes con identidad e idempotencia.' },
+      { label: 'Bandeja de salida cifrada', detail: 'Conserva cambios pendientes con identidad e idempotencia.' },
       { label: 'API transaccional', detail: 'Valida la sincronización y confirma cada lote de forma atómica.' },
       { label: 'Datos operativos', detail: 'Mantiene la fuente de verdad y el historial auditable.' },
     ],
@@ -129,44 +57,56 @@ export const PROJECTS: ProjectItem[] = [
   {
     slug: 'landing',
     name: 'Landing pública multi-tenant',
-    kind: 'Frontend dinámico',
+    kind: 'Interfaz web dinámica',
     summary:
       'Landing multi-tenant que consume contenido dinámico desde un CMS y conmuta a un respaldo local mediante un repositorio y adaptadores tipados.',
     impact: 'Una misma aplicación presenta contenido diferente por organización sin recompilar.',
+    ownership: 'Arquitectura, planeación y ejecución integral por Irving Conde.',
+    team: 'Ejecución individual',
+    status: 'Implementación funcional en evolución visual',
+    solutionFor: 'Sitios administrables que deben seguir disponibles cuando el CMS falla.',
+    constraints: ['No ejecutar HTML o CSS arbitrario.', 'Resolver el tenant antes del contenido.', 'Conservar un modelo visual estable ante cambios del API.'],
+    evidence: [{ value: '14', label: 'pruebas automatizadas' }, { value: '2', label: 'fuentes conmutables' }, { value: '1', label: 'contrato visual estable' }],
+    accent: 'yellow',
     technologies: ['Angular', 'TypeScript', 'Responsive UI', 'REST API'],
     preview: 'laboratory',
     hasDemo: true,
-    architectureType: 'Frontend composable · Clean data access · Multi-tenant',
+    architectureType: 'Interfaz componible · Acceso limpio a datos · Multi-tenant',
     architectureScope: 'C4 nivel componentes · resolución de contenido, estilos y media',
-    patterns: ['Adapter', 'Repository', 'Facade', 'Renderer registry', 'Fallback source'],
+    patterns: ['Adaptador', 'Repositorio', 'Fachada', 'Registro de renderizadores', 'Fuente de respaldo'],
     qualityAttributes: [
-      { name: 'Modificabilidad', mechanism: 'Nuevos bloques mediante registro sin alterar el shell.' },
+      { name: 'Modificabilidad', mechanism: 'Nuevos bloques mediante registro sin alterar la estructura principal.' },
       { name: 'Disponibilidad', mechanism: 'Fuente local tipada cuando el CMS público no responde.' },
       { name: 'Rendimiento', mechanism: 'Activos responsivos, secciones lazy y modelo ya normalizado.' },
       { name: 'Aislamiento', mechanism: 'Contexto de tenant aplicado antes de consultar contenido.' },
     ],
     failureModes: [
-      { trigger: 'CMS público no disponible', response: 'Repositorio selecciona snapshot local y marca contenido degradado.' },
+      { trigger: 'CMS público no disponible', response: 'El repositorio selecciona el respaldo local y marca el contenido degradado.' },
       { trigger: 'Bloque desconocido', response: 'Renderer seguro lo omite sin romper el resto de la página.' },
       { trigger: 'Media inválida', response: 'Resolver sustituye por placeholder y registra diagnóstico.' },
     ],
-    tradeoffs: ['Contrato visual estable limita propiedades arbitrarias.', 'Fallback mejora disponibilidad pero puede mostrar una versión anterior.', 'Composición dinámica exige validación estricta en CMS.'],
+    tradeoffs: ['El contrato visual estable limita propiedades arbitrarias.', 'El respaldo mejora la disponibilidad, pero puede mostrar una versión anterior.', 'La composición dinámica exige validación estricta en el CMS.'],
     observability: ['Tenant resuelto', 'Fuente API/fallback', 'Bloques descartados', 'Core Web Vitals'],
     architecture: [
-      { label: 'Contexto del sitio', detail: 'Resuelve la organización desde dominio o configuración.' },
-      { label: 'Source', detail: 'Alterna entre API pública y contenido local de respaldo.' },
-      { label: 'Adapter', detail: 'Traduce contratos externos a un modelo estable de presentación.' },
-      { label: 'Repository', detail: 'Expone una única entrada de datos al resto de la aplicación.' },
-      { label: 'Renderer registry', detail: 'Selecciona el componente adecuado para cada tipo de sección.' },
+      { label: 'Navegador', detail: 'Solicita una página sin conocer la fuente que resolverá su contenido.' },
+      { label: 'Contexto del sitio', detail: 'Resuelve la organización desde el dominio o la configuración local.' },
+      { label: 'Repositorio de contenido', detail: 'Expone una entrada estable y coordina la selección de fuente.' },
+      { label: 'Selector de fuente', detail: 'Intenta consultar el CMS y conmuta al respaldo local ante error o tiempo agotado.' },
+      { label: 'Adaptador', detail: 'Traduce ambos contratos a un mismo modelo de presentación.' },
+      { label: 'Registro de renderizadores', detail: 'Selecciona un componente seguro para cada tipo de sección.' },
+      { label: 'CMS público o respaldo local', detail: 'Dos fuentes intercambiables detrás del mismo puerto de datos.' },
     ],
     sequence: [
       { from: 'Visitante', action: 'Abre el dominio', to: 'Landing' },
-      { from: 'Landing', action: 'Resuelve el tenant', to: 'Repositorio' },
-      { from: 'Repositorio', action: 'Consulta contenido público', to: 'API / fallback' },
-      { from: 'Adapter', action: 'Normaliza datos y estilos', to: 'Modelo visual' },
-      { from: 'Registry', action: 'Compone las secciones', to: 'Navegador' },
+      { from: 'Landing', action: 'Resuelve el tenant y solicita contenido', to: 'Repositorio' },
+      { from: 'Repositorio', action: 'Consulta primero la fuente remota', to: 'CMS público' },
+      { from: 'CMS público', action: 'Devuelve contenido o un error controlado', to: 'Selector de fuente' },
+      { from: 'Selector de fuente', action: 'Ante error o tiempo agotado obtiene el respaldo', to: 'Respaldo local' },
+      { from: 'Selector de fuente', action: 'Entrega la fuente disponible', to: 'Adaptador' },
+      { from: 'Adaptador', action: 'Normaliza datos, estilos y medios', to: 'Registro visual' },
+      { from: 'Registro visual', action: 'Compone secciones seguras', to: 'Visitante' },
     ],
-    decisions: ['Contrato visual estable', 'Fallback local', 'Renderers extensibles', 'SEO por tenant'],
+    decisions: ['Contrato visual estable', 'Respaldo local', 'Renderizadores extensibles', 'SEO por tenant'],
   },
   {
     slug: 'cms',
@@ -175,10 +115,17 @@ export const PROJECTS: ProjectItem[] = [
     summary:
       'Panel para administrar navegación, páginas, componentes, medios y tokens publicados de forma segura.',
     impact: 'Separa cambios editoriales de despliegues técnicos y conserva contratos validados.',
+    ownership: 'Arquitectura, planeación y ejecución integral por Irving Conde.',
+    team: 'Ejecución individual',
+    status: 'Implementación funcional en evolución',
+    solutionFor: 'Equipos editoriales que requieren publicar sin modificar el código.',
+    constraints: ['Aplicar permisos por tenant y módulo.', 'Validar esquema antes de publicar.', 'Conservar la versión activa ante errores editoriales.'],
+    evidence: [{ value: '18', label: 'pruebas automatizadas' }, { value: '6', label: 'áreas editoriales' }, { value: '2', label: 'estados: borrador y publicado' }],
+    accent: 'teal',
     technologies: ['Angular', 'NestJS', 'PostgreSQL', 'RBAC', 'Media'],
     preview: 'cms',
     hasDemo: true,
-    architectureType: 'Modular frontend · RBAC · Content lifecycle',
+    architectureType: 'Interfaz modular · RBAC · Ciclo editorial',
     architectureScope: 'C4 nivel contenedores · edición, versionado y publicación',
     patterns: ['Feature modules', 'Schema validation', 'Draft/publish', 'RBAC guard', 'Tenant context'],
     qualityAttributes: [
@@ -213,16 +160,23 @@ export const PROJECTS: ProjectItem[] = [
   {
     slug: 'hostlyc',
     name: 'Landing comercial Hostlyc',
-    kind: 'Next.js · Diseño responsive',
+    kind: 'Next.js · Diseño adaptable',
     summary:
       'Experiencia comercial orientada a conversión con servicios, proyectos, proceso, diagnóstico y contacto.',
     impact: 'Convierte una oferta técnica amplia en una narrativa clara, rápida y accionable.',
+    ownership: 'Arquitectura, planeación y ejecución integral por Irving Conde.',
+    team: 'Ejecución individual',
+    status: 'Demostración pública sanitizada',
+    solutionFor: 'Negocios que necesitan explicar su oferta y convertir visitas en conversaciones.',
+    constraints: ['Mantener contenido útil sin JavaScript.', 'Priorizar lectura móvil y SEO.', 'Evitar que los recursos visuales bloqueen la carga.'],
+    evidence: [{ value: '7', label: 'secciones comerciales' }, { value: '2', label: 'rutas de conversión' }, { value: '1', label: 'sistema visual coherente' }],
+    accent: 'rose',
     technologies: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'SEO'],
     preview: 'agency',
     hasDemo: true,
-    architectureType: 'SSR/SSG · Component-driven · SEO-first',
+    architectureType: 'SSR/SSG · Componentes reutilizables · SEO prioritario',
     architectureScope: 'C4 nivel componentes · render, activos y conversión',
-    patterns: ['App Router', 'Server components', 'Typed content', 'Design tokens', 'Progressive enhancement'],
+    patterns: ['Enrutador de aplicación', 'Componentes de servidor', 'Contenido tipado', 'Variables de diseño', 'Mejora progresiva'],
     qualityAttributes: [
       { name: 'Rendimiento', mechanism: 'Generación estática, imágenes optimizadas y mínimo JavaScript cliente.' },
       { name: 'SEO', mechanism: 'Metadatos, semántica y sitemap construidos junto al contenido.' },
@@ -250,105 +204,66 @@ export const PROJECTS: ProjectItem[] = [
       { from: 'Formulario', action: 'Valida intención y datos', to: 'Contacto' },
       { from: 'Contacto', action: 'Continúa la conversación', to: 'Equipo' },
     ],
-    decisions: ['Mobile-first', 'Activos optimizados', 'Secciones reutilizables', 'CTA medible'],
+    decisions: ['Prioridad móvil', 'Recursos optimizados', 'Secciones reutilizables', 'Conversión medible'],
   },
   {
     slug: 'edge-gateway',
     name: 'Gateway dinámico multi-plataforma',
-    kind: 'Backend · Arquitectura distribuida',
+    kind: 'Servicios backend · Arquitectura distribuida',
     summary:
-      'Fachada segura que autentica plataformas, aplica políticas y enruta contratos públicos hacia servicios internos.',
+      'Fachada segura para aplicaciones web, móviles y de escritorio que autentica, aplica políticas y resuelve servicios internos sin revelar hosts.',
     impact: 'Permite evolucionar rutas y políticas sin acoplar a los clientes con la topología interna.',
+    ownership: 'Arquitectura, planeación y ejecución integral por Irving Conde.',
+    team: 'Ejecución individual',
+    status: 'Arquitectura aplicada y sanitizada',
+    solutionFor: 'Plataformas con múltiples clientes y servicios internos que necesitan una frontera pública gobernada.',
+    constraints: ['No exponer topología ni encabezados internos.', 'Bloquear ante fallos de validaciones sensibles.', 'Acotar colas, tiempos límite y reintentos.'],
+    evidence: [{ value: '3', label: 'tipos de cliente' }, { value: '10', label: 'puntos de control' }, { value: '5', label: 'señales operativas' }],
+    accent: 'violet',
     technologies: ['NestJS', 'NGINX', 'JWT', 'PostgreSQL', 'Docker'],
     preview: 'gateway',
     hasDemo: false,
-    architectureType: 'Edge gateway · Queueing · Cache-aside · Resource registry',
-    architectureScope: 'C4 nivel contenedores · admisión, caché, resolución dinámica y proxy seguro',
-    patterns: ['Queue-based load leveling', 'Cache-aside', 'Gateway', 'Registry', 'Policy pipeline', 'Fail-safe'],
+    architectureType: 'Gateway perimetral · Cola acotada · Caché lateral · Registro de recursos',
+    architectureScope: 'C4 nivel contenedores · admisión, caché, resolución dinámica y adaptador seguro',
+    patterns: ['Nivelación de carga por cola', 'Caché lateral', 'Gateway', 'Registro', 'Cadena de políticas', 'Fallo seguro'],
     qualityAttributes: [
       { name: 'Desacoplamiento', mechanism: 'Negocio solicita recursos lógicos, no entidades ni conexiones físicas.' },
       { name: 'Disponibilidad', mechanism: 'Cada contexto de datos falla de forma aislada con cooldown.' },
-      { name: 'Seguridad', mechanism: 'Firma, claims, plataforma, scopes y policy antes del upstream.' },
+      { name: 'Seguridad', mechanism: 'Firma, atributos, plataforma, alcances y política antes del servicio destino.' },
       { name: 'Escalabilidad', mechanism: 'El balanceador absorbe ráfagas, limita la cola y distribuye hacia instancias stateless.' },
     ],
     failureModes: [
       { trigger: 'Contexto SQL no disponible', response: 'Invalida DataSource, aplica cooldown y mantiene los otros contextos.' },
-      { trigger: 'Blacklist one-shot inaccesible', response: 'Política explícita fail-closed para operaciones sensibles.' },
-      { trigger: 'Cola o upstream excede presupuesto', response: 'Aplica timeout, backpressure y circuit breaker sin acumular trabajo indefinido.' },
+      { trigger: 'Registro de tokens de un solo uso inaccesible', response: 'Política explícita de bloqueo para operaciones sensibles.' },
+      { trigger: 'Cola o servicio destino excede el presupuesto', response: 'Aplica tiempo límite, contrapresión y circuito abierto sin acumular trabajo indefinido.' },
     ],
     tradeoffs: ['Registro dinámico reduce despliegues pero exige gobierno de configuración.', 'Fail-closed protege seguridad sacrificando disponibilidad parcial.', 'Compatibilidad multi-driver se restringe a capacidades comunes.'],
-    observability: ['x-request-id extremo a extremo', 'Profundidad/edad de cola', 'Hit ratio de caché', 'Latencia por upstream', 'Rechazos por policy'],
+    observability: ['x-request-id extremo a extremo', 'Profundidad y edad de cola', 'Proporción de aciertos de caché', 'Latencia por destino', 'Rechazos por política'],
     architecture: [
       { label: 'Canales cliente', detail: 'Solicitan recursos lógicos sin conocer hosts, rutas físicas ni topología interna.' },
-      { label: 'Ingress y balanceador', detail: 'Termina el canal público, mantiene health checks y distribuye solo a instancias sanas.' },
-      { label: 'Cola de admisión acotada', detail: 'Absorbe ráfagas breves con límite, timeout y backpressure; no crece indefinidamente.' },
+      { label: 'Entrada pública y balanceador', detail: 'Termina el canal público, comprueba la salud y distribuye solo a instancias sanas.' },
+      { label: 'Cola de admisión acotada', detail: 'Absorbe ráfagas breves con límite, tiempo de espera y contrapresión; no crece indefinidamente.' },
       { label: 'Caché de configuración', detail: 'Redis conserva rutas y políticas vigentes con TTL; no almacena secretos de cliente.' },
-      { label: 'VPC Front · registro lógico', detail: 'Resuelve recurso, plataforma y policy; ante miss consulta configuración gobernada.' },
-      { label: 'Guard y token one-shot', detail: 'Valida firma, claims, scope, plataforma y consumo único antes del proxy.' },
-      { label: 'Adaptador de proxy', detail: 'Transforma el contrato permitido y elimina encabezados que no deben cruzar el límite.' },
-      { label: 'VPC Back · destino lógico', detail: 'Mapea el recurso aprobado a un upstream interno sin revelar su dirección pública.' },
+      { label: 'VPC Front · registro lógico', detail: 'Resuelve recurso, plataforma y política; si no hay caché consulta configuración gobernada.' },
+      { label: 'Validador de acceso único', detail: 'Valida firma, atributos, alcance, plataforma y consumo antes del adaptador.' },
+      { label: 'Adaptador de salida', detail: 'Transforma el contrato permitido y elimina encabezados que no deben cruzar el límite.' },
+      { label: 'VPC Back · destino lógico', detail: 'Mapea el recurso aprobado a un servicio interno sin revelar su dirección pública.' },
       { label: 'Servicios internos', detail: 'Reciben contratos normalizados; cada dependencia conserva timeout y circuito propios.' },
     ],
     sequence: [
-      { from: 'Plataforma', action: 'Solicita un recurso lógico', to: 'Ingress / LB' },
-      { from: 'Ingress / LB', action: 'Distribuye a una instancia sana', to: 'Cola acotada' },
-      { from: 'Cola acotada', action: 'Admite con timeout y backpressure', to: 'VPC Front' },
+      { from: 'Plataforma', action: 'Solicita un recurso lógico', to: 'Entrada / balanceador' },
+      { from: 'Entrada / balanceador', action: 'Distribuye a una instancia sana', to: 'Cola acotada' },
+      { from: 'Cola acotada', action: 'Admite con tiempo límite y contrapresión', to: 'VPC Front' },
       { from: 'VPC Front', action: 'Consulta ruta y política por clave lógica', to: 'Redis' },
-      { from: 'Redis', action: 'En cache miss solicita configuración gobernada', to: 'Registro' },
-      { from: 'Registro', action: 'Devuelve destino lógico, policy y TTL', to: 'VPC Front' },
-      { from: 'VPC Front', action: 'Valida token, scope y consumo one-shot', to: 'Policy guard' },
-      { from: 'Policy guard', action: 'Autoriza contrato y transformación', to: 'Proxy' },
-      { from: 'Proxy', action: 'Resuelve el destino sin exponer host interno', to: 'VPC Back' },
-      { from: 'VPC Back', action: 'Ejecuta y normaliza la respuesta', to: 'Proxy' },
-      { from: 'Proxy', action: 'Responde con trazabilidad sanitizada', to: 'Plataforma' },
+      { from: 'Redis', action: 'Si no hay caché solicita configuración gobernada', to: 'Registro' },
+      { from: 'Registro', action: 'Devuelve destino lógico, política y vigencia', to: 'VPC Front' },
+      { from: 'VPC Front', action: 'Valida token, alcance y consumo único', to: 'Validador' },
+      { from: 'Validador', action: 'Autoriza contrato y transformación', to: 'Adaptador' },
+      { from: 'Adaptador', action: 'Resuelve el destino sin exponer el host interno', to: 'VPC Back' },
+      { from: 'VPC Back', action: 'Ejecuta y normaliza la respuesta', to: 'Adaptador' },
+      { from: 'Adaptador', action: 'Responde con trazabilidad sanitizada', to: 'Plataforma' },
     ],
-    decisions: ['Admisión con backpressure', 'Caché con TTL', 'Rutas por recurso lógico', 'Hosts internos no expuestos', 'Trazabilidad por solicitud'],
+    decisions: ['Admisión con contrapresión', 'Caché con vigencia', 'Rutas por recurso lógico', 'Hosts internos no expuestos', 'Trazabilidad por solicitud'],
   },
-  {
-    slug: 'cloud-automation',
-    name: 'Servicios y automatización cloud',
-    kind: 'Backend · Cloud',
-    summary:
-      'APIs, procesos serverless, almacenamiento y entrega de activos diseñados con observabilidad y límites claros.',
-    impact: 'Automatiza procesos repetibles y desacopla cómputo, datos y distribución.',
-    technologies: ['Python', 'NestJS', 'Lambda', 'S3', 'DynamoDB', 'CloudFront'],
-    preview: 'cloud',
-    hasDemo: false,
-    architectureType: 'Event-driven · Serverless · Asynchronous processing',
-    architectureScope: 'C4 nivel contenedores · comando, evento, worker y consulta de estado',
-    patterns: ['Queue-based load leveling', 'Idempotent consumer', 'Dead-letter queue', 'Object storage', 'CQRS ligero'],
-    qualityAttributes: [
-      { name: 'Elasticidad', mechanism: 'Workers escalan con la profundidad de la cola.' },
-      { name: 'Resiliencia', mechanism: 'Reintentos acotados y DLQ para mensajes no recuperables.' },
-      { name: 'Costo', mechanism: 'Cómputo bajo demanda y políticas de ciclo de vida para activos.' },
-      { name: 'Trazabilidad', mechanism: 'CorrelationId preservado entre API, evento, worker y resultado.' },
-    ],
-    failureModes: [
-      { trigger: 'Worker interrumpido', response: 'Visibilidad del mensaje expira y otro worker reanuda con idempotencia.' },
-      { trigger: 'Payload inválido', response: 'Se rechaza antes de publicar o termina en DLQ con causa estructurada.' },
-      { trigger: 'Dependencia externa lenta', response: 'Timeout, backoff con jitter y circuito abierto temporal.' },
-    ],
-    tradeoffs: ['Procesamiento asíncrono requiere consultar estado.', 'Entrega al menos una vez exige consumidor idempotente.', 'Serverless reduce operación pero introduce límites de plataforma.'],
-    observability: ['Profundidad y edad de cola', 'Tasa de DLQ', 'Duración de workers', 'Costo por operación'],
-    architecture: [
-      { label: 'Cliente', detail: 'Consume un contrato pequeño y versionado.' },
-      { label: 'API / evento', detail: 'Valida la entrada y desacopla el inicio del proceso.' },
-      { label: 'Reglas de negocio', detail: 'Orquesta tareas idempotentes con límites definidos.' },
-      { label: 'Persistencia', detail: 'Selecciona almacenamiento según acceso y ciclo de vida.' },
-      { label: 'Observabilidad', detail: 'Correlaciona ejecución, métricas y errores recuperables.' },
-    ],
-    sequence: [
-      { from: 'Cliente', action: 'Envía una operación', to: 'API' },
-      { from: 'API', action: 'Valida y publica el evento', to: 'Cola' },
-      { from: 'Worker', action: 'Procesa con idempotencia', to: 'Datos' },
-      { from: 'Worker', action: 'Registra métricas y resultado', to: 'Observabilidad' },
-      { from: 'API', action: 'Expone el estado', to: 'Cliente' },
-    ],
-    decisions: ['Procesamiento desacoplado', 'Idempotencia', 'Costo por demanda', 'Trazabilidad extremo a extremo'],
-  },
-];
-
-export const SKILLS = [
-  'TypeScript', 'Python', 'Angular', 'Ionic', 'NestJS', 'Next.js', 'Electron',
-  'PostgreSQL', 'AWS', 'Arquitectura de sistemas', 'Offline-first', 'APIs REST', 'CI/CD',
+  DATA_ACCESS_PROJECT,
 ];

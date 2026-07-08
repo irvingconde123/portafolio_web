@@ -31,7 +31,9 @@ jobs:
         run: npm ci
 
       - name: Verify source
-        run: npm run lint
+        run: |
+          npm run quality:size
+          npm run lint
 
       - name: Build project site
         run: npm run build:pages

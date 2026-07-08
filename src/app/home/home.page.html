@@ -3,7 +3,8 @@
     <button class="identity" type="button" (click)="scrollTo('top')" aria-label="Ir al inicio">
       <span>IC</span><b>Irving Conde</b>
     </button>
-    <nav aria-label="Navegación principal">
+    <button class="menu-toggle" type="button" [attr.aria-expanded]="mobileMenuOpen" aria-controls="main-navigation" (click)="toggleMobileMenu()"><span></span><span></span><span></span><b>Menú</b></button>
+    <nav id="main-navigation" [class.open]="mobileMenuOpen" aria-label="Navegación principal">
       <button type="button" (click)="scrollTo('about')">Sobre mí</button>
       <button type="button" (click)="scrollTo('experience')">Experiencia</button>
       <button type="button" (click)="scrollTo('projects')">Proyectos</button>
@@ -14,24 +15,24 @@
       <a class="header-cv" href="assets/Irving_Conde_CV.pdf" download>Descargar CV</a>
     </div>
   </header>
+  @if (mobileMenuOpen) { <button class="navigation-backdrop" type="button" (click)="toggleMobileMenu()" aria-label="Cerrar menú"></button> }
 
   <main id="top">
     <section class="hero section">
       <div class="hero-content">
-        <p class="eyebrow">Software Engineer · Full Stack Developer</p>
-        <h1>Construyo sistemas claros para escenarios complejos.</h1>
+        <p class="eyebrow">Arquitecto y desarrollador full stack</p>
+        <h1>Operación sin conexión y plataformas multi-tenant.</h1>
         <p class="hero-copy">
-          Más de cuatro años desarrollando aplicaciones móviles, servicios backend e infraestructura cloud con Angular, Ionic, NestJS, Python y AWS.
+          Diseño y ejecuto productos completos para web, Android y escritorio: desde el flujo de usuario y el contrato API hasta persistencia, seguridad, pruebas y entrega continua.
         </p>
         <div class="hero-actions">
           <button class="primary" type="button" (click)="scrollTo('projects')">Explorar proyectos</button>
           <a class="secondary" href="mailto:Irving.CondeM@gmail.com">Contactar</a>
-          <a class="text-link" href="assets/Irving_Conde_CV.pdf" download>Descargar CV ↓</a>
         </div>
       </div>
       <aside class="system-card" aria-label="Especialidades">
         <div class="availability"><span class="pulse"></span><small>DISPONIBLE PARA COLABORAR</small></div>
-        <strong>Web · Mobile · Backend · Cloud</strong>
+        <strong>Web · Android · Escritorio · Servicios</strong>
         <p>Diseño soluciones que cuidan la operación, los datos y la experiencia de quien las utiliza.</p>
         <div class="system-grid">
           <span>Offline-first</span><span>APIs seguras</span><span>AWS</span><span>Arquitectura</span>
@@ -53,18 +54,27 @@
           <span><b>3</b> superficies: web, móvil y escritorio</span>
           <span><b>1</b> criterio: continuidad operativa</span>
         </div>
-        <div class="about-links">
-          <a href="https://github.com/irvingconde123" target="_blank" rel="noreferrer">github.com/irvingconde123 ↗</a>
-          <a href="assets/Irving_Conde_CV.pdf" download>CV en PDF ↓</a>
-        </div>
       </div>
     </section>
 
     <section class="section skills" aria-labelledby="skills-title">
-      <p class="eyebrow">Herramientas</p>
-      <h2 id="skills-title">Tecnología aplicada a resultados</h2>
-      <div class="skill-list">
-        @for (skill of skills; track skill) { <span>{{ skill }}</span> }
+      <p class="eyebrow">Capacidades con evidencia</p>
+      <h2 id="skills-title">Tecnología conectada a decisiones reales</h2>
+      <div class="skill-groups">
+        @for (group of skillGroups; track group.name) {
+          <article>
+            <header><h3>{{ group.name }}</h3><p>{{ group.description }}</p></header>
+            <div>
+              @for (skill of group.skills; track skill.name) {
+                @if (skill.projectSlug) {
+                  <a [routerLink]="['/arquitecturas', skill.projectSlug]"><b>{{ skill.name }}</b><span>{{ skill.evidence }} ↗</span></a>
+                } @else {
+                  <span class="skill-private"><b>{{ skill.name }}</b><small>{{ skill.evidence }}</small></span>
+                }
+              }
+            </div>
+          </article>
+        }
       </div>
     </section>
 
@@ -87,10 +97,10 @@
     <section id="projects" class="section" aria-labelledby="projects-title">
       <p class="eyebrow">Trabajo seleccionado</p>
       <h2 id="projects-title">Proyectos y arquitecturas</h2>
-      <p class="section-copy">Demos y diagramas sanitizados que explican decisiones, experiencia y flujos sin exponer datos ni infraestructura privada.</p>
+      <p class="section-copy">Demostraciones y diagramas sanitizados que explican decisiones, experiencia y flujos sin exponer datos ni infraestructura privada.</p>
       <div class="project-grid">
         @for (project of projects; track project.slug) {
-          <article class="project-card">
+          <article class="project-card" [attr.data-accent]="project.accent">
             <div class="project-preview" [attr.data-preview]="project.preview" aria-hidden="true">
               <div class="preview-bar"><i></i><i></i><i></i><span>{{ project.kind }}</span></div>
               @switch (project.preview) {
@@ -104,10 +114,13 @@
             </div>
             <div class="project-body">
               <small>{{ project.kind }}</small><h3>{{ project.name }}</h3><p>{{ project.summary }}</p>
+              <div class="project-authorship"><span>AUTORÍA END-TO-END</span><b>{{ project.ownership }}</b></div>
+              <div class="project-evidence" aria-label="Evidencia del proyecto">@for (item of project.evidence; track item.label) { <span><b>{{ item.value }}</b>{{ item.label }}</span> }</div>
               <p class="impact">{{ project.impact }}</p>
+              <dl class="project-facts"><div><dt>Estado</dt><dd>{{ project.status }}</dd></div><div><dt>Uso</dt><dd>{{ project.solutionFor }}</dd></div></dl>
               <div class="tags">@for (technology of project.technologies; track technology) { <span>{{ technology }}</span> }</div>
               <div class="project-actions">
-                @if (project.hasDemo) { <a class="demo-link" [routerLink]="['/demos', project.slug]">Abrir demo <span>→</span></a> }
+                @if (project.hasDemo) { <a class="demo-link" [routerLink]="['/demos', project.slug]">Abrir demostración <span>→</span></a> }
                 <a class="architecture-link" [routerLink]="['/arquitecturas', project.slug]">Ver arquitectura <span>↗</span></a>
               </div>
             </div>
