@@ -4,6 +4,8 @@
 
 export const environment = {
   production: false,
+  canonicalUrl: 'https://irving-conde-portfolio.vercel.app',
+  robots: 'noindex,nofollow',
 };
 
 /*

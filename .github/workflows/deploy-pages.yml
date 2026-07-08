@@ -39,10 +39,10 @@ jobs:
       - name: Build project site
         run: npm run build:pages
 
-      - name: Add SPA fallback and disable Jekyll
+      - name: Add fallback and disable Jekyll
         run: |
-          cp www/index.html www/404.html
-          touch www/.nojekyll
+          cp dist/app/browser/index.html dist/app/browser/404.html
+          touch dist/app/browser/.nojekyll
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
@@ -50,7 +50,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./www
+          path: ./dist/app/browser
 
   deploy:
     environment:

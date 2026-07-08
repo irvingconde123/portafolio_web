@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
   canonicalUrl: 'https://irving-conde-portfolio.vercel.app',
-  robots: 'index,follow',
+  robots: 'noindex,follow',
 };
