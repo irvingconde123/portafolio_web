@@ -3,7 +3,6 @@ import { IonContent } from '@ionic/angular';
 import {
   CASE_STUDIES,
   EXPERIENCES,
-  PROJECTS,
   SKILL_GROUPS,
 } from '../data/portfolio-content';
 
@@ -17,7 +16,6 @@ export class HomePage {
 
   protected readonly experiences = EXPERIENCES;
   protected readonly caseStudies = CASE_STUDIES;
-  protected readonly projects = PROJECTS;
   protected readonly skillGroups = SKILL_GROUPS;
   protected mobileMenuOpen = false;
 

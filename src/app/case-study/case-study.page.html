@@ -1,6 +1,6 @@
 <ion-content [fullscreen]="true">
   <header class="case-header">
-    <a routerLink="/home" fragment="projects">← Casos seleccionados</a>
+    <a routerLink="/" fragment="projects">← Casos seleccionados</a>
     <span>Caso técnico · datos sanitizados</span>
   </header>
 
@@ -118,7 +118,7 @@
           @for (evidence of item.evidence; track evidence.source) {
             <article>
               <span aria-hidden="true">✓</span>
-              <p><b>{{ evidence.label }}</b><code>{{ evidence.source }}</code></p>
+              <p><b>{{ evidence.label }}</b><a [href]="evidenceUrl(evidence.source)" target="_blank" rel="noreferrer">Ver fuente ↗</a></p>
             </article>
           }
         </div>
@@ -128,14 +128,14 @@
         @for (demo of item.demos; track demo.slug) {
           <a class="primary" [routerLink]="['/demos', demo.slug]">{{ demo.label }}</a>
         }
-        <a class="secondary" routerLink="/home" fragment="projects">Volver al portafolio</a>
+        <a class="secondary" routerLink="/" fragment="projects">Volver al portafolio</a>
       </nav>
     </main>
   } @else {
     <main class="case-page not-found">
       <p class="section-label">Caso no encontrado</p>
       <h1>La solución solicitada no está publicada.</h1>
-      <a class="primary" routerLink="/home" fragment="projects">Ver casos disponibles</a>
+      <a class="primary" routerLink="/" fragment="projects">Ver casos disponibles</a>
     </main>
   }
 </ion-content>

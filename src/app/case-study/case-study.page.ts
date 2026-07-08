@@ -46,4 +46,8 @@ export class CaseStudyPage implements OnInit, OnDestroy {
   protected kindLabel(kind: ArchitectureNodeKind): string {
     return this.kindLabels[kind];
   }
+
+  protected evidenceUrl(source: string): string {
+    return `https://github.com/irvingconde123/portafolio_web/blob/main/${source}`;
+  }
 }

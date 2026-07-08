@@ -58,7 +58,7 @@ code { background: rgba(8, 145, 178, 0.13); border-radius: 0.3rem; color: inheri
 .evidence-section article { align-items: flex-start; background: var(--case-surface); border: 1px solid var(--case-border); border-radius: 0.75rem; display: flex; gap: 0.8rem; padding: 1rem; }
 .evidence-section article > span { color: #15803d; font-weight: 800; }
 .evidence-section p { display: grid; gap: 0.45rem; margin: 0; }
-.evidence-section code { overflow-wrap: anywhere; }
+.evidence-section a { color: var(--case-primary); font-size: 0.85rem; font-weight: 750; text-decoration: none; }
 .case-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 3rem; }
 .primary, .secondary { align-items: center; border-radius: 0.55rem; display: inline-flex; font-weight: 750; justify-content: center; min-height: 2.75rem; padding: 0.75rem 1rem; text-decoration: none; }
 .primary { background: var(--case-primary); color: white; }
