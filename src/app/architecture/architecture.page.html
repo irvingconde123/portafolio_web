@@ -19,7 +19,7 @@
           <div class="c4-diagram">
             <section class="c4-zone client-zone"><header><b>TRUST ZONE 01</b><span>Canal / actor</span></header><article><i>ACTOR</i><b>{{ project.architecture[0].label }}</b><p>{{ project.architecture[0].detail }}</p></article></section>
             <div class="c4-connector"><span>HTTPS / local port</span><i>→</i></div>
-            <section class="c4-zone application-zone"><header><b>SYSTEM BOUNDARY</b><span>Aplicación y políticas</span></header><div>@for (node of project.architecture.slice(1, 4); track node.label; let index = $index) { <article><i>C{{ index + 1 }}</i><b>{{ node.label }}</b><p>{{ node.detail }}</p><small>{{ project.patterns[index] || 'Application service' }}</small></article> }</div></section>
+            <section class="c4-zone application-zone"><header><b>SYSTEM BOUNDARY</b><span>Aplicación, control y adaptadores</span></header><div>@for (node of project.architecture.slice(1, -1); track node.label; let index = $index) { <article><i>C{{ index + 1 }}</i><b>{{ node.label }}</b><p>{{ node.detail }}</p><small>{{ project.patterns[index] || 'Application service' }}</small></article> }</div></section>
             <div class="c4-connector"><span>Port / contract</span><i>→</i></div>
             <section class="c4-zone data-zone"><header><b>DEPENDENCY ZONE</b><span>Datos / servicios</span></header><article><i>STORE</i><b>{{ project.architecture[project.architecture.length - 1].label }}</b><p>{{ project.architecture[project.architecture.length - 1].detail }}</p></article></section>
           </div>
@@ -30,11 +30,30 @@
       @case ('sequence') {
         <section class="architecture-panel technical-panel">
           <div class="panel-heading"><div><p>RUNTIME VIEW</p><h2>Camino principal y puntos de control</h2></div><span>La secuencia muestra ownership y confirmaciones, no endpoints internos.</span></div>
-          <div class="sequence-diagram">
-            <div class="sequence-lanes"><span>Origen</span><span>Aplicación</span><span>Política / dominio</span><span>Dependencia</span></div>
-            <ol>@for (step of project.sequence; track $index; let index = $index) { <li><b>{{ index + 1 }}</b><span class="sequence-from">{{ step.from }}</span><i></i><div><strong>{{ step.action }}</strong><small>Destino lógico: {{ step.to }}</small></div><em>ACK / resultado</em></li> }</ol>
+          <div class="uml-sequence">
+            <div class="uml-actors" [style.grid-template-columns]="'repeat(' + sequenceActors.length + ', minmax(7rem, 1fr))'">
+              @for (actor of sequenceActors; track actor; let index = $index) {
+                <article><i>{{ index === 0 ? 'ACTOR' : index === sequenceActors.length - 1 ? 'DEPENDENCY' : 'PARTICIPANT' }}</i><b>{{ actor }}</b></article>
+              }
+            </div>
+            <div class="uml-runtime" [style.--actor-count]="sequenceActors.length">
+              <div class="uml-lifelines" [style.grid-template-columns]="'repeat(' + sequenceActors.length + ', minmax(7rem, 1fr))'" aria-hidden="true">
+                @for (actor of sequenceActors; track actor) { <i></i> }
+              </div>
+              <ol>
+                @for (step of project.sequence; track $index; let index = $index) {
+                  <li class="uml-step">
+                    <b>{{ index + 1 }}</b>
+                    <div class="uml-message" [class.reverse]="sequenceIsReverse(step)" [style.left.%]="sequenceStart(step)" [style.width.%]="sequenceWidth(step)">
+                      <span>{{ step.action }}</span><i></i>
+                    </div>
+                    <small>{{ step.from }} → {{ step.to }}</small>
+                  </li>
+                }
+              </ol>
+            </div>
           </div>
-          <div class="sequence-notes"><article><b>Idempotencia</b><span>La identidad de operación viaja entre reintentos para distinguir repetición de una nueva intención.</span></article><article><b>Ownership</b><span>Cada paso define quién confirma el estado antes de avanzar al siguiente límite.</span></article><article><b>Timeout</b><span>Las dependencias externas tienen presupuesto de tiempo y respuesta degradada explícita.</span></article></div>
+          <div class="sequence-notes"><article><b>Idempotencia</b><span>La identidad de operación viaja entre reintentos para distinguir repetición de una nueva intención.</span></article><article><b>Ownership / ACK</b><span>Cada flecha nombra quién entrega el control y qué participante debe confirmar antes de avanzar.</span></article><article><b>Timeout y backpressure</b><span>Colas, dependencias y adaptadores tienen presupuesto de tiempo; una saturación no se propaga sin límite.</span></article></div>
         </section>
       }
       @case ('resilience') {
