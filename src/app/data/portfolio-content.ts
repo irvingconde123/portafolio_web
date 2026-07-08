@@ -3,6 +3,11 @@ import { DATA_ACCESS_PROJECT } from './data-access-project';
 
 export * from './portfolio.models';
 export { EXPERIENCES, SKILL_GROUPS } from './portfolio-profile';
+export {
+  CASE_STUDIES,
+  findCaseStudy,
+  hasValidArchitecture,
+} from './case-studies';
 
 export const PROJECTS: ProjectItem[] = [
   {

@@ -10,16 +10,16 @@ export const EXPERIENCES: ExperienceItem[] = [
     technologies: ['Python', 'Ionic', 'Angular', 'Lambda', 'S3', 'DynamoDB', 'CloudFront'],
   },
   {
-    company: 'Hostlyc · colaboración independiente',
+    company: 'Hostlyc',
     period: 'Oct 2025 — Actualidad',
-    role: 'Arquitecto y desarrollador full stack',
+    role: 'Desarrollador full stack · colaboración independiente',
     summary:
       'Planeación, arquitectura y ejecución de API, aplicaciones multiplataforma y mecanismos de continuidad para web, Android y escritorio.',
     technologies: ['NestJS', 'Ionic', 'Angular', 'Electron', 'Prisma', 'TypeORM', 'PostgreSQL'],
   },
   {
     company: 'GECOSOFT',
-    period: 'Mar 2022 — May 2024',
+    period: 'Mar 2022 — Mayo 2024',
     role: 'Desarrollador backend',
     summary:
       'Servicios backend, bases de datos y administración de infraestructura Linux y Windows en AWS y Azure.',
@@ -40,7 +40,7 @@ export const SKILL_GROUPS: SkillGroup[] = [
     name: 'Interfaces multiplataforma',
     description: 'Una base visual coherente para navegador, Android y escritorio.',
     skills: [
-      { name: 'Angular', evidence: 'Landing dinámica y CMS', projectSlug: 'landing' },
+      { name: 'Angular', evidence: 'Landing dinámica y CMS', projectSlug: 'plataforma-contenido' },
       { name: 'Ionic', evidence: 'Operación híbrida', projectSlug: 'adastra' },
       { name: 'Electron', evidence: 'Distribución de escritorio', projectSlug: 'adastra' },
       { name: 'Next.js', evidence: 'Landing comercial', projectSlug: 'hostlyc' },
@@ -50,10 +50,10 @@ export const SKILL_GROUPS: SkillGroup[] = [
     name: 'Servicios y datos',
     description: 'Contratos, seguridad y persistencia aislados de la experiencia visual.',
     skills: [
-      { name: 'NestJS', evidence: 'API, políticas y gateway', projectSlug: 'edge-gateway' },
-      { name: 'PostgreSQL', evidence: 'Contenido y operación', projectSlug: 'cms' },
-      { name: 'TypeORM', evidence: 'Resolución dinámica', projectSlug: 'cloud-automation' },
-      { name: 'API REST', evidence: 'Contrato público tipado', projectSlug: 'landing' },
+      { name: 'NestJS', evidence: 'API, políticas y gateway', projectSlug: 'gateway-datos' },
+      { name: 'PostgreSQL', evidence: 'Contenido versionado', projectSlug: 'plataforma-contenido' },
+      { name: 'TypeORM', evidence: 'Resolución dinámica', projectSlug: 'gateway-datos' },
+      { name: 'API REST', evidence: 'Contrato público tipado', projectSlug: 'plataforma-contenido' },
     ],
   },
   {
@@ -61,16 +61,16 @@ export const SKILL_GROUPS: SkillGroup[] = [
     description: 'Decisiones para continuidad, evolución y límites de confianza.',
     skills: [
       { name: 'Operación sin conexión', evidence: 'Bandeja de salida cifrada', projectSlug: 'adastra' },
-      { name: 'Multi-tenant', evidence: 'Tenant por dominio', projectSlug: 'landing' },
-      { name: 'Gateway', evidence: 'Rutas y políticas', projectSlug: 'edge-gateway' },
-      { name: 'Acceso dinámico a datos', evidence: 'Registro lógico', projectSlug: 'cloud-automation' },
+      { name: 'Multi-tenant', evidence: 'Tenant por dominio', projectSlug: 'plataforma-contenido' },
+      { name: 'Gateway', evidence: 'Rutas y políticas', projectSlug: 'gateway-datos' },
+      { name: 'Acceso dinámico a datos', evidence: 'Registro lógico', projectSlug: 'gateway-datos' },
     ],
   },
   {
     name: 'Nube y entrega',
     description: 'Automatización y operación con evidencia pública limitada por confidencialidad.',
     skills: [
-      { name: 'GitHub Actions', evidence: 'CI/CD de este portafolio', projectSlug: 'hostlyc' },
+      { name: 'GitHub Actions', evidence: 'CI/CD de este portafolio' },
       { name: 'AWS', evidence: 'Experiencia profesional; detalles reservados' },
       { name: 'Python', evidence: 'Automatización profesional; detalles reservados' },
     ],
