@@ -34,6 +34,7 @@ jobs:
         run: |
           npm run quality:size
           npm run lint
+          npm test -- --watch=false --browsers=ChromeHeadless
 
       - name: Build project site
         run: npm run build:pages
