@@ -12,7 +12,7 @@ export const PROJECTS: ProjectItem[] = [
     summary:
       'Aplicación operativa con captura offline cifrada, caché local, sincronización idempotente y continuidad de sesión.',
     impact: 'El flujo puede continuar sin red y reconciliar cambios sin duplicar información.',
-    ownership: 'Arquitectura, planeación y ejecución integral por Irving Conde.',
+    ownership: 'Arquitectura integral, experiencia multiplataforma, persistencia offline y pruebas.',
     team: 'Ejecución individual',
     status: 'Producto funcional en evolución',
     solutionFor: 'Operación de campo y laboratorio con conectividad intermitente.',
@@ -61,7 +61,7 @@ export const PROJECTS: ProjectItem[] = [
     summary:
       'Landing multi-tenant que consume contenido dinámico desde un CMS y conmuta a un respaldo local mediante un repositorio y adaptadores tipados.',
     impact: 'Una misma aplicación presenta contenido diferente por organización sin recompilar.',
-    ownership: 'Arquitectura, planeación y ejecución integral por Irving Conde.',
+    ownership: 'Arquitectura frontend, integración CMS con respaldo local y sistema visual.',
     team: 'Ejecución individual',
     status: 'Implementación funcional en evolución visual',
     solutionFor: 'Sitios administrables que deben seguir disponibles cuando el CMS falla.',
@@ -115,7 +115,7 @@ export const PROJECTS: ProjectItem[] = [
     summary:
       'Panel para administrar navegación, páginas, componentes, medios y tokens publicados de forma segura.',
     impact: 'Separa cambios editoriales de despliegues técnicos y conserva contratos validados.',
-    ownership: 'Arquitectura, planeación y ejecución integral por Irving Conde.',
+    ownership: 'Arquitectura del panel, ciclo editorial, permisos y pruebas automatizadas.',
     team: 'Ejecución individual',
     status: 'Implementación funcional en evolución',
     solutionFor: 'Equipos editoriales que requieren publicar sin modificar el código.',
@@ -164,7 +164,7 @@ export const PROJECTS: ProjectItem[] = [
     summary:
       'Experiencia comercial orientada a conversión con servicios, proyectos, proceso, diagnóstico y contacto.',
     impact: 'Convierte una oferta técnica amplia en una narrativa clara, rápida y accionable.',
-    ownership: 'Arquitectura, planeación y ejecución integral por Irving Conde.',
+    ownership: 'Estrategia de producto, arquitectura web, diseño de interfaz y entrega.',
     team: 'Ejecución individual',
     status: 'Demostración pública sanitizada',
     solutionFor: 'Negocios que necesitan explicar su oferta y convertir visitas en conversaciones.',
@@ -213,7 +213,7 @@ export const PROJECTS: ProjectItem[] = [
     summary:
       'Fachada segura para aplicaciones web, móviles y de escritorio que autentica, aplica políticas y resuelve servicios internos sin revelar hosts.',
     impact: 'Permite evolucionar rutas y políticas sin acoplar a los clientes con la topología interna.',
-    ownership: 'Arquitectura, planeación y ejecución integral por Irving Conde.',
+    ownership: 'Diseño del gateway, políticas de acceso, resiliencia y observabilidad.',
     team: 'Ejecución individual',
     status: 'Arquitectura aplicada y sanitizada',
     solutionFor: 'Plataformas con múltiples clientes y servicios internos que necesitan una frontera pública gobernada.',

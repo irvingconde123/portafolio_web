@@ -1,7 +1,7 @@
 <ion-content [fullscreen]="true">
   <header class="site-header">
     <button class="identity" type="button" (click)="scrollTo('top')" aria-label="Ir al inicio">
-      <span>IC</span><b>Irving Conde</b>
+      <b>Irving Conde</b>
     </button>
     <button class="menu-toggle" type="button" [attr.aria-expanded]="mobileMenuOpen" aria-controls="main-navigation" (click)="toggleMobileMenu()"><span></span><span></span><span></span><b>Menú</b></button>
     <nav id="main-navigation" [class.open]="mobileMenuOpen" aria-label="Navegación principal">
@@ -114,7 +114,7 @@
             </div>
             <div class="project-body">
               <small>{{ project.kind }}</small><h3>{{ project.name }}</h3><p>{{ project.summary }}</p>
-              <div class="project-authorship"><span>AUTORÍA END-TO-END</span><b>{{ project.ownership }}</b></div>
+              <div class="project-authorship"><span>CONTRIBUCIONES REALIZADAS</span><b>{{ project.ownership }}</b></div>
               <div class="project-evidence" aria-label="Evidencia del proyecto">@for (item of project.evidence; track item.label) { <span><b>{{ item.value }}</b>{{ item.label }}</span> }</div>
               <p class="impact">{{ project.impact }}</p>
               <dl class="project-facts"><div><dt>Estado</dt><dd>{{ project.status }}</dd></div><div><dt>Uso</dt><dd>{{ project.solutionFor }}</dd></div></dl>

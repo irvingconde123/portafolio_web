@@ -51,13 +51,13 @@
   .landing-blueprint > .blueprint-node:last-child,.hostlyc-blueprint > .blueprint-node:last-child,.cms-blueprint > .blueprint-node:nth-of-type(3),.cms-blueprint > .blueprint-branch { grid-column: auto; }
 }
 @media (max-width: 560px) {
-  .demo-header span { display: none; }.demo-window { border-width: 4px; border-radius: 0.9rem; }
+  .demo-header { min-height: 4rem; padding: .8rem 1rem; }.demo-header span { display: none; }.demo-page { padding: 2rem .5rem 5rem; }.demo-window { border-width: 4px; border-radius: 0.9rem; min-height: 32rem; min-width: 0; width: 100%; }
   .demo-intro h1 { font-size: clamp(2.35rem, 13vw, 3.35rem); }
-  .demo-blueprint > header { align-items: flex-start; flex-direction: column; gap: .3rem; }
+  .demo-blueprint { padding: .8rem; }.demo-blueprint > header { align-items: flex-start; flex-direction: column; gap: .3rem; }
   .blueprint-branch,.blueprint-branch.two-paths { grid-template-columns: 1fr; }
   .ops-workspace > header { padding: 0.8rem; }.session-chip { display: none; }.update-strip { padding-inline: 0.9rem; }.update-strip button { display: none; }.ops-content { padding: 1rem; }.metrics { grid-template-columns: 1fr; }.report-row { align-items: flex-start; flex-direction: column; gap: 0.8rem; }
   .laboratory-demo > nav,.hostlyc-demo > nav { padding-inline: 0.8rem; }.lab-cta,.hostlyc-contact { display: none; }.laboratory-hero { padding: 1.5rem 1rem 2.5rem; }.laboratory-hero h2 { font-size: 2.5rem; }.laboratory-hero > div > div { align-items: stretch; flex-direction: column; }.laboratory-hero footer { grid-template-columns: auto 1fr; }
-  .cms-workspace { padding: 1rem; }.cms-workspace > header button { display: none; }.cms-summary { grid-template-columns: 1fr; }.cms-editor article button { display: none; }
+  .cms-workspace { overflow: hidden; padding: .85rem; }.cms-workspace > header { align-items: flex-start; }.cms-workspace > header button { display: none; }.cms-summary { grid-template-columns: 1fr; }.cms-editor article button { display: none; }.cms-section-heading { align-items: flex-start; flex-direction: column; }.cms-modal { width: 100%; }
   .hostlyc-hero h2 { font-size: 3.1rem; }.hostlyc-hero > div { align-items: stretch; flex-direction: column; }.hostlyc-marquee { justify-content: flex-start; }
 }
 

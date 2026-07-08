@@ -7,7 +7,7 @@
     </section>
 
     <section class="project-context" aria-label="Contexto verificable del proyecto">
-      <article><small>AUTORÍA</small><b>{{ project.ownership }}</b><span>{{ project.team }}</span></article>
+      <article><small>CONTRIBUCIONES REALIZADAS</small><b>{{ project.ownership }}</b><span>{{ project.team }}</span></article>
       <article><small>ESTADO</small><b>{{ project.status }}</b><span>Representación pública sanitizada</span></article>
       <article><small>SOLUCIÓN PARA</small><b>{{ project.solutionFor }}</b></article>
       <article class="context-evidence"><small>EVIDENCIA</small><div>@for (item of project.evidence; track item.label) { <span><b>{{ item.value }}</b>{{ item.label }}</span> }</div></article>

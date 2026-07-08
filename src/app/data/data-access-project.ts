@@ -7,7 +7,7 @@ export const DATA_ACCESS_PROJECT: ProjectItem = {
   summary:
     'Capa de acceso que recibe un recurso lógico y resuelve contexto, entidad, controlador y conexión sin acoplar el dominio a una base física.',
   impact: 'Permite mover recursos entre contextos o motores y aislar una caída sin detener toda la plataforma.',
-  ownership: 'Arquitectura, planeación y ejecución integral por Irving Conde.',
+  ownership: 'Diseño del registro, fábrica de conexiones, adaptadores y recuperación por contexto.',
   team: 'Ejecución individual',
   status: 'Arquitectura aplicada y sanitizada',
   solutionFor: 'Sistemas con varias bases, módulos o motores que deben evolucionar sin contaminar la lógica de negocio.',
