@@ -206,23 +206,30 @@ h3 { font-size: 1.35rem; line-height: 1.2; margin: 0.35rem 0 0.8rem; }
 .preview-bar { align-items: center; display: flex; gap: 0.35rem; height: 2.2rem; }
 .preview-bar i { background: #334155; border-radius: 50%; height: 0.36rem; width: 0.36rem; }
 .preview-bar span { color: #718096; font-size: 0.55rem; margin-left: auto; text-transform: uppercase; }
-.mini-app { background: #f3f6fb; border-radius: 0.5rem; color: #172033; display: grid; grid-template-columns: 3.5rem 1fr; height: 9.75rem; overflow: hidden; }
-.mini-app > b { background: #fff; border-right: 1px solid #dbe3ef; color: #315ee8; padding: 0.8rem; }
-.mini-app > div { display: grid; gap: 0.45rem; grid-template-columns: repeat(3, 1fr); padding: 1rem; }
-.mini-app em { background: #dbe7ff; border-radius: 0.3rem; grid-column: 1 / -1; height: 0.7rem; }
-.mini-app strong { background: white; border: 1px solid #dce3ed; border-radius: 0.3rem; font-size: 1rem; padding: 0.65rem 0.4rem; text-align: center; }
-.mini-app p { background: white; border: 1px solid #dce3ed; border-radius: 0.3rem; grid-column: 1 / -1; height: 0.65rem; margin: 0; }
-.mini-cms > b { background: #0d4c4a; color: white; }
-.mini-cms em { background: #ccfbf1; }
-.mini-lab { background: radial-gradient(circle at 78% 20%, #1e4a75, #070d17 62%); border-radius: 0.5rem; display: flex; flex-direction: column; height: 9.75rem; justify-content: center; padding: 1.4rem; position: relative; }
-.mini-lab small { color: #60a5fa; font-size: 0.5rem; letter-spacing: 0.14em; }
-.mini-lab b { font-size: 1.5rem; line-height: 1; margin-top: 0.6rem; max-width: 10ch; }
-.mini-lab span { background: #3b82f6; border-radius: 0.25rem; height: 0.55rem; margin-top: 1rem; width: 3.5rem; }
-.mini-agency { background: #121212; border-radius: 0.5rem; display: flex; flex-direction: column; height: 9.75rem; justify-content: center; padding: 1.4rem; text-align: center; }
-.mini-agency small { color: #fff; font-size: 0.48rem; }
-.mini-agency b { font-size: 1.45rem; line-height: 0.95; margin-top: 0.55rem; }
-.mini-agency b i { color: #ff003d; font-style: normal; }
-.mini-agency span { background: #ff003d; border-radius: 0.25rem; height: 0.5rem; margin: 0.9rem auto 0; width: 4rem; }
+.mini-app { background: #f3f6fb; border-radius: .5rem; color: #172033; display: grid; grid-template-columns: 3.2rem 1fr; height: 9.75rem; overflow: hidden; }
+.mini-app > aside { align-items: center; background: #fff; border-right: 1px solid #dbe3ef; display: flex; flex-direction: column; gap: .65rem; padding: .7rem .55rem; }
+.mini-app > aside b { color: #315ee8; font-size: .75rem; }
+.mini-app > aside i { background: #d8e0ed; border-radius: .2rem; height: .3rem; width: 1.6rem; }
+.mini-app > section { display: grid; gap: .33rem; grid-template-columns: repeat(3, 1fr); padding: .65rem .75rem; }
+.mini-app header { align-items: center; display: flex; grid-column: 1/-1; justify-content: space-between; }
+.mini-app header small { color: #637189; font-size: .42rem; }
+.mini-app header span { align-items: center; background: #315ee8; border-radius: 50%; color: #fff; display: flex; font-size: .36rem; height: 1.1rem; justify-content: center; width: 1.1rem; }
+.mini-app section > em { color: #315ee8; font-size: .38rem; font-style: normal; font-weight: 800; grid-column: 1/-1; }
+.mini-app section > b { font-size: .72rem; grid-column: 1/-1; }
+.mini-app section > div { display: grid; gap: .3rem; grid-column: 1/-1; grid-template-columns: repeat(3,1fr); }
+.mini-app strong { background: white; border: 1px solid #dce3ed; border-radius: .3rem; display: grid; font-size: .75rem; gap: .05rem; padding: .35rem; }
+.mini-app strong small { color: #7c899b; font-size: .32rem; font-weight: 500; }
+.mini-app p { background: white; border: 1px solid #dce3ed; border-radius: .25rem; grid-column: 1/-1; height: .38rem; margin: 0; }
+.mini-cms > aside { background: #0d4c4a; }.mini-cms > aside b { color: white; }.mini-cms > aside i { background: #5b9692; }.mini-cms section > em { color: #0f766e; }.mini-cms header span { background: #0f766e; border-radius: .25rem; height: auto; padding: .22rem .35rem; width: auto; }
+.mini-lab { background: #081321; border-radius: .5rem; height: 9.75rem; overflow: hidden; }
+.mini-lab nav { align-items: center; background: #fff; color: #14213a; display: flex; font-size: .4rem; height: 1.8rem; justify-content: space-between; padding: 0 .65rem; }
+.mini-lab nav b { color: #172554; font-size: .45rem; }.mini-lab nav span { color: #64748b; }
+.mini-lab section { display: grid; grid-template-columns: 1.1fr .9fr; height: calc(100% - 1.8rem); padding: .75rem; }
+.mini-lab section > div { align-content: center; display: grid; }.mini-lab small { color: #60a5fa; font-size: .36rem; letter-spacing: .12em; }.mini-lab section b { font-size: 1.45rem; line-height: 1; margin-top: .35rem; }.mini-lab p { color: #a8b8cc; font-size: .38rem; line-height: 1.4; margin: .35rem 0; max-width: 14rem; }.mini-lab section i { background: #ffd400; border-radius: .2rem; height: .35rem; width: 2.8rem; }
+.mini-lab figure { background: linear-gradient(90deg,#07101db5,#07101d10),url('../assets/laboratory-hero.png') center/cover; border: 1px solid #2c4059; border-radius: .45rem; margin: 0; min-width: 0; }
+.mini-agency { background: #121212; border-radius: .5rem; height: 9.75rem; overflow: hidden; text-align: center; }
+.mini-agency nav { align-items: center; background: #fff; color: #181818; display: flex; font-size: .4rem; height: 1.8rem; justify-content: space-between; padding: 0 .65rem; }.mini-agency nav b { font-size: .48rem; }.mini-agency nav b::first-letter { color: #ff003d; }.mini-agency nav span { color: #71676a; }
+.mini-agency section { align-content: center; display: grid; height: calc(100% - 1.8rem); justify-items: center; padding: .6rem; }.mini-agency small { color: #fff; font-size: .36rem; }.mini-agency section b { font-size: 1.25rem; line-height: .95; margin-top: .35rem; }.mini-agency section b i { color: #ff003d; font-style: normal; }.mini-agency p { color: #b7adb0; font-size: .36rem; margin: .35rem 0; }.mini-agency section span { background: #ff003d; border-radius: .2rem; height: .35rem; width: 3.5rem; }
 .mini-flow { align-items: center; display: flex; gap: 0.5rem; height: 9.75rem; justify-content: center; }
 .mini-flow b { background: #111e31; border: 1px solid #315070; border-radius: 0.45rem; font-size: 0.65rem; padding: 1rem 0.65rem; }
 .mini-flow i { color: var(--accent); font-style: normal; }

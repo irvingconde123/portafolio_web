@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PROJECTS, ProjectItem } from '../data/portfolio-content';
 
@@ -47,14 +47,22 @@ interface CmsBlock {
   visible: boolean;
 }
 
+interface DemoFeedback {
+  id: number;
+  message: string;
+}
+
 @Component({
   selector: 'app-demo',
   templateUrl: './demo.page.html',
   styleUrls: ['./demo.page.scss'],
   standalone: false,
 })
-export class DemoPage implements OnInit {
+export class DemoPage implements OnInit, OnDestroy {
   private readonly route = inject(ActivatedRoute);
+  private readonly feedbackDuration = 3000;
+  private feedbackTimer?: ReturnType<typeof setTimeout>;
+  private feedbackSequence = 0;
 
   protected slug: DemoSlug = 'adastra';
   protected project?: ProjectItem;
@@ -62,7 +70,7 @@ export class DemoPage implements OnInit {
   protected selectedSection = 'Inicio';
   protected appView: AppView = 'home';
   protected cmsView: CmsView = 'Resumen';
-  protected feedback = '';
+  protected feedback?: DemoFeedback;
   protected reportSearch = '';
   protected reportStatusFilter = 'Todos';
   protected selectedReportId: string | null = null;
@@ -168,6 +176,10 @@ export class DemoPage implements OnInit {
         ? candidate
         : 'adastra';
     this.project = PROJECTS.find((item) => item.slug === this.slug);
+  }
+
+  ngOnDestroy(): void {
+    if (this.feedbackTimer) clearTimeout(this.feedbackTimer);
   }
 
   protected get filteredReports(): DemoReport[] {
@@ -359,10 +371,15 @@ export class DemoPage implements OnInit {
   }
 
   protected clearFeedback(): void {
-    this.feedback = '';
+    if (this.feedbackTimer) clearTimeout(this.feedbackTimer);
+    this.feedback = undefined;
   }
 
   private showFeedback(message: string): void {
-    this.feedback = message;
+    if (this.feedbackTimer) clearTimeout(this.feedbackTimer);
+    this.feedback = { id: ++this.feedbackSequence, message };
+    this.feedbackTimer = setTimeout(() => {
+      this.feedback = undefined;
+    }, this.feedbackDuration);
   }
 }

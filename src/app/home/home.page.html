@@ -94,10 +94,10 @@
             <div class="project-preview" [attr.data-preview]="project.preview" aria-hidden="true">
               <div class="preview-bar"><i></i><i></i><i></i><span>{{ project.kind }}</span></div>
               @switch (project.preview) {
-                @case ('operations') { <div class="mini-app"><b>AA</b><div><em></em><strong>5</strong><strong>2</strong><strong>18</strong><p></p><p></p></div></div> }
-                @case ('laboratory') { <div class="mini-lab"><small>LABORATORIO AMBIENTAL</small><b>Ciencia precisa para decidir mejor.</b><span></span></div> }
-                @case ('cms') { <div class="mini-app mini-cms"><b>CMS</b><div><em></em><p></p><p></p><p></p></div></div> }
-                @case ('agency') { <div class="mini-agency"><small>AGENCIA DIGITAL</small><b>Tu negocio,<br><i>visible</i> y creciendo.</b><span></span></div> }
+                @case ('operations') { <div class="mini-app"><aside><b>AA</b><i></i><i></i><i></i></aside><section><header><small>Laboratorista</small><span>IC</span></header><em>JORNADA · 07 JUL</em><b>Bandeja de laboratorio</b><div><strong>1<small>Pendiente</small></strong><strong>1<small>Activo</small></strong><strong>1<small>Cerrado</small></strong></div><p></p><p></p></section></div> }
+                @case ('laboratory') { <div class="mini-lab"><nav><b>AA · AD ASTRA LABS</b><span>Inicio&nbsp;&nbsp; Servicios&nbsp;&nbsp; Contacto</span></nav><section><div><small>LABORATORIO AMBIENTAL ACREDITADO</small><b>Ad Astra</b><p>Resultados confiables para decisiones responsables.</p><i></i></div><figure></figure></section></div> }
+                @case ('cms') { <div class="mini-app mini-cms"><aside><b>CMS</b><i></i><i></i><i></i></aside><section><header><small>Lab CMS</small><span>Publicar</span></header><em>RESUMEN EDITORIAL</em><b>Contenido del sitio</b><div><strong>4<small>Páginas</small></strong><strong>5<small>Bloques</small></strong><strong>12<small>Versión</small></strong></div><p></p><p></p></section></div> }
+                @case ('agency') { <div class="mini-agency"><nav><b>✦ Hostlyc</b><span>Servicios&nbsp;&nbsp; Proyectos&nbsp;&nbsp; Contacto</span></nav><section><small>AGENCIA DIGITAL</small><b>Tu negocio, <i>visible</i><br>y creciendo.</b><p>Diseño, software y automatización.</p><span></span></section></div> }
                 @case ('gateway') { <div class="mini-flow"><b>Clientes</b><i>→</i><b>Gateway</b><i>→</i><b>Servicios</b></div> }
                 @case ('cloud') { <div class="mini-cloud"><b>API</b><i></i><b>EVENTOS</b><i></i><b>DATOS</b></div> }
               }

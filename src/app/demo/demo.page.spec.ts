@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -12,7 +12,7 @@ interface DemoHarness {
     location: string;
   };
   drafts: unknown[];
-  feedback: string;
+  feedback?: { id: number; message: string };
   offline: boolean;
   reports: Array<{ id: string; status: string; evidence: string[] }>;
   cmsVersion: number;
@@ -21,6 +21,7 @@ interface DemoHarness {
   changeReportStatus(report: unknown, status: string): void;
   removeEvidence(report: unknown, index: number): void;
   publishCms(): void;
+  demoAction(message: string): void;
 }
 
 describe('DemoPage', () => {
@@ -63,7 +64,7 @@ describe('DemoPage', () => {
     harness.offline = true;
     harness.syncDrafts();
     expect(harness.drafts.length).toBeGreaterThan(0);
-    expect(harness.feedback).toContain('No hay conexión');
+    expect(harness.feedback?.message).toContain('No hay conexión');
 
     harness.offline = false;
     harness.syncDrafts();
@@ -82,4 +83,14 @@ describe('DemoPage', () => {
     harness.publishCms();
     expect(harness.cmsVersion).toBe(initialVersion + 1);
   });
+
+  it('dismisses feedback automatically after three seconds', fakeAsync(() => {
+    harness.demoAction('Solicitud de cotización mock enviada.');
+    expect(harness.feedback?.message).toContain('Solicitud de cotización');
+
+    tick(2999);
+    expect(harness.feedback).toBeDefined();
+    tick(1);
+    expect(harness.feedback).toBeUndefined();
+  }));
 });

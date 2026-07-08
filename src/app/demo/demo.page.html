@@ -6,12 +6,65 @@
 
   <main class="demo-page">
     <section class="demo-intro">
-      <p>{{ project?.kind }}</p>
-      <h1>{{ project?.name }}</h1>
-      <span>{{ project?.summary }}</span>
-      <div class="flow">
-        @for (node of project?.architecture; track node.label; let last = $last) {
-          <b>{{ node.label }}</b>@if (!last) { <i>→</i> }
+      <div class="demo-intro-copy">
+        <p>{{ project?.kind }}</p>
+        <h1>{{ project?.name }}</h1>
+        <span>{{ project?.summary }}</span>
+      </div>
+      <div class="demo-blueprint" [attr.data-architecture]="slug" aria-label="Arquitectura resumida de la demostración">
+        <header><span>MINI ARCHITECTURE</span><small>Flujo conceptual sanitizado</small></header>
+        @switch (slug) {
+          @case ('adastra') {
+            <div class="blueprint-grid adastra-blueprint">
+              <article class="blueprint-node source"><small>Canal</small><b>App híbrida</b><span>Web · Android · Desktop</span></article>
+              <i class="blueprint-arrow">→</i>
+              <article class="blueprint-node core"><small>Application core</small><b>Router de persistencia</b><span>Puertos + estrategia por plataforma</span></article>
+              <div class="blueprint-branch">
+                <article class="blueprint-node"><small>Preferencias</small><b>IndexedDB</b><span>Caché acotada</span></article>
+                <article class="blueprint-node accent"><small>Operación offline</small><b>Outbox cifrado</b><span>SQLite + idempotency key</span></article>
+                <article class="blueprint-node"><small>Con red</small><b>API transaccional</b><span>ACK atómico → datos operativos</span></article>
+              </div>
+            </div>
+          }
+          @case ('landing') {
+            <div class="blueprint-grid landing-blueprint">
+              <article class="blueprint-node source"><small>Request</small><b>Dominio + tenant</b><span>Contexto visual</span></article>
+              <i class="blueprint-arrow">→</i>
+              <article class="blueprint-node core"><small>Data access</small><b>Content repository</b><span>Switch de fuente tipado</span></article>
+              <div class="blueprint-branch two-paths">
+                <article class="blueprint-node"><small>Primario</small><b>CMS público</b><span>Contenido publicado</span></article>
+                <article class="blueprint-node fallback"><small>Respaldo</small><b>Snapshot local</b><span>Fallback disponible</span></article>
+              </div>
+              <i class="blueprint-arrow">→</i>
+              <article class="blueprint-node accent"><small>Presentación</small><b>Adapter + registry</b><span>Normaliza y compone secciones</span></article>
+            </div>
+          }
+          @case ('cms') {
+            <div class="blueprint-grid cms-blueprint">
+              <article class="blueprint-node source"><small>Actor</small><b>Editor CMS</b><span>Formularios por módulo</span></article>
+              <i class="blueprint-arrow">→</i>
+              <article class="blueprint-node core"><small>Policy</small><b>Schema + RBAC</b><span>Sesión · tenant · permisos</span></article>
+              <i class="blueprint-arrow">→</i>
+              <article class="blueprint-node accent"><small>Lifecycle</small><b>Draft / Publish API</b><span>Versionado y auditoría</span></article>
+              <div class="blueprint-branch two-paths">
+                <article class="blueprint-node"><small>Store</small><b>Contenido versionado</b><span>Borrador + versión activa</span></article>
+                <article class="blueprint-node"><small>Read model</small><b>API pública</b><span>Solo proyección publicada</span></article>
+              </div>
+            </div>
+          }
+          @case ('hostlyc') {
+            <div class="blueprint-grid hostlyc-blueprint">
+              <article class="blueprint-node source"><small>Navegación</small><b>App Router</b><span>Ruta + metadata SEO</span></article>
+              <i class="blueprint-arrow">→</i>
+              <article class="blueprint-node core"><small>Render</small><b>Server components</b><span>Composición por secciones</span></article>
+              <div class="blueprint-branch two-paths">
+                <article class="blueprint-node"><small>Content</small><b>Datos tipados</b><span>Oferta y casos</span></article>
+                <article class="blueprint-node"><small>Assets</small><b>Media optimizada</b><span>Responsive + fallback</span></article>
+              </div>
+              <i class="blueprint-arrow">→</i>
+              <article class="blueprint-node accent"><small>Entrega</small><b>Salida SSR / SSG</b><span>HTML útil + CTA progresivo</span></article>
+            </div>
+          }
         }
       </div>
     </section>
@@ -160,5 +213,11 @@
     <p class="disclaimer">Esta simulación no se conecta a sistemas reales. Los nombres, métricas y registros son demostrativos.</p>
   </main>
 
-  @if (feedback) { <div class="demo-feedback" role="status"><span>{{ feedback }}</span><button type="button" (click)="clearFeedback()" aria-label="Cerrar mensaje">×</button></div> }
+  @for (notice of feedback ? [feedback] : []; track notice.id) {
+    <div class="demo-feedback" role="status" aria-live="polite">
+      <span>{{ notice.message }}</span>
+      <button type="button" (click)="clearFeedback()" aria-label="Cerrar mensaje">×</button>
+      <i class="demo-feedback-progress" aria-hidden="true"></i>
+    </div>
+  }
 </ion-content>
