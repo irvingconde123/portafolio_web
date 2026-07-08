@@ -5,6 +5,7 @@ import { AdastraDemoComponent } from './adastra-demo.component';
 interface AdastraHarness {
   appView: string;
   captureModel: { customer: string; location: string };
+  demoPlatform: 'web' | 'android' | 'desktop';
   drafts: unknown[];
   offline: boolean;
   reports: Array<{ status: string; evidence: string[] }>;
@@ -52,5 +53,15 @@ describe('AdastraDemoComponent', () => {
     harness.removeEvidence(report, 0);
     expect(report.status).toBe('En curso');
     expect(report.evidence.length).toBe(initialEvidence - 1);
+  });
+
+  it('only offers application updates for packaged platforms', () => {
+    harness.demoPlatform = 'web';
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.update-strip')).toBeNull();
+
+    harness.demoPlatform = 'android';
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.update-strip')).not.toBeNull();
   });
 });

@@ -19,8 +19,10 @@
       <button type="button" [class.active]="appView === 'capture'" (click)="selectAppView('capture')">Nueva muestra</button>
       <button type="button" [class.active]="appView === 'drafts'" (click)="selectAppView('drafts')">Borradores</button>
     </nav>
-    <header><div><small>Laboratorista</small><b>Buen día, bienvenido</b></div><div class="session-chip">Sesión 07:48:21</div><span class="avatar">IC</span></header>
-    <div class="update-strip">↑ <span><b>Actualización Android disponible</b><small>Puedes continuar trabajando.</small></span><button type="button" (click)="notify('Descarga simulada iniciada.')">Descargar</button></div>
+    <header><div><small>Laboratorista</small><b>Buen día, bienvenido</b></div><label class="platform-picker">Vista<select name="demoPlatform" [(ngModel)]="demoPlatform"><option value="web">Web</option><option value="android">Android</option><option value="desktop">Escritorio</option></select></label><div class="session-chip">Sesión 07:48:21</div><span class="avatar">IC</span></header>
+    @if (demoPlatform !== 'web') {
+      <div class="update-strip">↑ <span><b>Actualización {{ demoPlatform === 'android' ? 'Android' : 'de escritorio' }} disponible</b><small>Puedes continuar trabajando.</small></span><button type="button" (click)="notify('Descarga simulada iniciada.')">Descargar</button></div>
+    }
 
     <section class="ops-content">
       @switch (appView) {

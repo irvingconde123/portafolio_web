@@ -1,26 +1,16 @@
 <ion-content [fullscreen]="true">
-  <header class="demo-header"><a routerLink="/home">← Portafolio</a><span>Demostración interactiva · datos ficticios</span></header>
+  <header class="demo-header">
+    <a routerLink="/">← Portafolio</a>
+    <span>Demostración interactiva · datos ficticios</span>
+  </header>
 
   <main class="demo-page">
-    <section class="demo-intro">
-      <div class="demo-intro-copy"><p>{{ project?.kind }}</p><h1>{{ project?.name }}</h1><span>{{ project?.summary }}</span></div>
-      <div class="demo-blueprint" [attr.data-architecture]="slug" aria-label="Arquitectura resumida de la demostración">
-        <header><span>ARQUITECTURA RESUMIDA</span><small>Flujo conceptual sanitizado</small></header>
-        @switch (slug) {
-          @case ('adastra') {
-            <div class="blueprint-grid adastra-blueprint"><article class="blueprint-node source"><small>Canal</small><b>Aplicación híbrida</b><span>Web · Android · Escritorio</span></article><i class="blueprint-arrow">→</i><article class="blueprint-node core"><small>Núcleo de aplicación</small><b>Enrutador de persistencia</b><span>Puertos + estrategia por plataforma</span></article><div class="blueprint-branch"><article class="blueprint-node"><small>Preferencias</small><b>IndexedDB</b><span>Caché acotada</span></article><article class="blueprint-node accent"><small>Operación sin conexión</small><b>Bandeja de salida cifrada</b><span>SQLite + clave idempotente</span></article><article class="blueprint-node"><small>Con red</small><b>API transaccional</b><span>Confirmación atómica → datos</span></article></div></div>
-          }
-          @case ('landing') {
-            <div class="blueprint-grid landing-blueprint"><article class="blueprint-node source"><small>Solicitud</small><b>Dominio + tenant</b><span>Contexto visual</span></article><i class="blueprint-arrow">→</i><article class="blueprint-node core"><small>Acceso a datos</small><b>Repositorio de contenido</b><span>Selector de fuente tipado</span></article><div class="blueprint-branch two-paths"><article class="blueprint-node"><small>Fuente primaria</small><b>CMS público</b><span>Contenido publicado</span></article><article class="blueprint-node fallback"><small>Respaldo</small><b>Snapshot local</b><span>Disponible ante error</span></article></div><i class="blueprint-arrow">→</i><article class="blueprint-node accent"><small>Presentación</small><b>Adaptador + registro</b><span>Normaliza y compone secciones</span></article></div>
-          }
-          @case ('cms') {
-            <div class="blueprint-grid cms-blueprint"><article class="blueprint-node source"><small>Actor</small><b>Editor CMS</b><span>Formularios por módulo</span></article><i class="blueprint-arrow">→</i><article class="blueprint-node core"><small>Política</small><b>Esquema + RBAC</b><span>Sesión · tenant · permisos</span></article><i class="blueprint-arrow">→</i><article class="blueprint-node accent"><small>Ciclo editorial</small><b>API de borrador y publicación</b><span>Versionado y auditoría</span></article><div class="blueprint-branch two-paths"><article class="blueprint-node"><small>Persistencia</small><b>Contenido versionado</b><span>Borrador + versión activa</span></article><article class="blueprint-node"><small>Modelo de lectura</small><b>API pública</b><span>Solo contenido publicado</span></article></div></div>
-          }
-          @case ('hostlyc') {
-            <div class="blueprint-grid hostlyc-blueprint"><article class="blueprint-node source"><small>Navegación</small><b>Enrutador de aplicación</b><span>Ruta + metadatos SEO</span></article><i class="blueprint-arrow">→</i><article class="blueprint-node core"><small>Renderizado</small><b>Componentes de servidor</b><span>Composición por secciones</span></article><div class="blueprint-branch two-paths"><article class="blueprint-node"><small>Contenido</small><b>Datos tipados</b><span>Oferta y casos</span></article><article class="blueprint-node"><small>Recursos</small><b>Medios optimizados</b><span>Responsivos + respaldo</span></article></div><i class="blueprint-arrow">→</i><article class="blueprint-node accent"><small>Entrega</small><b>Salida SSR / SSG</b><span>HTML útil + conversión progresiva</span></article></div>
-          }
-        }
+    <section class="demo-guide" aria-labelledby="demo-title">
+      <div>
+        <small>DEMOSTRACIÓN CON DATOS FICTICIOS</small>
+        <h1 id="demo-title">{{ project?.name }}</h1>
       </div>
+      <p><b>Recorrido sugerido</b><span>{{ suggestedJourney }}</span></p>
     </section>
 
     @switch (slug) {
@@ -30,7 +20,7 @@
       @case ('hostlyc') { <app-hostlyc-demo (feedback)="showFeedback($event)"></app-hostlyc-demo> }
     }
 
-    <p class="disclaimer">Esta simulación no se conecta a sistemas reales. Los nombres, métricas y registros son demostrativos.</p>
+    <p class="disclaimer">La simulación no se conecta a sistemas reales. Nombres, métricas y registros son demostrativos.</p>
   </main>
 
   @for (notice of feedback ? [feedback] : []; track notice.id) {

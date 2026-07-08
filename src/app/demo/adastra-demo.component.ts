@@ -11,6 +11,7 @@ export class AdastraDemoComponent {
   @Output() readonly feedback = new EventEmitter<string>();
 
   protected offline = false;
+  protected demoPlatform: 'web' | 'android' | 'desktop' = 'android';
   protected appView: AppView = 'home';
   protected reportSearch = '';
   protected reportStatusFilter = 'Todos';

@@ -20,6 +20,16 @@ export class DemoPage implements OnInit, OnDestroy {
   protected project?: ProjectItem;
   protected feedback?: DemoFeedback;
 
+  protected get suggestedJourney(): string {
+    const journeys: Record<DemoSlug, string> = {
+      adastra: 'Revisa un reporte, edítalo, fuerza el modo sin conexión y sincroniza el borrador.',
+      landing: 'Explora servicios, acreditaciones y contacto como visitante del laboratorio.',
+      cms: 'Edita contenido, medios y SEO; después publica una versión simulada.',
+      hostlyc: 'Recorre servicios y proyectos; termina con el diagnóstico de contacto.',
+    };
+    return journeys[this.slug];
+  }
+
   ngOnInit(): void {
     const candidate = this.route.snapshot.paramMap.get('slug');
     this.slug =
