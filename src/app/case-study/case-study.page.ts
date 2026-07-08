@@ -48,6 +48,12 @@ export class CaseStudyPage implements OnInit, OnDestroy {
   }
 
   protected evidenceUrl(source: string): string {
-    return `https://github.com/irvingconde123/portafolio_web/blob/main/${source}`;
+    const repositoryPath = source
+      .replace(/^\/+/, '')
+      .split('/')
+      .map((segment) => encodeURIComponent(segment))
+      .join('/');
+
+    return `https://github.com/irvingconde123/portafolio_web/blob/main/${repositoryPath}`;
   }
 }

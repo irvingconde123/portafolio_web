@@ -40,11 +40,15 @@ h2 { font-size: clamp(1.65rem, 4vw, 2.35rem); letter-spacing: -0.025em; margin: 
 .architecture-nodes p { color: #a8b7c9; font-size: 0.9rem; line-height: 1.5; }
 code { background: rgba(8, 145, 178, 0.13); border-radius: 0.3rem; color: inherit; font-size: 0.75rem; padding: 0.25rem 0.4rem; }
 .architecture-edges { border: 1px solid #23374d; border-radius: 0.75rem; margin-top: 2rem; overflow: hidden; }
-.architecture-edges header, .architecture-edges article { align-items: center; display: grid; gap: 1rem; grid-template-columns: 1.1fr 0.55fr 1.35fr; padding: 0.85rem 1rem; }
-.architecture-edges header { background: #0d1b2a; color: #67e8f9; font-size: 0.75rem; text-transform: uppercase; }
-.architecture-edges article { border-top: 1px solid #23374d; }
-.architecture-edges b, .architecture-edges p { font-size: 0.85rem; margin: 0; }
-.architecture-edges p { color: #a8b7c9; }
+.architecture-edges table { border-collapse: collapse; table-layout: fixed; width: 100%; }
+.architecture-edges caption { clip: rect(0 0 0 0); clip-path: inset(50%); height: 1px; overflow: hidden; position: absolute; white-space: nowrap; width: 1px; }
+.architecture-edges th, .architecture-edges td { font-size: 0.85rem; overflow-wrap: anywhere; padding: 0.85rem 1rem; text-align: left; }
+.architecture-edges thead { background: #0d1b2a; color: #67e8f9; font-size: 0.75rem; text-transform: uppercase; }
+.architecture-edges thead th:nth-child(1) { width: 34%; }
+.architecture-edges thead th:nth-child(2) { width: 20%; }
+.architecture-edges tbody tr { border-top: 1px solid #23374d; }
+.architecture-edges tbody th { font-weight: 750; }
+.architecture-edges td { color: #a8b7c9; }
 .scenario-grid article, .decision-list article { background: var(--case-surface); border: 1px solid var(--case-border); border-radius: 0.75rem; padding: 1.25rem; }
 .scenario-grid span { color: var(--case-primary); font-weight: 800; }
 .scenario-grid p, .decision-list p { color: var(--case-muted); line-height: 1.5; }
@@ -72,8 +76,9 @@ code { background: rgba(8, 145, 178, 0.13); border-radius: 0.3rem; color: inheri
   .case-overview, .architecture-nodes, .scenario-grid { grid-template-columns: 1fr; }
   .architecture-section > header { display: block; }
   .architecture-section > header > span { display: inline-block; margin-top: 0.5rem; }
-  .architecture-edges header { display: none; }
-  .architecture-edges article { align-items: flex-start; grid-template-columns: 1fr; }
+  .architecture-edges th, .architecture-edges td { font-size: 0.75rem; padding: 0.75rem 0.6rem; }
+  .architecture-edges thead th:nth-child(1) { width: 35%; }
+  .architecture-edges thead th:nth-child(2) { width: 24%; }
   .decision-list article { grid-template-columns: 1fr; }
   .case-actions a { width: 100%; }
 }

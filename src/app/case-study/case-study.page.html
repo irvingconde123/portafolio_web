@@ -69,15 +69,26 @@
           }
         </div>
 
-        <div class="architecture-edges" aria-label="Contratos entre elementos">
-          <header><span>Origen → destino</span><span>Contrato</span><span>Propósito</span></header>
-          @for (edge of item.edges; track edge.from + edge.to) {
-            <article>
-              <b>{{ edge.from }} → {{ edge.to }}</b>
-              <code>{{ edge.protocol }}</code>
-              <p>{{ edge.purpose }}</p>
-            </article>
-          }
+        <div class="architecture-edges">
+          <table>
+            <caption>Contratos entre elementos de la arquitectura</caption>
+            <thead>
+              <tr>
+                <th scope="col">Origen → destino</th>
+                <th scope="col">Contrato</th>
+                <th scope="col">Propósito</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (edge of item.edges; track edge.from + edge.to) {
+                <tr>
+                  <th scope="row">{{ edge.from }} → {{ edge.to }}</th>
+                  <td><code>{{ edge.protocol }}</code></td>
+                  <td>{{ edge.purpose }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
         </div>
       </section>
 
@@ -118,7 +129,7 @@
           @for (evidence of item.evidence; track evidence.source) {
             <article>
               <span aria-hidden="true">✓</span>
-              <p><b>{{ evidence.label }}</b><a [href]="evidenceUrl(evidence.source)" target="_blank" rel="noreferrer">Ver fuente ↗</a></p>
+              <p><b>{{ evidence.label }}</b><a [href]="evidenceUrl(evidence.source)" target="_blank" rel="noopener noreferrer" [attr.aria-label]="'Ver fuente pública: ' + evidence.label + ' (abre en una pestaña nueva)'">Ver fuente ↗</a></p>
             </article>
           }
         </div>
