@@ -6,6 +6,11 @@
     <button class="cms-logout" type="button" (click)="notify('La sesión de demostración se reinició; el portafolio permanece abierto.')">Cerrar sesión</button>
   </aside>
   <div class="cms-workspace">
+    <nav class="mobile-demo-tabs cms-mobile-tabs" aria-label="Módulos del CMS">
+      @for (view of ['Resumen','Páginas y menú','Landing','Medios','Estilos','SEO']; track view) {
+        <button type="button" [class.active]="cmsView === view" (click)="setCmsView($any(view))">{{ view }}</button>
+      }
+    </nav>
     <header><div><small>CONTENIDO PÚBLICO</small><h2>{{ cmsView }}</h2></div><span class="version-chip">Borrador v{{ cmsVersion }}</span><button type="button" (click)="publishCms()">Publicar versión</button></header>
     @switch (cmsView) {
       @case ('Resumen') {

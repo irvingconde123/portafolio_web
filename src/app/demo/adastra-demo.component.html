@@ -13,6 +13,12 @@
   </aside>
 
   <div class="ops-workspace">
+    <nav class="mobile-demo-tabs" aria-label="Pantallas de la aplicación">
+      <button type="button" [class.active]="appView === 'home'" (click)="selectAppView('home')">Resumen</button>
+      <button type="button" [class.active]="appView === 'reports'" (click)="selectAppView('reports')">Reportes</button>
+      <button type="button" [class.active]="appView === 'capture'" (click)="selectAppView('capture')">Nueva muestra</button>
+      <button type="button" [class.active]="appView === 'drafts'" (click)="selectAppView('drafts')">Borradores</button>
+    </nav>
     <header><div><small>Laboratorista</small><b>Buen día, bienvenido</b></div><div class="session-chip">Sesión 07:48:21</div><span class="avatar">IC</span></header>
     <div class="update-strip">↑ <span><b>Actualización Android disponible</b><small>Puedes continuar trabajando.</small></span><button type="button" (click)="notify('Descarga simulada iniciada.')">Descargar</button></div>
 
