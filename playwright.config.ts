@@ -1,6 +1,7 @@
 import { defineConfig } from '@playwright/test';
 
-const channel = process.env['CI'] ? 'chrome' : 'msedge';
+const isCi = process.env['CI'] === 'true';
+const localBrowserChannel = isCi ? undefined : 'msedge';
 
 export default defineConfig({
   testDir: './e2e',
@@ -11,7 +12,7 @@ export default defineConfig({
   use: {
     baseURL: 'http://127.0.0.1:4303',
     browserName: 'chromium',
-    channel,
+    ...(localBrowserChannel ? { channel: localBrowserChannel } : {}),
     trace: 'retain-on-failure',
   },
   webServer: {
