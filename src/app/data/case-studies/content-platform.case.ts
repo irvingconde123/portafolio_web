@@ -23,8 +23,8 @@ export const CONTENT_PLATFORM_CASE: CaseStudy = {
   technologies: ['Angular', 'NestJS', 'PostgreSQL', 'REST', 'RBAC'],
   evidence: [
     { label: 'Demo de landing con navegación y contenido ficticio', source: 'src/app/demo/landing-demo.component.html', verified: true },
-    { label: 'Demo CMS con edición y publicación simulada', source: 'src/app/demo/cms-demo.component.html', verified: true },
-    { label: 'Prueba del cambio de versión editorial', source: 'src/app/demo/cms-demo.component.spec.ts', verified: true },
+    { label: 'Demo CMS con selector multi-proyecto, edición y publicación simulada', source: 'src/app/demo/cms-demo.component.html', verified: true },
+    { label: 'Prueba de cambio de contexto editorial y publicación', source: 'src/app/demo/cms-demo.component.spec.ts', verified: true },
   ],
   demos: [
     { label: 'Abrir demo de landing', slug: 'landing' },

@@ -4,9 +4,9 @@ export const EXPERIENCES: ExperienceItem[] = [
   {
     company: 'DISH México · MVSHUB',
     period: 'Ago 2024 — Actualidad',
-    role: 'Desarrollador full stack',
+    role: 'Líder de proyecto y desarrollador full stack',
     summary:
-      'Desarrollo móvil y full stack, automatizaciones con Python, integraciones, soporte productivo y validación de entregas sobre servicios AWS.',
+      'Participación en MVSHUB e integraciones con proveedores de contenido; mantenimiento de aplicaciones MVS, optimización de arquitectura, procesos reutilizables y resolución de incidencias productivas.',
     technologies: ['Python', 'Ionic', 'Angular', 'Lambda', 'S3', 'DynamoDB', 'CloudFront'],
   },
   {
@@ -14,7 +14,7 @@ export const EXPERIENCES: ExperienceItem[] = [
     period: 'Oct 2025 — Actualidad',
     role: 'Desarrollador full stack · colaboración independiente',
     summary:
-      'Planeación, arquitectura y ejecución de API, aplicaciones multiplataforma y mecanismos de continuidad para web, Android y escritorio.',
+      'Colaboración freelance en equipo de 5 personas, con foco en planeación de arquitectura, desarrollo backend y productos web/multiplataforma.',
     technologies: ['NestJS', 'Ionic', 'Angular', 'Electron', 'Prisma', 'TypeORM', 'PostgreSQL'],
   },
   {
@@ -22,7 +22,7 @@ export const EXPERIENCES: ExperienceItem[] = [
     period: 'Mar 2022 — Mayo 2024',
     role: 'Desarrollador backend',
     summary:
-      'Servicios backend, bases de datos y administración de infraestructura Linux y Windows en AWS y Azure.',
+      'Desarrollo backend, configuración de despliegues y soporte de servidores para soluciones de distintos clientes bajo contexto de consultoría.',
     technologies: ['Python', 'Java', 'Node.js', 'SQL Server', 'PostgreSQL', 'AWS', 'Azure'],
   },
   {

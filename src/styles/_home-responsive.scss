@@ -23,20 +23,20 @@
   .menu-toggle b { display: none; }
   .header-actions .header-cv { font-size: 0; min-height: 2.75rem; padding-inline: .75rem; }
   .header-actions .header-cv::before { content: 'CV ↓'; font-size: .75rem; font-weight: 800; }
-  .section { padding: 3.25rem 1.15rem; }
-  .hero { min-height: auto; padding-bottom: 3rem; padding-top: 3rem; }
+  .section { padding: 2.05rem 1.15rem; }
+  .hero { min-height: auto; padding-bottom: 1.6rem; padding-top: 1.6rem; }
   h1 { font-size: clamp(2.35rem, 10.5vw, 2.5rem); letter-spacing: -.045em; max-width: 100%; }
   h2 { font-size: clamp(1.8rem, 8.5vw, 2.3rem); }
   .hero-copy { font-size: 1rem; line-height: 1.6; }
   .hero-actions { display: grid; grid-template-columns: 1fr 1fr; margin-top: 1.5rem; }
   .hero-actions > * { padding-inline: .7rem; }
   .proof-strip > div { grid-template-columns: 1fr 1fr; padding: 0 1.15rem; }
-  .proof-strip span { border-bottom: 1px solid rgb(255 255 255 / 22%); font-size: .8rem; min-height: 3.75rem; padding: .75rem; }
+  .proof-strip span { border-bottom: 1px solid rgb(255 255 255 / 22%); font-size: .8rem; min-height: 3.1rem; padding: .55rem .75rem; }
   .proof-strip span:nth-child(2n) { border-right: 1px solid rgb(255 255 255 / 22%); }
-  .projects { padding-top: 2.75rem; }
+  .projects { padding-top: 2.2rem; }
   .case-grid, .skill-groups { grid-template-columns: 1fr; }
   .case-card { padding: 1.1rem; }
-  .timeline article { gap: .75rem; grid-template-columns: 1fr; padding: 1.25rem 0; }
+  .timeline article { gap: .65rem; grid-template-columns: 1fr; padding: 1.1rem 0; }
   .contact-actions { align-items: stretch; display: grid; grid-template-columns: 1fr 1fr; width: 100%; }
   .contact-actions a { width: 100%; }
 }
@@ -44,6 +44,6 @@
 @media (max-width: 390px) {
   .site-header { padding-inline: .75rem; }
   .identity { max-width: 7.5rem; }
-  .hero-actions, .contact-actions { grid-template-columns: 1fr; }
+  .hero-actions { grid-template-columns: 1fr; }
   .case-topline { align-items: flex-start; flex-direction: column; gap: .5rem; }
 }

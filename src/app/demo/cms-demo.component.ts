@@ -3,9 +3,10 @@ import {
   INITIAL_CMS_BLOCKS,
   INITIAL_CMS_MEDIA,
   INITIAL_CMS_PAGES,
+  INITIAL_CMS_SITES,
   INITIAL_CMS_TOKENS,
 } from './demo.fixtures';
-import { CmsPageItem, CmsView } from './demo.models';
+import { CmsPageItem, CmsSiteItem, CmsView } from './demo.models';
 
 @Component({
   selector: 'app-cms-demo',
@@ -23,7 +24,13 @@ export class CmsDemoComponent {
   protected cmsBlocks = INITIAL_CMS_BLOCKS.map((block) => ({ ...block }));
   protected cmsMedia = INITIAL_CMS_MEDIA.map((media) => ({ ...media }));
   protected cmsTokens = INITIAL_CMS_TOKENS.map((token) => ({ ...token }));
+  protected cmsSites = INITIAL_CMS_SITES.map((site) => ({ ...site, modules: [...site.modules] }));
+  protected activeSiteSlug = this.cmsSites[0].slug;
   private dialogTrigger: HTMLElement | null = null;
+
+  protected get activeSite(): CmsSiteItem {
+    return this.cmsSites.find((site) => site.slug === this.activeSiteSlug) ?? this.cmsSites[0];
+  }
 
   protected setCmsView(view: CmsView): void {
     this.cmsView = view;
@@ -32,7 +39,13 @@ export class CmsDemoComponent {
 
   protected publishCms(): void {
     this.cmsVersion += 1;
-    this.notify(`Versión ${this.cmsVersion} publicada. La landing ya consume el cambio.`);
+    this.notify(`Versión ${this.cmsVersion} publicada para ${this.activeSite.name}.`);
+  }
+
+  protected selectSite(site: CmsSiteItem): void {
+    this.activeSiteSlug = site.slug;
+    this.cmsView = 'Resumen';
+    this.notify(`Contexto cambiado a ${site.name}. Los módulos visibles se resolvieron por negocio.`);
   }
 
   protected openCmsEditor(label: string, value: string): void {

@@ -81,6 +81,10 @@ export class SeoService {
           name: 'Irving Conde',
           jobTitle: 'Full Stack Engineer',
           url: `${environment.canonicalUrl}/`,
+          sameAs: [
+            'https://github.com/irvingconde123',
+            'https://www.linkedin.com/in/irving-rafael-conde-marin-4a173b198',
+          ],
         },
         {
           '@type': 'ItemList',

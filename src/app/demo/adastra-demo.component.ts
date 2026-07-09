@@ -1,6 +1,6 @@
 import { Component, EventEmitter, HostListener, Output } from '@angular/core';
 import { INITIAL_CAPTURE, INITIAL_DRAFTS, INITIAL_REPORTS } from './demo.fixtures';
-import { AppView, DemoDraft, DemoReport, ReportStatus } from './demo.models';
+import { AppView, DemoDraft, DemoReport, ReportStatus, SyncCheckpoint } from './demo.models';
 
 @Component({
   selector: 'app-adastra-demo',
@@ -17,6 +17,13 @@ export class AdastraDemoComponent {
   protected reportStatusFilter = 'Todos';
   protected selectedReportId: string | null = null;
   protected editingReport = false;
+  protected syncCheckpoint: SyncCheckpoint = {
+    batchId: 'sync-20260707-0001',
+    state: 'Sin iniciar',
+    sent: 0,
+    total: INITIAL_DRAFTS.length,
+    detail: 'Sin envío activo. El próximo intento consultará el estado del lote antes de mandar datos.',
+  };
   protected captureModel = { ...INITIAL_CAPTURE };
   protected reports = INITIAL_REPORTS.map((report) => ({
     ...report,
@@ -40,6 +47,18 @@ export class AdastraDemoComponent {
 
   protected get selectedReport(): DemoReport | undefined {
     return this.reports.find((report) => report.id === this.selectedReportId);
+  }
+
+  protected get platformSummary(): string {
+    if (this.demoPlatform === 'android') {
+      return 'Android renderiza el flujo dentro de un marco móvil: navegación compacta, safe area y revisión de reportes en una sola columna.';
+    }
+
+    if (this.demoPlatform === 'desktop') {
+      return 'Escritorio simula una app empaquetada con actualización descargable y espacio suficiente para operación extendida.';
+    }
+
+    return 'Web muestra la experiencia de navegador sin actualización de APK o instalador.';
   }
 
   protected countReports(status: ReportStatus): number {
@@ -130,6 +149,12 @@ export class AdastraDemoComponent {
       location: this.captureModel.location,
       state: 'Por sincronizar',
     });
+    this.syncCheckpoint = {
+      ...this.syncCheckpoint,
+      state: 'Sin iniciar',
+      total: this.drafts.length,
+      detail: 'Hay cambios locales listos para verificación por batchId.',
+    };
     this.captureModel = { ...INITIAL_CAPTURE };
     this.selectAppView('drafts');
     this.notify('Formulario cifrado guardado en este dispositivo.');
@@ -148,6 +173,11 @@ export class AdastraDemoComponent {
 
   protected removeDraft(index: number): void {
     this.drafts.splice(index, 1);
+    this.syncCheckpoint = {
+      ...this.syncCheckpoint,
+      total: this.drafts.length,
+      sent: Math.min(this.syncCheckpoint.sent, this.drafts.length),
+    };
     this.notify('Borrador eliminado del dispositivo.');
   }
 
@@ -156,8 +186,61 @@ export class AdastraDemoComponent {
       this.notify('No hay conexión. Los borradores permanecen protegidos localmente.');
       return;
     }
+
+    if (!this.drafts.length) {
+      this.syncCheckpoint = {
+        ...this.syncCheckpoint,
+        state: 'Confirmada',
+        sent: 0,
+        total: 0,
+        detail: 'No hay pendientes locales. El último lote consultado no requiere reenvío.',
+      };
+      this.notify('No hay borradores pendientes por sincronizar.');
+      return;
+    }
+
+    this.syncCheckpoint = {
+      ...this.syncCheckpoint,
+      state: 'Verificando batchId',
+      sent: Math.min(this.syncCheckpoint.sent, this.drafts.length),
+      total: this.drafts.length,
+      detail: 'El cliente consulta al API si el lote ya fue confirmado antes de reenviar datos.',
+    };
+
     this.drafts = [];
-    this.notify('Sincronización simulada completada sin duplicados.');
+    this.syncCheckpoint = {
+      ...this.syncCheckpoint,
+      state: 'Confirmada',
+      sent: this.syncCheckpoint.total,
+      detail: 'API confirmó el lote completo; el cliente liberó la bandeja local sin duplicados.',
+    };
+    this.notify('Sincronización simulada completada después de validar batchId.');
+  }
+
+  protected interruptSync(): void {
+    if (!this.drafts.length) {
+      this.notify('No hay pendientes para simular una interrupción.');
+      return;
+    }
+
+    this.syncCheckpoint = {
+      ...this.syncCheckpoint,
+      state: 'Interrumpida',
+      sent: Math.min(1, this.drafts.length),
+      total: this.drafts.length,
+      detail: 'Se perdió conexión/proceso después de enviar parte del lote. Los borradores siguen locales.',
+    };
+    this.notify('Interrupción simulada: el batch quedó pendiente de verificación.');
+  }
+
+  protected verifyBatchBeforeSync(): void {
+    this.syncCheckpoint = {
+      ...this.syncCheckpoint,
+      state: 'Lista para reintento',
+      total: this.drafts.length,
+      detail: `API respondió que ${this.syncCheckpoint.sent} de ${this.syncCheckpoint.total} operaciones no deben duplicarse; se reenviará solo lo pendiente.`,
+    };
+    this.notify('Batch verificado. El siguiente intento reanuda sin duplicar operaciones.');
   }
 
   protected notify(message: string): void {

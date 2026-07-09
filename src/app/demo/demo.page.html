@@ -1,4 +1,4 @@
-<ion-content [fullscreen]="true">
+<div class="demo-shell">
   <header class="demo-header">
     <a routerLink="/">← Portafolio</a>
     <span>Demostración interactiva · datos ficticios</span>
@@ -26,4 +26,4 @@
   @for (notice of feedback ? [feedback] : []; track notice.id) {
     <div class="demo-feedback" role="status" aria-live="polite"><span>{{ notice.message }}</span><button type="button" (click)="clearFeedback()" aria-label="Cerrar mensaje">×</button><i class="demo-feedback-progress" aria-hidden="true"></i></div>
   }
-</ion-content>
+</div>

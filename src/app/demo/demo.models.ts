@@ -2,6 +2,7 @@ export type DemoSlug = 'adastra' | 'landing' | 'cms' | 'hostlyc';
 export type AppView = 'home' | 'reports' | 'capture' | 'drafts';
 export type ReportStatus = 'Pendiente' | 'En curso' | 'Cerrado' | 'Rechazado';
 export type CmsView = 'Resumen' | 'Páginas y menú' | 'Landing' | 'Medios' | 'Estilos' | 'SEO';
+export type SyncState = 'Sin iniciar' | 'Verificando batchId' | 'Interrumpida' | 'Lista para reintento' | 'Confirmada';
 
 export interface DemoReport {
   id: string;
@@ -25,6 +26,14 @@ export interface DemoDraft {
   state: 'Borrador' | 'Por sincronizar';
 }
 
+export interface SyncCheckpoint {
+  batchId: string;
+  state: SyncState;
+  sent: number;
+  total: number;
+  detail: string;
+}
+
 export interface CaptureModel {
   customer: string;
   sampleType: string;
@@ -45,6 +54,14 @@ export interface CmsBlock {
   title: string;
   type: string;
   visible: boolean;
+}
+
+export interface CmsSiteItem {
+  name: string;
+  slug: string;
+  type: string;
+  status: string;
+  modules: string[];
 }
 
 export interface DemoFeedback {

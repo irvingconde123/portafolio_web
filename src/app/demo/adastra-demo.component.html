@@ -1,4 +1,9 @@
-<section class="demo-window operations-demo">
+<section
+  class="demo-window operations-demo"
+  [class.platform-web]="demoPlatform === 'web'"
+  [class.platform-android]="demoPlatform === 'android'"
+  [class.platform-desktop]="demoPlatform === 'desktop'"
+>
   <aside class="ops-sidebar">
     <div class="ops-brand"><strong>AA</strong><span>AD ASTRA<small>OPERACIONES</small></span></div>
     <nav aria-label="Pantallas de la aplicación">
@@ -19,7 +24,20 @@
       <button type="button" [class.active]="appView === 'capture'" [attr.aria-current]="appView === 'capture' ? 'page' : null" (click)="selectAppView('capture')">Nueva muestra</button>
       <button type="button" [class.active]="appView === 'drafts'" [attr.aria-current]="appView === 'drafts' ? 'page' : null" (click)="selectAppView('drafts')">Borradores</button>
     </nav>
-    <header><div><small>Laboratorista</small><b>Buen día, bienvenido</b></div><label class="platform-picker">Vista<select name="demoPlatform" [(ngModel)]="demoPlatform"><option value="web">Web</option><option value="android">Android</option><option value="desktop">Escritorio</option></select></label><div class="session-chip">Sesión 07:48:21</div><span class="avatar">IC</span></header>
+    <header>
+      <div><small>Laboratorista</small><b>Buen día, bienvenido</b></div>
+      <label class="platform-picker">
+        Vista
+        <select name="demoPlatform" [(ngModel)]="demoPlatform">
+          <option value="web">Web</option>
+          <option value="android">Android</option>
+          <option value="desktop">Escritorio</option>
+        </select>
+      </label>
+      <div class="session-chip">Sesión 07:48:21</div>
+      <span class="avatar">IC</span>
+    </header>
+    <p class="platform-summary">{{ platformSummary }}</p>
     @if (demoPlatform !== 'web') {
       <div class="update-strip">↑ <span><b>Actualización {{ demoPlatform === 'android' ? 'Android' : 'de escritorio' }} disponible</b><small>Puedes continuar trabajando.</small></span><button type="button" (click)="notify('Descarga simulada iniciada.')">Descargar</button></div>
     }
@@ -44,6 +62,21 @@
         }
         @case ('drafts') {
           <div class="screen-heading"><div><p class="ops-eyebrow">ALMACENAMIENTO CIFRADO</p><h2>Formularios en este dispositivo</h2></div><span>{{ drafts.length }} por sincronizar</span></div>
+          <section class="sync-audit" aria-label="Control de sincronización">
+            <div>
+              <small>CONTROL DE LOTE</small>
+              <h3>{{ syncCheckpoint.batchId }}</h3>
+              <p>{{ syncCheckpoint.detail }}</p>
+            </div>
+            <dl>
+              <div><dt>Estado</dt><dd>{{ syncCheckpoint.state }}</dd></div>
+              <div><dt>Progreso</dt><dd>{{ syncCheckpoint.sent }} / {{ syncCheckpoint.total }}</dd></div>
+            </dl>
+            <footer>
+              <button type="button" (click)="interruptSync()">Simular interrupción</button>
+              <button type="button" (click)="verifyBatchBeforeSync()">Consultar batchId</button>
+            </footer>
+          </section>
           <div class="draft-list-demo">@for (draft of drafts; track draft.id; let index = $index) { <article><span class="draft-state">{{ draft.state }}</span><div><b>{{ draft.customer }}</b><small>{{ draft.sampleType }} · {{ draft.location }}</small></div><button type="button" (click)="editDraft(draft)">Ver / editar</button><button class="danger" type="button" (click)="removeDraft(index)">Eliminar</button></article> } @empty { <div class="empty-state"><b>No hay formularios pendientes</b><span>Las nuevas capturas aparecerán aquí, incluso sin sesión.</span></div> }</div>
           <button class="form-submit" type="button" (click)="syncDrafts()">Sincronizar ahora</button>
         }

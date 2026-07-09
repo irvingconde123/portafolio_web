@@ -1,9 +1,9 @@
-<ion-content [fullscreen]="true">
+<div class="page-shell">
   <header class="site-header">
-    <button class="identity" type="button" (click)="scrollTo('top')" aria-label="Ir al inicio">
+    <button class="identity" type="button" (click)="scrollTo('top')" aria-label="Irving Conde, ir al inicio">
       Irving Conde
     </button>
-    <button class="menu-toggle" type="button" [attr.aria-expanded]="mobileMenuOpen" aria-controls="main-navigation" (click)="toggleMobileMenu()">
+    <button class="menu-toggle" type="button" [attr.aria-expanded]="mobileMenuOpen" aria-controls="main-navigation" aria-label="Abrir menú principal" (click)="toggleMobileMenu()">
       <span></span><span></span><span></span><b>Menú</b>
     </button>
     <nav id="main-navigation" [class.open]="mobileMenuOpen" aria-label="Navegación principal">
@@ -14,6 +14,7 @@
     </nav>
     <div class="header-actions">
       <a href="https://github.com/irvingconde123" target="_blank" rel="noreferrer" aria-label="Abrir GitHub de Irving Conde">GitHub</a>
+      <a href="https://www.linkedin.com/in/irving-rafael-conde-marin-4a173b198" target="_blank" rel="noreferrer" aria-label="Abrir LinkedIn de Irving Conde">LinkedIn</a>
       <a class="header-cv" href="assets/Irving_Conde_CV.pdf" download>Descargar CV</a>
     </div>
   </header>
@@ -100,13 +101,14 @@
       <div>
         <p class="eyebrow">Contacto</p>
         <h2 id="contact-title">¿Necesitas convertir un flujo complejo en un producto mantenible?</h2>
-        <p>Orizaba, Veracruz · Disponible para oportunidades Full Stack y proyectos de producto.</p>
+        <p>Orizaba, Veracruz · Modalidad remota · Inglés intermedio · Disponible para oportunidades Full Stack y proyectos de producto.</p>
       </div>
       <div class="contact-actions">
         <a class="primary" href="mailto:Irving.CondeM@gmail.com">Enviar correo</a>
         <a class="secondary" href="https://github.com/irvingconde123" target="_blank" rel="noreferrer">Ver GitHub</a>
+        <a class="secondary" href="https://www.linkedin.com/in/irving-rafael-conde-marin-4a173b198" target="_blank" rel="noreferrer">Ver LinkedIn</a>
       </div>
     </section>
   </main>
   <footer>© 2026 Irving Conde.</footer>
-</ion-content>
+</div>

@@ -2,7 +2,6 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { IonicModule } from '@ionic/angular';
 import { DemoPage } from './demo.page';
 
 interface DemoHarness {
@@ -17,7 +16,7 @@ describe('DemoPage', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [DemoPage],
-      imports: [IonicModule.forRoot(), RouterTestingModule],
+      imports: [RouterTestingModule],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [{
         provide: ActivatedRoute,

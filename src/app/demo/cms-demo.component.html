@@ -1,34 +1,215 @@
 <section class="demo-window cms-demo">
   <aside>
-    <div class="cms-brand"><b>Lab CMS</b><small>Astra Laboratorios</small></div>
-    <span class="cms-user">Bienvenido<b>Irving Conde</b><small>editor&#64;demo.test</small></span>
-    <nav aria-label="Módulos del CMS">@for (view of ['Resumen','Páginas y menú','Landing','Medios','Estilos','SEO']; track view) { <button type="button" [class.active]="cmsView === view" [attr.aria-current]="cmsView === view ? 'page' : null" (click)="setCmsView($any(view))"><i aria-hidden="true"></i>{{ view }}</button> }</nav>
-    <button class="cms-logout" type="button" (click)="notify('La sesión de demostración se reinició; el portafolio permanece abierto.')">Cerrar sesión</button>
+    <div class="cms-brand">
+      <b>Lab CMS</b>
+      <small>{{ activeSite.name }}</small>
+    </div>
+    <span class="cms-user">
+      Bienvenido
+      <b>Irving Conde</b>
+      <small>editor&#64;demo.test</small>
+    </span>
+    <nav aria-label="Módulos del CMS">
+      @for (view of ['Resumen','Páginas y menú','Landing','Medios','Estilos','SEO']; track view) {
+        <button
+          type="button"
+          [class.active]="cmsView === view"
+          [attr.aria-current]="cmsView === view ? 'page' : null"
+          (click)="setCmsView($any(view))"
+        >
+          <i aria-hidden="true"></i>
+          {{ view }}
+        </button>
+      }
+    </nav>
+    <button
+      class="cms-logout"
+      type="button"
+      (click)="notify('La sesión de demostración se reinició; el portafolio permanece abierto.')"
+    >
+      Cerrar sesión
+    </button>
   </aside>
+
   <div class="cms-workspace">
     <nav class="mobile-demo-tabs cms-mobile-tabs" aria-label="Módulos del CMS">
       @for (view of ['Resumen','Páginas y menú','Landing','Medios','Estilos','SEO']; track view) {
-        <button type="button" [class.active]="cmsView === view" [attr.aria-current]="cmsView === view ? 'page' : null" (click)="setCmsView($any(view))">{{ view }}</button>
+        <button
+          type="button"
+          [class.active]="cmsView === view"
+          [attr.aria-current]="cmsView === view ? 'page' : null"
+          (click)="setCmsView($any(view))"
+        >
+          {{ view }}
+        </button>
       }
     </nav>
-    <header><div><small>CONTENIDO PÚBLICO</small><h2>{{ cmsView }}</h2></div><span class="version-chip">Borrador v{{ cmsVersion }}</span><button type="button" (click)="publishCms()">Publicar versión</button></header>
+
+    <header>
+      <div>
+        <small>{{ activeSite.type }}</small>
+        <h2>{{ cmsView }}</h2>
+      </div>
+      <span class="version-chip">{{ activeSite.status }} · v{{ cmsVersion }}</span>
+      <button type="button" (click)="publishCms()">Publicar versión</button>
+    </header>
+
     @switch (cmsView) {
       @case ('Resumen') {
-        <div class="cms-summary"><article><small>Páginas</small><b>{{ cmsPages.length }}</b><span>{{ cmsPages.length }} activas</span></article><article><small>Medios</small><b>{{ cmsMedia.length }}</b><span>Optimizados</span></article><article><small>Versión pública</small><b class="published">v{{ cmsVersion }}</b><span>Sin errores</span></article></div>
-        <section class="cms-dashboard"><div><p>RESUMEN</p><h3>Panel de administración</h3><span>La sesión opera dentro del contexto resuelto por la API.</span></div><dl><div><dt>Negocio</dt><dd>Astra Laboratorios</dd></div><div><dt>Identificador</dt><dd>astra-labs</dd></div><div><dt>Entorno</dt><dd>Demostración</dd></div></dl><h4>Módulos habilitados</h4><div class="module-pills"><span>SITIO</span><span>MEDIOS</span><span>ESTILOS</span><span>SEO</span></div></section>
+        <section class="cms-welcome" aria-label="Selector de proyecto CMS">
+          <div>
+            <p>BIENVENIDA</p>
+            <h3>Selecciona el negocio o página que quieres administrar.</h3>
+            <span>
+              El CMS resuelve contexto, módulos habilitados, versión editorial y fuente pública
+              antes de permitir cambios.
+            </span>
+          </div>
+          <div class="cms-site-grid">
+            @for (site of cmsSites; track site.slug) {
+              <button
+                type="button"
+                [class.active]="activeSite.slug === site.slug"
+                [attr.aria-pressed]="activeSite.slug === site.slug"
+                (click)="selectSite(site)"
+              >
+                <b>{{ site.name }}</b>
+                <small>{{ site.type }} · {{ site.status }}</small>
+                <span>{{ site.modules.join(' · ') }}</span>
+              </button>
+            }
+          </div>
+        </section>
+
+        <div class="cms-summary">
+          <article><small>Páginas</small><b>{{ cmsPages.length }}</b><span>{{ cmsPages.length }} activas</span></article>
+          <article><small>Medios</small><b>{{ cmsMedia.length }}</b><span>Optimizados</span></article>
+          <article><small>Versión pública</small><b class="published">v{{ cmsVersion }}</b><span>Sin errores</span></article>
+        </div>
+
+        <section class="cms-dashboard">
+          <div>
+            <p>CONTEXTO ACTIVO</p>
+            <h3>{{ activeSite.name }}</h3>
+            <span>La sesión opera dentro del contexto resuelto por la API.</span>
+          </div>
+          <dl>
+            <div><dt>Negocio</dt><dd>{{ activeSite.name }}</dd></div>
+            <div><dt>Identificador</dt><dd>{{ activeSite.slug }}</dd></div>
+            <div><dt>Entorno</dt><dd>Demostración</dd></div>
+          </dl>
+          <h4>Módulos habilitados</h4>
+          <div class="module-pills">
+            @for (module of activeSite.modules; track module) { <span>{{ module }}</span> }
+          </div>
+        </section>
       }
+
       @case ('Páginas y menú') {
-        <div class="cms-section-heading"><div><h3>Páginas del sitio</h3><span>Organiza las páginas y enlaces visibles.</span></div><button type="button" (click)="addCmsPage()">Agregar página</button></div>
-        <div class="cms-table"><div class="cms-table-head"><span>Nombre visible</span><span>Dirección</span><span>Estado</span><span>Acciones</span></div>@for (page of cmsPages; track page.route) { <div><b>{{ page.label }}</b><code>{{ page.route }}</code><span [class.enabled]="page.active">{{ page.active ? 'Activa' : 'Inactiva' }}</span><span><button type="button" (click)="openCmsEditor('Editar página', page.label)">Editar</button><button type="button" (click)="toggleCmsPage(page)">{{ page.active ? 'Ocultar' : 'Activar' }}</button></span></div> }</div>
+        <div class="cms-section-heading">
+          <div><h3>Páginas del sitio</h3><span>Organiza las páginas y enlaces visibles.</span></div>
+          <button type="button" (click)="addCmsPage()">Agregar página</button>
+        </div>
+        <div class="cms-table">
+          <div class="cms-table-head">
+            <span>Nombre visible</span><span>Dirección</span><span>Estado</span><span>Acciones</span>
+          </div>
+          @for (page of cmsPages; track page.route) {
+            <div>
+              <b>{{ page.label }}</b>
+              <code>{{ page.route }}</code>
+              <span [class.enabled]="page.active">{{ page.active ? 'Activa' : 'Inactiva' }}</span>
+              <span>
+                <button type="button" (click)="openCmsEditor('Editar página', page.label)">Editar</button>
+                <button type="button" (click)="toggleCmsPage(page)">{{ page.active ? 'Ocultar' : 'Activar' }}</button>
+              </span>
+            </div>
+          }
+        </div>
       }
+
       @case ('Landing') {
-        <div class="cms-section-heading"><div><h3>Composición de página</h3><span>Ordena, edita y publica los bloques de la landing.</span></div><button type="button" (click)="cmsBlocks.push({ title: 'Nuevo bloque', type: 'Contenido', visible: false })">Agregar bloque</button></div>
-        <div class="cms-editor">@for (block of cmsBlocks; track block.title; let index = $index) { <article><i aria-hidden="true">⠿</i><span><b>{{ block.title }}</b><small>{{ block.type }} · {{ block.visible ? 'Visible' : 'Oculto' }}</small></span><button type="button" [disabled]="index === 0" [attr.aria-label]="'Subir ' + block.title" (click)="moveCmsBlock(index, -1)">↑</button><button type="button" [disabled]="index === cmsBlocks.length - 1" [attr.aria-label]="'Bajar ' + block.title" (click)="moveCmsBlock(index, 1)">↓</button><button type="button" (click)="block.visible = !block.visible">{{ block.visible ? 'Ocultar' : 'Mostrar' }}</button><button type="button" (click)="openCmsEditor('Editar bloque', block.title)">Editar</button></article> }</div>
+        <div class="cms-section-heading">
+          <div><h3>Composición de página</h3><span>Ordena, edita y publica los bloques de la landing.</span></div>
+          <button type="button" (click)="cmsBlocks.push({ title: 'Nuevo bloque', type: 'Contenido', visible: false })">Agregar bloque</button>
+        </div>
+        <div class="cms-editor">
+          @for (block of cmsBlocks; track block.title; let index = $index) {
+            <article>
+              <i aria-hidden="true">⠿</i>
+              <span><b>{{ block.title }}</b><small>{{ block.type }} · {{ block.visible ? 'Visible' : 'Oculto' }}</small></span>
+              <button type="button" [disabled]="index === 0" [attr.aria-label]="'Subir ' + block.title" (click)="moveCmsBlock(index, -1)">↑</button>
+              <button type="button" [disabled]="index === cmsBlocks.length - 1" [attr.aria-label]="'Bajar ' + block.title" (click)="moveCmsBlock(index, 1)">↓</button>
+              <button type="button" (click)="block.visible = !block.visible">{{ block.visible ? 'Ocultar' : 'Mostrar' }}</button>
+              <button type="button" (click)="openCmsEditor('Editar bloque', block.title)">Editar</button>
+            </article>
+          }
+        </div>
       }
-      @case ('Medios') { <div class="cms-section-heading"><div><h3>Biblioteca de medios</h3><span>Recursos locales y externos de la landing.</span></div><button type="button" (click)="addCmsMedia()">Subir recurso</button></div><div class="media-grid">@for (media of cmsMedia; track media.name) { <article><i></i><div><b>{{ media.name }}</b><span>{{ media.type }} · {{ media.size }}</span></div><button type="button" (click)="openCmsEditor('Editar texto alternativo', media.name)">Editar</button></article> }</div> }
-      @case ('Estilos') { <div class="cms-section-heading"><div><h3>Variables visuales</h3><span>Valores estructurados del negocio activo.</span></div><button type="button" (click)="notify('Vista previa actualizada con las variables actuales.')">Vista previa</button></div><div class="token-list">@for (token of cmsTokens; track token.key) { <article><code>{{ token.key }}</code><span>{{ token.value }}</span><button type="button" (click)="openCmsEditor('Editar variable', token.value)">Editar</button></article> }</div> }
-      @case ('SEO') { <form class="seo-form" (submit)="$event.preventDefault(); notify('Metadatos SEO guardados como borrador.')"><label>Título del sitio<input name="seoTitle" value="Ad Astra Professional Labs"></label><label>Descripción<textarea name="seoDescription">Laboratorio ambiental acreditado para análisis de agua, suelo y aire.</textarea></label><div><label>Idioma<select name="seoLanguage"><option>Español (México)</option><option>Inglés</option></select></label><label>Indexación<select name="seoIndex"><option>Permitir indexación</option><option>No indexar</option></select></label></div><label>Imagen social<button type="button" (click)="notify('Selector simulado de imagen social abierto.')">Seleccionar desde medios</button></label><button class="cms-form-submit" type="submit">Guardar SEO</button></form> }
+
+      @case ('Medios') {
+        <div class="cms-section-heading">
+          <div><h3>Biblioteca de medios</h3><span>Recursos locales y externos de la landing.</span></div>
+          <button type="button" (click)="addCmsMedia()">Subir recurso</button>
+        </div>
+        <div class="media-grid">
+          @for (media of cmsMedia; track media.name) {
+            <article>
+              <i></i>
+              <div><b>{{ media.name }}</b><span>{{ media.type }} · {{ media.size }}</span></div>
+              <button type="button" (click)="openCmsEditor('Editar texto alternativo', media.name)">Editar</button>
+            </article>
+          }
+        </div>
+      }
+
+      @case ('Estilos') {
+        <div class="cms-section-heading">
+          <div><h3>Variables visuales</h3><span>Valores estructurados del negocio activo.</span></div>
+          <button type="button" (click)="notify('Vista previa actualizada con las variables actuales.')">Vista previa</button>
+        </div>
+        <div class="token-list">
+          @for (token of cmsTokens; track token.key) {
+            <article>
+              <code>{{ token.key }}</code>
+              <span>{{ token.value }}</span>
+              <button type="button" (click)="openCmsEditor('Editar variable', token.value)">Editar</button>
+            </article>
+          }
+        </div>
+      }
+
+      @case ('SEO') {
+        <form class="seo-form" (submit)="$event.preventDefault(); notify('Metadatos SEO guardados como borrador.')">
+          <label>Título del sitio<input name="seoTitle" [value]="activeSite.name"></label>
+          <label>Descripción<textarea name="seoDescription">Laboratorio ambiental acreditado para análisis de agua, suelo y aire.</textarea></label>
+          <div>
+            <label>Idioma<select name="seoLanguage"><option>Español (México)</option><option>Inglés</option></select></label>
+            <label>Indexación<select name="seoIndex"><option>Permitir indexación</option><option>No indexar</option></select></label>
+          </div>
+          <label>
+            Imagen social
+            <button type="button" (click)="notify('Selector simulado de imagen social abierto.')">Seleccionar desde medios</button>
+          </label>
+          <button class="cms-form-submit" type="submit">Guardar SEO</button>
+        </form>
+      }
     }
   </div>
-  @if (cmsEditing) { <div class="cms-modal-backdrop" aria-hidden="true" (click)="closeCmsEditor()"></div><aside class="cms-modal" role="dialog" aria-modal="true" aria-labelledby="cms-dialog-title" tabindex="-1"><header><h3 id="cms-dialog-title">{{ cmsEditing }}</h3><button type="button" aria-label="Cerrar editor" (click)="closeCmsEditor()">×</button></header><label>Valor<input name="cmsDraftValue" [(ngModel)]="cmsDraftValue"></label><label>Descripción<textarea name="cmsDraftDescription">Contenido demostrativo editable desde el CMS.</textarea></label><footer><button type="button" (click)="closeCmsEditor()">Cancelar</button><button type="button" (click)="saveCmsEditor()">Guardar cambios</button></footer></aside> }
+
+  @if (cmsEditing) {
+    <div class="cms-modal-backdrop" aria-hidden="true" (click)="closeCmsEditor()"></div>
+    <aside class="cms-modal" role="dialog" aria-modal="true" aria-labelledby="cms-dialog-title" tabindex="-1">
+      <header>
+        <h3 id="cms-dialog-title">{{ cmsEditing }}</h3>
+        <button type="button" aria-label="Cerrar editor" (click)="closeCmsEditor()">×</button>
+      </header>
+      <label>Valor<input name="cmsDraftValue" [(ngModel)]="cmsDraftValue"></label>
+      <label>Descripción<textarea name="cmsDraftDescription">Contenido demostrativo editable desde el CMS.</textarea></label>
+      <footer>
+        <button type="button" (click)="closeCmsEditor()">Cancelar</button>
+        <button type="button" (click)="saveCmsEditor()">Guardar cambios</button>
+      </footer>
+    </aside>
+  }
 </section>

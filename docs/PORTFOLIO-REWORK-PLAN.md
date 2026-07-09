@@ -40,7 +40,7 @@ Espejo: GitHub Pages
 > ¿Qué resultados concretos, responsabilidades y sistemas puedes describir públicamente?
 >
 > **Respuesta:**
->
+> No puedo demostrar nada publicamente debido a mi contrato, puedo mencionar que he trabajado en la aplicación MVSHUB, permitiendo integraciones con proveedores de contenido como Oxxo, Disney y otros proveedores. He mantenimiento a diversos aplicativos de MVS, tales como Dish, ON, NetTV, realizado optimizaciones en cuestiones de desacoplamiento de código, realizado procesos reutilizables para distintos proyectos, mejorando la optmización de la arquitectura de MVSHUB. Actualmente soy lider de proyecto y he sido participe desde el desarrollo de proyectos hasta la resolución de incidencias productivas
 >
 >
 >
@@ -49,7 +49,7 @@ Espejo: GitHub Pages
 >
 >
 > **¿Se puede publicar?** Sí / No / Sanitizar
->
+>Sanitizar
 > ---
 
 > **COMENTARIO DE IRVING — HOSTLYC**
@@ -57,7 +57,7 @@ Espejo: GitHub Pages
 > Confirma modalidad, periodo, tamaño de equipo y resultados que puedan publicarse.
 >
 > **Respuesta:**
->
+> Actualmente es un equipo de 5 personas, es un proyecto freelance que me contrataron, soy parte del desarrollo, planeación de arquitectura, y mayormente backend. Actualmente tenemos la landing https://hostlyc.com/, hemos colocaborado con Adastra lab. Y el producto propio de la empresa hostlyc está en desarrollo
 >
 >
 >
@@ -66,7 +66,7 @@ Espejo: GitHub Pages
 >
 >
 > **¿Se puede publicar?** Sí / No / Sanitizar
->
+>Sanitizar
 > ---
 
 > **COMENTARIO DE IRVING — GECOSOFT Y PROYECTOS INDEPENDIENTES**
@@ -74,7 +74,7 @@ Espejo: GitHub Pages
 > Indica entregables, responsabilidades, tamaño de equipo y resultados verificables.
 >
 > **Respuesta:**
->
+> De igual forma no puedo publciar nada de forma libre, por cuestiones de contrato, pero estaba a cargo del servidor, mayormente en la parte de desarrollo o configuración de despliegue. Era más un tipo consultora, por lo que se trabajaba de forma muy versatil, hoy podíamos estar dando solución a una escuela, y mañana solucionando errores de otra empresa.
 >
 >
 >
@@ -83,7 +83,7 @@ Espejo: GitHub Pages
 >
 >
 > **¿Se puede publicar?** Sí / No / Sanitizar
->
+> Sanitizar
 > ---
 
 > **COMENTARIO DE IRVING — MÉTRICAS POR SOLUCIÓN**
@@ -109,15 +109,16 @@ Espejo: GitHub Pages
 >
 > **Respuesta:**
 >
->
->
->
+> Linkedin: www.linkedin.com/in/irving-rafael-conde-marin-4a173b198
+> Inglés: Intermedio
+> Modalidad: Remotoda
+Disponibilidad: En busqueda de nuevas oportunidades para el crecimiento personal y profesional
 > **Enlaces o evidencia:**
 >
 >
 >
 > **¿Se puede publicar?** Sí / No / Sanitizar
->
+> SI
 > ---
 
 > **COMENTARIO DE IRVING — VERCEL**
@@ -126,7 +127,7 @@ Espejo: GitHub Pages
 >
 > **Respuesta:**
 >
->
+> Usaremos una de vercel, no hay dominio propio aparte del de github pages
 >
 >
 > **Enlaces o evidencia:**
@@ -134,7 +135,7 @@ Espejo: GitHub Pages
 >
 >
 > **¿Se puede publicar?** Sí / No / Sanitizar
->
+> Si
 > ---
 
 ## Política de contenido pendiente

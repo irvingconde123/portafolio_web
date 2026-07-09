@@ -61,6 +61,8 @@ yarn-error.log
 /.nx/cache
 /connect.lock
 /coverage
+/test-results
+/.lighthouseci
 /libpeerconnection.log
 testem.log
 /typings

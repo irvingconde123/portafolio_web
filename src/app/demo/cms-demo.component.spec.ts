@@ -3,11 +3,14 @@ import { FormsModule } from '@angular/forms';
 import { CmsDemoComponent } from './cms-demo.component';
 
 interface CmsHarness {
+  activeSiteSlug: string;
+  cmsSites: Array<{ name: string; slug: string }>;
   cmsEditing: string | null;
   cmsVersion: number;
   closeEditorWithKeyboard(): void;
   openCmsEditor(label: string, value: string): void;
   publishCms(): void;
+  selectSite(site: { name: string; slug: string }): void;
 }
 
 describe('CmsDemoComponent', () => {
@@ -27,6 +30,15 @@ describe('CmsDemoComponent', () => {
     const initialVersion = harness.cmsVersion;
     harness.publishCms();
     expect(harness.cmsVersion).toBe(initialVersion + 1);
+  });
+
+  it('changes the editable project context from the welcome dashboard', () => {
+    const nextSite = harness.cmsSites[1];
+    harness.selectSite(nextSite);
+    fixture.detectChanges();
+
+    expect(harness.activeSiteSlug).toBe(nextSite.slug);
+    expect(fixture.nativeElement.textContent).toContain(nextSite.name);
   });
 
   it('provides an accessible editor dialog that Escape can close', () => {

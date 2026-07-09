@@ -28,7 +28,7 @@ export const ADASTRA_CASE: CaseStudy = {
       verified: true,
     },
     {
-      label: 'Pruebas del borrador local, sincronización y edición de reportes',
+      label: 'Pruebas de sincronización interrumpida, batchId y edición de reportes',
       source: 'src/app/demo/adastra-demo.component.spec.ts',
       verified: true,
     },
@@ -56,7 +56,7 @@ export const ADASTRA_CASE: CaseStudy = {
     { from: 'api', to: 'database', protocol: 'Transacción', purpose: 'Confirmar cambios completos' },
   ],
   qualityScenarios: [
-    { attribute: 'Recuperación', stimulus: 'La app se cierra durante una sincronización', response: 'Conserva pendientes y consulta el estado antes de reintentar', measure: 'Sin duplicar una operación confirmada' },
+    { attribute: 'Recuperación', stimulus: 'La app se cierra durante una sincronización', response: 'Conserva pendientes, consulta el batchId y reenvía solo lo no confirmado', measure: 'Sin duplicar una operación confirmada' },
     { attribute: 'Seguridad', stimulus: 'La sesión expira con trabajo local', response: 'Detiene el envío y solicita autenticación', measure: 'El borrador permanece local' },
     { attribute: 'Disponibilidad', stimulus: 'La red deja de responder', response: 'Permite continuar con los datos locales disponibles', measure: 'La captura no depende de la red' },
   ],

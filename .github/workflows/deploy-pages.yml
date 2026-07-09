@@ -36,8 +36,27 @@ jobs:
           npm run lint
           npm test -- --watch=false --browsers=ChromeHeadless
 
-      - name: Build project site
+      - name: Build canonical site
+        run: npm run build:vercel
+
+      - name: Verify responsive routes and accessibility
+        run: npm run qa:e2e
+
+      - name: Verify performance budgets
+        run: npm run qa:lighthouse
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
+
+      - name: Build GitHub Pages mirror
         run: npm run build:pages
+
+      - name: Upload QA reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-qa
+          path: test-results
+          if-no-files-found: ignore
 
       - name: Add fallback and disable Jekyll
         run: |

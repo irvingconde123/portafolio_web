@@ -9,11 +9,14 @@ interface AdastraHarness {
   drafts: unknown[];
   offline: boolean;
   selectedReportId: string | null;
+  syncCheckpoint: { state: string; sent: number; total: number };
   reports: Array<{ status: string; evidence: string[] }>;
   closeReportWithKeyboard(): void;
   openReport(reportId: string): void;
   saveDraft(): void;
   syncDrafts(): void;
+  interruptSync(): void;
+  verifyBatchBeforeSync(): void;
   changeReportStatus(report: unknown, status: string): void;
   removeEvidence(report: unknown, index: number): void;
 }
@@ -47,6 +50,21 @@ describe('AdastraDemoComponent', () => {
     harness.offline = false;
     harness.syncDrafts();
     expect(harness.drafts.length).toBe(0);
+    expect(harness.syncCheckpoint.state).toBe('Confirmada');
+  });
+
+  it('keeps drafts after an interrupted sync and resumes by batchId', () => {
+    const pendingDrafts = harness.drafts.length;
+    harness.interruptSync();
+    expect(harness.drafts.length).toBe(pendingDrafts);
+    expect(harness.syncCheckpoint.state).toBe('Interrumpida');
+
+    harness.verifyBatchBeforeSync();
+    expect(harness.syncCheckpoint.state).toBe('Lista para reintento');
+
+    harness.syncDrafts();
+    expect(harness.drafts.length).toBe(0);
+    expect(harness.syncCheckpoint.state).toBe('Confirmada');
   });
 
   it('updates report status and evidence in memory', () => {
@@ -66,6 +84,7 @@ describe('AdastraDemoComponent', () => {
     harness.demoPlatform = 'android';
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('.update-strip')).not.toBeNull();
+    expect(fixture.nativeElement.querySelector('.platform-android')).not.toBeNull();
   });
 
   it('exposes report detail as a modal dialog and closes it from the keyboard', () => {

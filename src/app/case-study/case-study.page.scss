@@ -4,11 +4,11 @@
   --case-text: #0f172a;
   --case-muted: #475569;
   --case-primary: #0f4c81;
-  --case-accent: #0891b2;
+  --case-accent: #0e7490;
   --case-border: #cbd5e1;
 }
 
-ion-content { --background: var(--case-bg); color: var(--case-text); }
+.case-shell { background: var(--case-bg); color: var(--case-text); min-height: 100vh; }
 .case-header { align-items: center; background: rgba(255, 255, 255, 0.94); border-bottom: 1px solid var(--case-border); display: flex; justify-content: space-between; min-height: 4rem; padding: 0 5vw; position: sticky; top: 0; z-index: 5; }
 .case-header a { color: var(--case-primary); font-weight: 750; text-decoration: none; }
 .case-header span { color: var(--case-muted); font-size: 0.75rem; }
@@ -28,6 +28,7 @@ h2 { font-size: clamp(1.65rem, 4vw, 2.35rem); letter-spacing: -0.025em; margin: 
 .constraint-list { display: flex; flex-wrap: wrap; gap: 0.65rem; margin-top: 1.5rem; }
 .constraint-list span { border-radius: 0.5rem; }
 .architecture-section { background: #07111f; border-radius: 1.25rem; color: #e2e8f0; padding: clamp(1.25rem, 4vw, 3rem); }
+.architecture-section .section-label { color: #67e8f9; }
 .architecture-section > header { align-items: flex-start; display: flex; gap: 2rem; justify-content: space-between; }
 .architecture-section > header > span { background: #123047; border-radius: 999px; color: #67e8f9; font-size: 0.75rem; padding: 0.5rem 0.75rem; white-space: nowrap; }
 .architecture-section > header > span.invalid { color: #fecaca; }

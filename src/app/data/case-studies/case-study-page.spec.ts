@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap, ParamMap } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { IonicModule } from '@ionic/angular';
 import { BehaviorSubject } from 'rxjs';
 import { CaseStudyPage } from '../../case-study/case-study.page';
 
@@ -14,7 +13,7 @@ describe('CaseStudyPage', () => {
 
     await TestBed.configureTestingModule({
       declarations: [CaseStudyPage],
-      imports: [IonicModule.forRoot(), RouterTestingModule],
+      imports: [RouterTestingModule],
       providers: [{
         provide: ActivatedRoute,
         useValue: { paramMap: routeParams.asObservable() },

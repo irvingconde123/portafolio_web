@@ -1,4 +1,4 @@
-import { CaptureModel, CmsBlock, CmsPageItem, DemoDraft, DemoReport } from './demo.models';
+import { CaptureModel, CmsBlock, CmsPageItem, CmsSiteItem, DemoDraft, DemoReport } from './demo.models';
 
 export const INITIAL_CAPTURE: CaptureModel = {
   customer: '',
@@ -65,6 +65,30 @@ export const INITIAL_CMS_PAGES: CmsPageItem[] = [
   { label: 'Servicios', route: '/servicios', active: true },
   { label: 'Nosotros', route: '/nosotros', active: true },
   { label: 'Contacto', route: '/contacto', active: true },
+];
+
+export const INITIAL_CMS_SITES: CmsSiteItem[] = [
+  {
+    name: 'Astra Laboratorios',
+    slug: 'astra-labs',
+    type: 'Landing técnica',
+    status: 'Publicada',
+    modules: ['Landing', 'Medios', 'SEO', 'Tokens'],
+  },
+  {
+    name: 'Hostlyc Comercial',
+    slug: 'hostlyc',
+    type: 'Sitio corporativo',
+    status: 'Borrador activo',
+    modules: ['Landing', 'Servicios', 'Contacto'],
+  },
+  {
+    name: 'Colegio Demo',
+    slug: 'colegio-demo',
+    type: 'Portal institucional',
+    status: 'En revisión',
+    modules: ['Páginas', 'Avisos', 'Medios'],
+  },
 ];
 
 export const INITIAL_CMS_BLOCKS: CmsBlock[] = [
