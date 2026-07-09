@@ -2,7 +2,7 @@
   "name": "irving-conde-portfolio",
   "version": "0.0.0",
   "author": "Irving Conde",
-  "homepage": "https://irving-conde-portfolio.vercel.app/",
+  "homepage": "https://irvingconde123.github.io/portafolio_web/",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

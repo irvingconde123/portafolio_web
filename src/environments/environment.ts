@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  canonicalUrl: 'https://irving-conde-portfolio.vercel.app',
+  canonicalUrl: 'https://irvingconde123.github.io/portafolio_web',
   robots: 'noindex,nofollow',
 };
 

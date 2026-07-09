@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://irving-conde-portfolio.vercel.app/sitemap.xml
+Sitemap: https://irvingconde123.github.io/portafolio_web/sitemap.xml
