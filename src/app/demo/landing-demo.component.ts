@@ -8,9 +8,11 @@ import { Component, EventEmitter, Output } from '@angular/core';
 export class LandingDemoComponent {
   @Output() readonly feedback = new EventEmitter<string>();
   protected selectedSection = 'Inicio';
+  protected mobileMenuOpen = false;
 
   protected jumpToSection(section: string): void {
     this.selectedSection = section;
+    this.mobileMenuOpen = false;
     document
       .getElementById(`demo-landing-${section.toLowerCase()}`)
       ?.scrollIntoView({ behavior: 'smooth', block: 'start' });

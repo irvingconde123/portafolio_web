@@ -48,6 +48,8 @@ export class CaseStudyPage implements OnInit, OnDestroy {
   }
 
   protected evidenceUrl(source: string): string {
+    if (/^https?:\/\//.test(source)) return source;
+
     const repositoryPath = source
       .replace(/^\/+/, '')
       .split('/')

@@ -76,7 +76,7 @@ describe('AdastraDemoComponent', () => {
   });
 
   it('only offers application updates in the mobile preview', () => {
-    fixture.componentRef.setInput('viewport', 'web');
+    fixture.componentRef.setInput('viewport', 'desktop');
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('.update-strip')).toBeNull();
 

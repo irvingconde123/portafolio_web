@@ -19,14 +19,14 @@ export class DemoPage implements OnInit, OnDestroy {
   protected slug: DemoSlug = 'adastra';
   protected project?: ProjectItem;
   protected feedback?: DemoFeedback;
-  protected viewport: DemoViewport = 'web';
+  protected viewport: DemoViewport = 'desktop';
 
   protected get suggestedJourney(): string {
     const journeys: Record<DemoSlug, string> = {
-      adastra: 'Revisa un reporte, edítalo, fuerza el modo sin conexión y sincroniza el borrador.',
-      landing: 'Explora servicios, acreditaciones y contacto como visitante del laboratorio.',
-      cms: 'Edita contenido, medios y SEO; después publica una versión simulada.',
-      hostlyc: 'Recorre servicios y proyectos; termina con el diagnóstico de contacto.',
+      adastra: 'Cambia de módulo, edita un reporte y prueba la sincronización sin red.',
+      landing: 'Recorre una landing alimentada por CMS con respaldo local.',
+      cms: 'Edita un bloque, cambia de módulo y publica una versión simulada.',
+      hostlyc: 'Explora servicios, proyectos y rutas de contacto verificables.',
     };
     return journeys[this.slug];
   }
@@ -38,7 +38,6 @@ export class DemoPage implements OnInit, OnDestroy {
         ? candidate
         : 'adastra';
     this.project = PROJECTS.find((item) => item.slug === this.slug);
-    this.viewport = this.slug === 'adastra' ? 'mobile' : 'web';
   }
 
   ngOnDestroy(): void {

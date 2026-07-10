@@ -32,18 +32,24 @@
   </aside>
 
   <div class="cms-workspace">
-    <nav class="mobile-demo-tabs cms-mobile-tabs" aria-label="Módulos del CMS">
-      @for (view of ['Resumen','Páginas y menú','Landing','Medios','Estilos','SEO']; track view) {
-        <button
-          type="button"
-          [class.active]="cmsView === view"
-          [attr.aria-current]="cmsView === view ? 'page' : null"
-          (click)="setCmsView($any(view))"
-        >
-          {{ view }}
-        </button>
-      }
-    </nav>
+    <div class="cms-mobile-bar">
+      <button type="button" [attr.aria-expanded]="mobileMenuOpen" (click)="mobileMenuOpen = !mobileMenuOpen">☰ Módulos</button>
+      <span>{{ cmsView }}</span>
+    </div>
+    @if (mobileMenuOpen) {
+      <nav class="cms-mobile-menu" aria-label="Módulos del CMS">
+        @for (view of ['Resumen','Páginas y menú','Landing','Medios','Estilos','SEO']; track view) {
+          <button
+            type="button"
+            [class.active]="cmsView === view"
+            [attr.aria-current]="cmsView === view ? 'page' : null"
+            (click)="setCmsView($any(view))"
+          >
+            {{ view }}
+          </button>
+        }
+      </nav>
+    }
 
     <header>
       <div>

@@ -22,6 +22,7 @@ export const HOSTLYC_CASE: CaseStudy = {
   ],
   technologies: ['Next.js', 'React', 'TypeScript', 'Diseño responsive', 'SEO'],
   evidence: [
+    { label: 'Sitio público real usado como referencia visual y comercial', source: 'https://hostlyc.com/', verified: true },
     { label: 'Demo navegable con servicios, proyectos, proceso y contacto', source: 'src/app/demo/hostlyc-demo.component.html', verified: true },
     { label: 'Interacciones de navegación y formulario simulado', source: 'src/app/demo/hostlyc-demo.component.ts', verified: true },
   ],

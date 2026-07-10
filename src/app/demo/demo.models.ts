@@ -1,5 +1,5 @@
 export type DemoSlug = 'adastra' | 'landing' | 'cms' | 'hostlyc';
-export type DemoViewport = 'web' | 'mobile';
+export type DemoViewport = 'desktop' | 'tablet' | 'mobile';
 export type AppView = 'home' | 'reports' | 'capture' | 'drafts';
 export type ReportStatus = 'Pendiente' | 'En curso' | 'Cerrado' | 'Rechazado';
 export type CmsView = 'Resumen' | 'Páginas y menú' | 'Landing' | 'Medios' | 'Estilos' | 'SEO';

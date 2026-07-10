@@ -17,6 +17,7 @@ export class CmsDemoComponent {
   @Output() readonly feedback = new EventEmitter<string>();
 
   protected cmsView: CmsView = 'Resumen';
+  protected mobileMenuOpen = false;
   protected cmsEditing: string | null = null;
   protected cmsDraftValue = '';
   protected cmsVersion = 12;
@@ -34,6 +35,7 @@ export class CmsDemoComponent {
 
   protected setCmsView(view: CmsView): void {
     this.cmsView = view;
+    this.mobileMenuOpen = false;
     this.closeCmsEditor();
   }
 

@@ -13,20 +13,34 @@
   </aside>
 
   <div class="ops-workspace">
-    <nav class="mobile-demo-tabs" aria-label="Pantallas de la aplicación">
-      <button type="button" [class.active]="appView === 'home'" [attr.aria-current]="appView === 'home' ? 'page' : null" (click)="selectAppView('home')">Resumen</button>
-      <button type="button" [class.active]="appView === 'reports'" [attr.aria-current]="appView === 'reports' ? 'page' : null" (click)="selectAppView('reports')">Reportes</button>
-      <button type="button" [class.active]="appView === 'capture'" [attr.aria-current]="appView === 'capture' ? 'page' : null" (click)="selectAppView('capture')">Nueva muestra</button>
-      <button type="button" [class.active]="appView === 'drafts'" [attr.aria-current]="appView === 'drafts' ? 'page' : null" (click)="selectAppView('drafts')">Borradores</button>
-    </nav>
+    <div class="mobile-appbar">
+      <button type="button" class="mobile-menu-button" [attr.aria-expanded]="mobileMenuOpen" (click)="mobileMenuOpen = !mobileMenuOpen" aria-label="Abrir menú de la aplicación">☰</button>
+      <span><i [class.offline]="offline"></i>{{ offline ? 'Sin conexión' : 'En línea' }}</span>
+      <button type="button" class="mobile-sync-button" (click)="syncDrafts()" aria-label="Sincronizar pendientes">↪</button>
+    </div>
+    @if (mobileMenuOpen) {
+      <div class="mobile-nav-backdrop" aria-hidden="true" (click)="mobileMenuOpen = false"></div>
+      <aside class="mobile-nav-panel" aria-label="Menú de la aplicación">
+        <div class="ops-brand"><strong>AA</strong><span>AD ASTRA<small>OPERACIONES</small></span></div>
+        <nav>
+          <button type="button" [class.active]="appView === 'home'" [attr.aria-current]="appView === 'home' ? 'page' : null" (click)="selectAppView('home')"><span aria-hidden="true">⌂</span>Resumen</button>
+          <button type="button" [class.active]="appView === 'reports'" [attr.aria-current]="appView === 'reports' ? 'page' : null" (click)="selectAppView('reports')"><span aria-hidden="true">□</span>Reportes</button>
+          <button type="button" [class.active]="appView === 'capture'" [attr.aria-current]="appView === 'capture' ? 'page' : null" (click)="selectAppView('capture')"><span aria-hidden="true">＋</span>Nueva muestra</button>
+          <button type="button" [class.active]="appView === 'drafts'" [attr.aria-current]="appView === 'drafts' ? 'page' : null" (click)="selectAppView('drafts')"><span aria-hidden="true">◇</span>Borradores</button>
+        </nav>
+        <div class="connection-card"><i [class.offline]="offline"></i><b>{{ offline ? 'Modo sin conexión' : 'En línea' }}</b><small>{{ offline ? 'Cambios protegidos localmente' : 'Los cambios se guardan localmente' }}</small></div>
+        <button class="offline-button" type="button" (click)="toggleConnection()">{{ offline ? 'Restaurar conexión' : 'Forzar modo offline' }}</button>
+        <button class="sync-button" type="button" (click)="syncDrafts()">Iniciar sesión para sincronizar</button>
+      </aside>
+    }
     <header>
       <div><small>Laboratorista</small><b>Buen día, bienvenido</b></div>
       <div class="session-chip">Sesión 07:48:21</div>
-      <span class="avatar">IC</span>
+      <span class="avatar">AR</span>
     </header>
     <p class="platform-summary">{{ platformSummary }}</p>
-    @if (viewport === 'mobile') {
-      <div class="update-strip">↑ <span><b>Actualización Android disponible</b><small>Puedes continuar trabajando.</small></span><button type="button" (click)="notify('Descarga simulada iniciada.')">Descargar</button></div>
+    @if (viewport !== 'desktop') {
+      <div class="update-strip">↑ <span><b>Actualización disponible</b><small>Puedes continuar trabajando.</small></span><button type="button" (click)="notify('Descarga simulada iniciada.')">Descargar</button></div>
     }
 
     <section class="ops-content">

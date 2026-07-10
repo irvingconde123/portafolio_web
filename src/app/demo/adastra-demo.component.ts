@@ -8,10 +8,11 @@ import { AppView, DemoDraft, DemoReport, DemoViewport, ReportStatus, SyncCheckpo
   standalone: false,
 })
 export class AdastraDemoComponent {
-  @Input() viewport: DemoViewport = 'web';
+  @Input() viewport: DemoViewport = 'desktop';
   @Output() readonly feedback = new EventEmitter<string>();
 
   protected offline = false;
+  protected mobileMenuOpen = false;
   protected appView: AppView = 'home';
   protected reportSearch = '';
   protected reportStatusFilter = 'Todos';
@@ -50,8 +51,8 @@ export class AdastraDemoComponent {
   }
 
   protected get platformSummary(): string {
-    if (this.viewport === 'mobile') {
-      return 'Vista Android: navegación compacta, captura offline, revisión de reportes y sincronización en una sola columna.';
+    if (this.viewport !== 'desktop') {
+      return 'Vista compacta: captura offline, revisión de reportes y sincronización sin perder el menú principal.';
     }
 
     return 'Vista web: operación extendida con barra lateral, filtros, detalle de reportes y control de sincronización.';
@@ -63,6 +64,7 @@ export class AdastraDemoComponent {
 
   protected selectAppView(view: AppView): void {
     this.appView = view;
+    this.mobileMenuOpen = false;
     this.closeReport();
   }
 

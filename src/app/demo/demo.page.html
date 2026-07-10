@@ -12,16 +12,19 @@
       </div>
       <p><b>Recorrido sugerido</b><span>{{ suggestedJourney }}</span></p>
       <div class="demo-view-toggle" aria-label="Cambiar tamaño de previsualización">
-        <span>Previsualización</span>
-        <button type="button" [class.active]="viewport === 'web'" (click)="selectViewport('web')">Web</button>
+        <span>Tamaño</span>
+        <button type="button" [class.active]="viewport === 'desktop'" (click)="selectViewport('desktop')">Escritorio</button>
+        <button type="button" [class.active]="viewport === 'tablet'" (click)="selectViewport('tablet')">Tablet</button>
         <button type="button" [class.active]="viewport === 'mobile'" (click)="selectViewport('mobile')">Móvil</button>
       </div>
     </section>
 
-    <section class="demo-stage" [class.demo-stage-mobile]="viewport === 'mobile'" aria-label="Previsualización de demostración">
-      @if (viewport === 'mobile') {
-        <div class="device-chrome" aria-hidden="true"><i></i><span>Android · 390px</span><b></b></div>
-      }
+    <section
+      class="demo-stage"
+      [class.demo-stage-tablet]="viewport === 'tablet'"
+      [class.demo-stage-mobile]="viewport === 'mobile'"
+      aria-label="Previsualización de demostración"
+    >
       <div class="demo-viewport">
         @switch (slug) {
           @case ('adastra') { <app-adastra-demo [viewport]="viewport" (feedback)="showFeedback($event)"></app-adastra-demo> }
