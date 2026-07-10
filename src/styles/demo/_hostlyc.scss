@@ -15,7 +15,8 @@
 .hostlyc-demo :is(button,input,select) { min-height: 2.75rem; }
 .hostlyc-demo button:focus-visible,.hostlyc-demo :is(input,select,textarea):focus-visible { outline: 3px solid #ff668a; outline-offset: 2px; }
 .hostlyc-demo :is(.hostlyc-contact,.hostlyc-hero button:not(.hostlyc-outline),.hostlyc-contact-section button:not(.hostlyc-outline)) { background: #c90031; border-color: #c90031; color: #fff; }
-.hostlyc-demo :is(h2,h3,p,span,label) { overflow-wrap: anywhere; }
+.hostlyc-demo :is(p,span,label) { overflow-wrap: anywhere; }
+.hostlyc-demo :is(h2,h3) { hyphens: none; overflow-wrap: normal; word-break: normal; }
 @media (max-width: 560px) {
   .hostlyc-demo .hostlyc-section,.hostlyc-demo .hostlyc-impact,.hostlyc-demo .hostlyc-contact-section { padding-inline: 0.95rem; }
   .hostlyc-demo .hostlyc-footer > div { flex-wrap: wrap; }

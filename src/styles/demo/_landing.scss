@@ -18,7 +18,8 @@
 .laboratory-demo :is(small,span,i,label,button,figcaption,li) { font-size: 0.75rem; }
 .laboratory-demo button { min-height: 2.75rem; }
 .laboratory-demo button:focus-visible { outline: 3px solid #60a5fa; outline-offset: 2px; }
-.laboratory-demo :is(h2,h3,p,span,li,figcaption) { overflow-wrap: anywhere; }
+.laboratory-demo :is(p,span,li,figcaption) { overflow-wrap: anywhere; }
+.laboratory-demo :is(h2,h3) { hyphens: none; overflow-wrap: normal; word-break: normal; }
 @media (max-width: 560px) {
   .laboratory-demo .lab-accreditation-strip { grid-template-columns: 1fr 1fr; }
   .laboratory-demo .lab-contact { margin-inline: 0.85rem; }
