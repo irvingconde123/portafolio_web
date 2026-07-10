@@ -17,12 +17,6 @@
 .ops-workspace > header { align-items: center; background: #fff; border-bottom: 1px solid #d9e1ed; display: flex; gap: 1rem; min-height: 5rem; padding: 1rem 1.75rem; }
 .ops-workspace > header > div:first-child { display: grid; gap: 0.2rem; margin-right: auto; }.ops-workspace > header small { color: #7b879a; }.ops-workspace > header b { font-size: 0.9rem; }
 .platform-summary { background: #eef6ff; border-bottom: 1px solid #c7ddf5; color: #244462; line-height: 1.5; margin: 0; padding: 0.7rem 1.75rem; }
-.platform-android { background: radial-gradient(circle at top,#dae8ff,#f4f7fc 48%); grid-template-columns: 1fr; justify-items: center; padding: 1.25rem; }
-.platform-android .ops-sidebar { display: none; }
-.platform-android .ops-workspace { background: #f4f7fc; border: 0.55rem solid #111827; border-radius: 2.2rem; box-shadow: 0 1.5rem 4rem rgb(15 23 42 / 35%); max-height: 48rem; max-width: 24.5rem; overflow: auto; position: relative; width: min(100%,24.5rem); }
-.platform-android .ops-workspace::before { background: #111827; border-radius: 0 0 1rem 1rem; content: ""; height: 1.25rem; left: 50%; position: sticky; top: 0; transform: translateX(-50%); width: 6.5rem; z-index: 22; }
-.platform-android .mobile-demo-tabs { display: flex; }
-.platform-desktop .ops-workspace::before { background: linear-gradient(90deg,#cbd5e1 0 12%,transparent 12% 100%); color: #526278; content: "Adastra Desktop"; display: block; font-size: .75rem; font-weight: 800; padding: .55rem 1rem .55rem 8rem; }
 .session-chip { background: #edf2ff; border: 1px solid #c6d4ff; border-radius: 999px; color: #4161df; font-size: 0.65rem; font-weight: 800; padding: 0.65rem 0.85rem; }
 .avatar { align-items: center; background: #e7efff; border-radius: 50%; color: #3159d8; display: flex; font-size: 0.7rem; font-weight: 900; height: 2.4rem; justify-content: center; width: 2.4rem; }
 .update-strip { align-items: center; background: #102e52; color: #91c5ff; display: flex; gap: 1rem; padding: 0.8rem 1.75rem; }

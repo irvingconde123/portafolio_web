@@ -1,7 +1,7 @@
 import { Component, inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PROJECTS, ProjectItem } from '../data/portfolio-content';
-import { DemoFeedback, DemoSlug } from './demo.models';
+import { DemoFeedback, DemoSlug, DemoViewport } from './demo.models';
 
 @Component({
   selector: 'app-demo',
@@ -19,6 +19,7 @@ export class DemoPage implements OnInit, OnDestroy {
   protected slug: DemoSlug = 'adastra';
   protected project?: ProjectItem;
   protected feedback?: DemoFeedback;
+  protected viewport: DemoViewport = 'web';
 
   protected get suggestedJourney(): string {
     const journeys: Record<DemoSlug, string> = {
@@ -37,6 +38,7 @@ export class DemoPage implements OnInit, OnDestroy {
         ? candidate
         : 'adastra';
     this.project = PROJECTS.find((item) => item.slug === this.slug);
+    this.viewport = this.slug === 'adastra' ? 'mobile' : 'web';
   }
 
   ngOnDestroy(): void {
@@ -54,5 +56,9 @@ export class DemoPage implements OnInit, OnDestroy {
     this.feedbackTimer = setTimeout(() => {
       this.feedback = undefined;
     }, this.feedbackDuration);
+  }
+
+  protected selectViewport(viewport: DemoViewport): void {
+    this.viewport = viewport;
   }
 }

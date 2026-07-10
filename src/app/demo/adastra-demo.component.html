@@ -1,9 +1,4 @@
-<section
-  class="demo-window operations-demo"
-  [class.platform-web]="demoPlatform === 'web'"
-  [class.platform-android]="demoPlatform === 'android'"
-  [class.platform-desktop]="demoPlatform === 'desktop'"
->
+<section class="demo-window operations-demo">
   <aside class="ops-sidebar">
     <div class="ops-brand"><strong>AA</strong><span>AD ASTRA<small>OPERACIONES</small></span></div>
     <nav aria-label="Pantallas de la aplicación">
@@ -26,20 +21,12 @@
     </nav>
     <header>
       <div><small>Laboratorista</small><b>Buen día, bienvenido</b></div>
-      <label class="platform-picker">
-        Vista
-        <select name="demoPlatform" [(ngModel)]="demoPlatform">
-          <option value="web">Web</option>
-          <option value="android">Android</option>
-          <option value="desktop">Escritorio</option>
-        </select>
-      </label>
       <div class="session-chip">Sesión 07:48:21</div>
       <span class="avatar">IC</span>
     </header>
     <p class="platform-summary">{{ platformSummary }}</p>
-    @if (demoPlatform !== 'web') {
-      <div class="update-strip">↑ <span><b>Actualización {{ demoPlatform === 'android' ? 'Android' : 'de escritorio' }} disponible</b><small>Puedes continuar trabajando.</small></span><button type="button" (click)="notify('Descarga simulada iniciada.')">Descargar</button></div>
+    @if (viewport === 'mobile') {
+      <div class="update-strip">↑ <span><b>Actualización Android disponible</b><small>Puedes continuar trabajando.</small></span><button type="button" (click)="notify('Descarga simulada iniciada.')">Descargar</button></div>
     }
 
     <section class="ops-content">

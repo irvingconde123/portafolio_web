@@ -1,6 +1,6 @@
-import { Component, EventEmitter, HostListener, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { INITIAL_CAPTURE, INITIAL_DRAFTS, INITIAL_REPORTS } from './demo.fixtures';
-import { AppView, DemoDraft, DemoReport, ReportStatus, SyncCheckpoint } from './demo.models';
+import { AppView, DemoDraft, DemoReport, DemoViewport, ReportStatus, SyncCheckpoint } from './demo.models';
 
 @Component({
   selector: 'app-adastra-demo',
@@ -8,10 +8,10 @@ import { AppView, DemoDraft, DemoReport, ReportStatus, SyncCheckpoint } from './
   standalone: false,
 })
 export class AdastraDemoComponent {
+  @Input() viewport: DemoViewport = 'web';
   @Output() readonly feedback = new EventEmitter<string>();
 
   protected offline = false;
-  protected demoPlatform: 'web' | 'android' | 'desktop' = 'android';
   protected appView: AppView = 'home';
   protected reportSearch = '';
   protected reportStatusFilter = 'Todos';
@@ -50,15 +50,11 @@ export class AdastraDemoComponent {
   }
 
   protected get platformSummary(): string {
-    if (this.demoPlatform === 'android') {
-      return 'Android renderiza el flujo dentro de un marco móvil: navegación compacta, safe area y revisión de reportes en una sola columna.';
+    if (this.viewport === 'mobile') {
+      return 'Vista Android: navegación compacta, captura offline, revisión de reportes y sincronización en una sola columna.';
     }
 
-    if (this.demoPlatform === 'desktop') {
-      return 'Escritorio simula una app empaquetada con actualización descargable y espacio suficiente para operación extendida.';
-    }
-
-    return 'Web muestra la experiencia de navegador sin actualización de APK o instalador.';
+    return 'Vista web: operación extendida con barra lateral, filtros, detalle de reportes y control de sincronización.';
   }
 
   protected countReports(status: ReportStatus): number {

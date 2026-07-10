@@ -11,14 +11,26 @@
         <h1 id="demo-title">{{ project?.name }}</h1>
       </div>
       <p><b>Recorrido sugerido</b><span>{{ suggestedJourney }}</span></p>
+      <div class="demo-view-toggle" aria-label="Cambiar tamaño de previsualización">
+        <span>Previsualización</span>
+        <button type="button" [class.active]="viewport === 'web'" (click)="selectViewport('web')">Web</button>
+        <button type="button" [class.active]="viewport === 'mobile'" (click)="selectViewport('mobile')">Móvil</button>
+      </div>
     </section>
 
-    @switch (slug) {
-      @case ('adastra') { <app-adastra-demo (feedback)="showFeedback($event)"></app-adastra-demo> }
-      @case ('landing') { <app-landing-demo (feedback)="showFeedback($event)"></app-landing-demo> }
-      @case ('cms') { <app-cms-demo (feedback)="showFeedback($event)"></app-cms-demo> }
-      @case ('hostlyc') { <app-hostlyc-demo (feedback)="showFeedback($event)"></app-hostlyc-demo> }
-    }
+    <section class="demo-stage" [class.demo-stage-mobile]="viewport === 'mobile'" aria-label="Previsualización de demostración">
+      @if (viewport === 'mobile') {
+        <div class="device-chrome" aria-hidden="true"><i></i><span>Android · 390px</span><b></b></div>
+      }
+      <div class="demo-viewport">
+        @switch (slug) {
+          @case ('adastra') { <app-adastra-demo [viewport]="viewport" (feedback)="showFeedback($event)"></app-adastra-demo> }
+          @case ('landing') { <app-landing-demo (feedback)="showFeedback($event)"></app-landing-demo> }
+          @case ('cms') { <app-cms-demo (feedback)="showFeedback($event)"></app-cms-demo> }
+          @case ('hostlyc') { <app-hostlyc-demo (feedback)="showFeedback($event)"></app-hostlyc-demo> }
+        }
+      </div>
+    </section>
 
     <p class="disclaimer">La simulación no se conecta a sistemas reales. Nombres, métricas y registros son demostrativos.</p>
   </main>

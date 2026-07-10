@@ -5,7 +5,6 @@ import { AdastraDemoComponent } from './adastra-demo.component';
 interface AdastraHarness {
   appView: string;
   captureModel: { customer: string; location: string };
-  demoPlatform: 'web' | 'android' | 'desktop';
   drafts: unknown[];
   offline: boolean;
   selectedReportId: string | null;
@@ -76,15 +75,14 @@ describe('AdastraDemoComponent', () => {
     expect(report.evidence.length).toBe(initialEvidence - 1);
   });
 
-  it('only offers application updates for packaged platforms', () => {
-    harness.demoPlatform = 'web';
+  it('only offers application updates in the mobile preview', () => {
+    fixture.componentRef.setInput('viewport', 'web');
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('.update-strip')).toBeNull();
 
-    harness.demoPlatform = 'android';
+    fixture.componentRef.setInput('viewport', 'mobile');
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('.update-strip')).not.toBeNull();
-    expect(fixture.nativeElement.querySelector('.platform-android')).not.toBeNull();
   });
 
   it('exposes report detail as a modal dialog and closes it from the keyboard', () => {

@@ -11,6 +11,7 @@
 
 Los estados se reinician al recargar. Ninguna acción escribe en servicios, almacenamiento o APIs reales.
 Las confirmaciones aparecen como avisos no bloqueantes con una barra de tiempo y se cierran automáticamente después de tres segundos.
+El shell de demos permite alternar entre previsualización web y móvil sin insertar controles de dispositivo dentro de las aplicaciones simuladas.
 
 ## Revisión técnica por proyecto
 
