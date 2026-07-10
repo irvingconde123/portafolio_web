@@ -1,9 +1,9 @@
 # Reestructuración del portafolio Full Stack Mid+
 
 Estado: en ejecución  
-Rama: `feat/portfolio-rework-mid-plus`  
-Sitio canónico previsto: Vercel  
-Espejo: GitHub Pages
+Rama actual: `main`
+Sitio canónico: GitHub Pages
+Despliegue: GitHub Actions
 
 ## Decisiones cerradas
 
@@ -20,7 +20,7 @@ Espejo: GitHub Pages
 - [ ] Home reducido y sistema visual claro.
 - [ ] Casos con arquitecturas semánticas específicas.
 - [ ] Demos accesibles y realmente mobile-first.
-- [ ] SSG, SEO por ruta, Vercel y espejo Pages.
+- [x] SSG, SEO por ruta y publicación mediante GitHub Pages.
 - [ ] Pruebas unitarias, visuales, accesibilidad y rendimiento.
 
 ## Criterios de aceptación
@@ -121,13 +121,13 @@ Disponibilidad: En busqueda de nuevas oportunidades para el crecimiento personal
 > SI
 > ---
 
-> **COMENTARIO DE IRVING — VERCEL**
+> **COMENTARIO DE IRVING — DESPLIEGUE**
 >
-> Comparte el dominio si habrá uno propio. En caso contrario se usará la URL productiva `.vercel.app`.
+> Comparte el dominio si habrá uno propio. En caso contrario se usará la URL productiva de GitHub Pages.
 >
 > **Respuesta:**
 >
-> Usaremos una de vercel, no hay dominio propio aparte del de github pages
+> Se usará GitHub Pages; no hay dominio propio adicional.
 >
 >
 > **Enlaces o evidencia:**

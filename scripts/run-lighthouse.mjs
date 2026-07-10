@@ -121,7 +121,7 @@ function writeReports(lhr, report, route) {
 
 async function main() {
   if (!fs.existsSync(staticDir)) {
-    throw new Error(`No existe staticDistDir: ${staticDir}. Ejecuta build:vercel antes.`);
+    throw new Error(`No existe staticDistDir: ${staticDir}. Ejecuta build:qa antes.`);
   }
 
   fs.rmSync(outputDir, { recursive: true, force: true });

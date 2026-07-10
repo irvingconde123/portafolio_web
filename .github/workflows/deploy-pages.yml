@@ -39,8 +39,8 @@ jobs:
           npm run lint
           npm test -- --watch=false --browsers=ChromeHeadless
 
-      - name: Build canonical site
-        run: npm run build:vercel
+      - name: Build QA site
+        run: npm run build:qa
 
       - name: Verify responsive routes and accessibility
         run: npm run qa:e2e
