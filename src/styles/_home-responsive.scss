@@ -21,6 +21,9 @@
   .header-actions a:not(.header-cv) { display: none; }
   .menu-toggle { grid-template-columns: 1rem; min-height: 2.75rem; padding-inline: .75rem; }
   .menu-toggle b { display: none; }
+  .site-header nav { gap: .4rem; grid-template-columns: repeat(2,minmax(0,1fr)); padding: .5rem; top: 4.25rem; }
+  .site-header nav button { justify-content: center; min-height: 2.65rem; padding: .55rem; text-align: center; }
+  .navigation-backdrop { display: none; }
   .header-actions .header-cv { font-size: 0; min-height: 2.75rem; padding-inline: .75rem; }
   .header-actions .header-cv::before { content: 'CV ↓'; font-size: .75rem; font-weight: 800; }
   .section { padding: 1.8rem 1.05rem; }

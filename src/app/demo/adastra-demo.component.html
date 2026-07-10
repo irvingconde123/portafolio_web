@@ -29,8 +29,8 @@
           <button type="button" [class.active]="appView === 'drafts'" [attr.aria-current]="appView === 'drafts' ? 'page' : null" (click)="selectAppView('drafts')"><span aria-hidden="true">◇</span>Borradores</button>
         </nav>
         <div class="connection-card"><i [class.offline]="offline"></i><b>{{ offline ? 'Modo sin conexión' : 'En línea' }}</b><small>{{ offline ? 'Cambios protegidos localmente' : 'Los cambios se guardan localmente' }}</small></div>
-        <button class="offline-button" type="button" (click)="toggleConnection()">{{ offline ? 'Restaurar conexión' : 'Forzar modo offline' }}</button>
-        <button class="sync-button" type="button" (click)="syncDrafts()">Iniciar sesión para sincronizar</button>
+        <button class="offline-button" type="button" (click)="toggleConnection()">{{ offline ? 'Restaurar conexión' : 'Usar modo offline' }}</button>
+        <button class="sync-button" type="button" (click)="syncDrafts()">Sincronizar ({{ drafts.length }})</button>
       </aside>
     }
     <header>

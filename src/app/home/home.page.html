@@ -3,7 +3,7 @@
     <button class="identity" type="button" (click)="scrollTo('top')" aria-label="Irving Conde, ir al inicio">
       Irving Conde
     </button>
-    <button class="menu-toggle" type="button" [attr.aria-expanded]="mobileMenuOpen" aria-controls="main-navigation" aria-label="Abrir menú principal" (click)="toggleMobileMenu()">
+    <button class="menu-toggle" type="button" [attr.aria-expanded]="mobileMenuOpen" aria-controls="main-navigation" [attr.aria-label]="mobileMenuOpen ? 'Cerrar menú principal' : 'Abrir menú principal'" (click)="toggleMobileMenu()">
       <span></span><span></span><span></span><b>Menú</b>
     </button>
     <nav id="main-navigation" [class.open]="mobileMenuOpen" aria-label="Navegación principal">
