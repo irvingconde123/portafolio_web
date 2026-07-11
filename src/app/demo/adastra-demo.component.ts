@@ -93,6 +93,7 @@ export class AdastraDemoComponent {
 
   @HostListener('document:keydown.escape')
   protected closeReportWithKeyboard(): void {
+    if (this.mobileMenuOpen) this.mobileMenuOpen = false;
     if (this.selectedReportId) this.closeReport();
   }
 

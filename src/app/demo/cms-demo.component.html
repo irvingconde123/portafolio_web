@@ -37,6 +37,7 @@
       <span>{{ cmsView }}</span>
     </div>
     @if (mobileMenuOpen) {
+      <div class="cms-mobile-backdrop" aria-hidden="true" (click)="mobileMenuOpen = false"></div>
       <nav class="cms-mobile-menu" aria-label="Módulos del CMS">
         @for (view of ['Resumen','Páginas y menú','Landing','Medios','Estilos','SEO']; track view) {
           <button

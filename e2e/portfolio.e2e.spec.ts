@@ -61,21 +61,49 @@ test('demos expose their fictional-data notice and guided workflow', async ({ pa
   }
 });
 
-test('mobile demo previews use the page as their vertical scroll container', async ({ page }) => {
+test('mobile demo previews scroll inside the simulated device', async ({ page }) => {
   for (const route of ROUTES.filter((path) => path.startsWith('/demos/'))) {
     await page.goto(route, { waitUntil: 'networkidle' });
     await page.getByRole('button', { name: 'Móvil', exact: true }).click();
 
+    await page.locator('.demo-window').hover();
+    const pageYBefore = await page.evaluate(() => window.scrollY);
+    await page.mouse.wheel(0, 150);
+
     const preview = await page.locator('.demo-window').evaluate((element) => {
       const styles = getComputedStyle(element);
       return {
+        clientHeight: element.clientHeight,
         overflowY: styles.overflowY,
         scrollTop: element.scrollTop,
+        scrollHeight: element.scrollHeight,
       };
     });
+    const pageYAfter = await page.evaluate(() => window.scrollY);
 
-    expect(['auto', 'scroll']).not.toContain(preview.overflowY);
-    expect(preview.scrollTop).toBe(0);
+    expect(['auto', 'scroll']).toContain(preview.overflowY);
+    expect(Math.abs(pageYAfter - pageYBefore)).toBeLessThanOrEqual(1);
+    if (preview.scrollHeight > preview.clientHeight) {
+      expect(preview.scrollTop).toBeGreaterThan(0);
+    }
+  }
+});
+
+test('mobile demo menus overlay content without pushing it down', async ({ page }) => {
+  for (const route of ['/demos/adastra', '/demos/cms'] as const) {
+    await page.goto(route, { waitUntil: 'networkidle' });
+    await page.getByRole('button', { name: 'Móvil', exact: true }).click();
+
+    const contentSelector = route.endsWith('adastra') ? '.ops-content' : '.cms-workspace > header';
+    const before = await page.locator(contentSelector).boundingBox();
+
+    await page.getByRole('button', { name: route.endsWith('adastra') ? 'Abrir menú de la aplicación' : /Módulos/ }).first().click();
+    const after = await page.locator(contentSelector).boundingBox();
+
+    expect(before).not.toBeNull();
+    expect(after).not.toBeNull();
+    expect(Math.abs((after?.y ?? 0) - (before?.y ?? 0))).toBeLessThan(1);
+    await expect(page.locator(route.endsWith('adastra') ? '.mobile-nav-panel' : '.cms-mobile-menu')).toBeVisible();
   }
 });
 

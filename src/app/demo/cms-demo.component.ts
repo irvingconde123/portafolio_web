@@ -70,6 +70,7 @@ export class CmsDemoComponent {
 
   @HostListener('document:keydown.escape')
   protected closeEditorWithKeyboard(): void {
+    if (this.mobileMenuOpen) this.mobileMenuOpen = false;
     if (this.cmsEditing) this.closeCmsEditor();
   }
 
