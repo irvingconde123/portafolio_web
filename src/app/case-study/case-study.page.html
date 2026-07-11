@@ -58,7 +58,9 @@
           </span>
         </header>
 
-        <div class="architecture-nodes">
+        <p class="architecture-mobile-hint">Desliza para recorrer componentes y contratos →</p>
+
+        <div class="architecture-nodes" tabindex="0" aria-label="Componentes de la arquitectura; recorrido horizontal en pantallas pequeñas">
           @for (node of item.nodes; track node.id) {
             <article [attr.data-kind]="node.kind">
               <small>{{ kindLabel(node.kind) }}</small>
@@ -79,7 +81,7 @@
                 <th scope="col">Propósito</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody tabindex="0" aria-label="Contratos de la arquitectura; recorrido horizontal en pantallas pequeñas">
               @for (edge of item.edges; track edge.from + edge.to) {
                 <tr>
                   <th scope="row">{{ edge.from }} → {{ edge.to }}</th>

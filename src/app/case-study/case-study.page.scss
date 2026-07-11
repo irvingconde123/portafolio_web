@@ -32,6 +32,7 @@ h2 { font-size: clamp(1.65rem, 4vw, 2.35rem); letter-spacing: -0.025em; margin: 
 .architecture-section > header { align-items: flex-start; display: flex; gap: 2rem; justify-content: space-between; }
 .architecture-section > header > span { background: #123047; border-radius: 999px; color: #67e8f9; font-size: 0.75rem; padding: 0.5rem 0.75rem; white-space: nowrap; }
 .architecture-section > header > span.invalid { color: #fecaca; }
+.architecture-mobile-hint { display: none; }
 .architecture-nodes, .scenario-grid { display: grid; gap: 1rem; grid-template-columns: repeat(3, 1fr); margin-top: 2rem; }
 .architecture-nodes article { background: #0d1b2a; border: 1px solid #23374d; border-left: 3px solid #0891b2; border-radius: 0.75rem; padding: 1rem; }
 .architecture-nodes article[data-kind="actor"] { border-left-color: #a78bfa; }
@@ -74,12 +75,22 @@ code { background: rgba(8, 145, 178, 0.13); border-radius: 0.3rem; color: inheri
   .case-header { padding: 0 1rem; }
   .case-header span { display: none; }
   .case-page { padding-inline: 1rem; }
-  .case-overview, .architecture-nodes, .scenario-grid { grid-template-columns: 1fr; }
+  .case-overview, .scenario-grid { grid-template-columns: 1fr; }
   .architecture-section > header { display: block; }
   .architecture-section > header > span { display: inline-block; margin-top: 0.5rem; }
-  .architecture-edges th, .architecture-edges td { font-size: 0.75rem; padding: 0.75rem 0.6rem; }
-  .architecture-edges thead th:nth-child(1) { width: 35%; }
-  .architecture-edges thead th:nth-child(2) { width: 24%; }
+  .architecture-mobile-hint { color: #8fa0b8; display: block; font-size: .75rem; line-height: 1.5; margin: 1.25rem 0 .75rem; }
+  .architecture-nodes { display: flex; gap: .75rem; margin-top: 0; overflow-x: auto; overscroll-behavior-inline: contain; padding: .15rem .05rem .65rem; scroll-padding-inline: .05rem; scroll-snap-type: inline mandatory; scrollbar-width: none; }
+  .architecture-nodes article { flex: 0 0 min(82vw,18rem); min-height: 11rem; scroll-snap-align: start; }
+  .architecture-edges { border: 0; margin-top: 1rem; overflow: visible; }
+  .architecture-edges table,.architecture-edges tbody { display: block; }
+  .architecture-edges thead { display: none; }
+  .architecture-edges tbody { display: flex; gap: .75rem; overflow-x: auto; overscroll-behavior-inline: contain; padding: .1rem .05rem .65rem; scroll-padding-inline: .05rem; scroll-snap-type: inline mandatory; scrollbar-width: none; }
+  .architecture-nodes::-webkit-scrollbar,.architecture-edges tbody::-webkit-scrollbar { display: none; }
+  .architecture-nodes:focus-visible,.architecture-edges tbody:focus-visible { outline: 3px solid #67e8f9; outline-offset: 2px; }
+  .architecture-edges tbody tr { background: #0d1b2a; border: 1px solid #23374d; border-radius: .7rem; display: grid; flex: 0 0 min(82vw,18rem); grid-template-columns: 1fr; overflow: hidden; scroll-snap-align: start; }
+  .architecture-edges tbody th,.architecture-edges tbody td { display: block; font-size: .75rem; padding: .7rem .8rem; width: auto; }
+  .architecture-edges tbody th { color: #e2e8f0; }
+  .architecture-edges tbody td { border-top: 1px solid #23374d; }
   .decision-list article { grid-template-columns: 1fr; }
   .case-actions a { width: 100%; }
 }

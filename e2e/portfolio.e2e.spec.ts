@@ -60,3 +60,40 @@ test('demos expose their fictional-data notice and guided workflow', async ({ pa
     await expect(page.getByText('Recorrido sugerido')).toBeVisible();
   }
 });
+
+test('mobile demo previews use the page as their vertical scroll container', async ({ page }) => {
+  for (const route of ROUTES.filter((path) => path.startsWith('/demos/'))) {
+    await page.goto(route, { waitUntil: 'networkidle' });
+    await page.getByRole('button', { name: 'Móvil', exact: true }).click();
+
+    const preview = await page.locator('.demo-window').evaluate((element) => {
+      const styles = getComputedStyle(element);
+      return {
+        overflowY: styles.overflowY,
+        scrollTop: element.scrollTop,
+      };
+    });
+
+    expect(['auto', 'scroll']).not.toContain(preview.overflowY);
+    expect(preview.scrollTop).toBe(0);
+  }
+});
+
+test('mobile architecture keeps all content in compact horizontal tracks', async ({ page }) => {
+  test.skip((page.viewportSize()?.width ?? 0) > 760, 'Mobile-only architecture layout');
+  await page.goto('/casos/gateway-datos#arquitectura', { waitUntil: 'networkidle' });
+
+  const architecture = await page.locator('.architecture-section').evaluate((section) => {
+    const nodes = section.querySelector<HTMLElement>('.architecture-nodes');
+    const contracts = section.querySelector<HTMLElement>('.architecture-edges tbody');
+    return {
+      height: section.clientHeight,
+      nodesOverflow: (nodes?.scrollWidth ?? 0) > (nodes?.clientWidth ?? 0),
+      contractsOverflow: (contracts?.scrollWidth ?? 0) > (contracts?.clientWidth ?? 0),
+    };
+  });
+
+  expect(architecture.height).toBeLessThan(800);
+  expect(architecture.nodesOverflow).toBe(true);
+  expect(architecture.contractsOverflow).toBe(true);
+});
