@@ -4,7 +4,7 @@ export const EXPERIENCES: ExperienceItem[] = [
   {
     company: 'DISH México · MVSHUB',
     period: 'Ago 2024 — Actualidad',
-    role: 'Líder de proyecto y desarrollador full stack',
+    role: 'Líder de proyecto y desarrollador de pila completa',
     summary:
       'Participación en MVSHUB e integraciones con proveedores de contenido; mantenimiento de aplicaciones MVS, optimización de arquitectura, procesos reutilizables y resolución de incidencias productivas.',
     technologies: ['Python', 'Ionic', 'Angular', 'Lambda', 'S3', 'DynamoDB', 'CloudFront'],
@@ -12,23 +12,23 @@ export const EXPERIENCES: ExperienceItem[] = [
   {
     company: 'Hostlyc',
     period: 'Oct 2025 — Actualidad',
-    role: 'Desarrollador full stack · colaboración independiente',
+    role: 'Desarrollador de pila completa · colaboración independiente',
     summary:
-      'Colaboración freelance en equipo de 5 personas, con foco en planeación de arquitectura, desarrollo backend y productos web/multiplataforma.',
+      'Colaboración independiente en un equipo de cinco personas, enfocada en planeación de arquitectura, desarrollo del servidor y productos web multiplataforma.',
     technologies: ['NestJS', 'Ionic', 'Angular', 'Electron', 'Prisma', 'TypeORM', 'PostgreSQL'],
   },
   {
     company: 'GECOSOFT',
     period: 'Mar 2022 — Mayo 2024',
-    role: 'Desarrollador backend',
+    role: 'Desarrollador de servicios de servidor',
     summary:
-      'Desarrollo backend, configuración de despliegues y soporte de servidores para soluciones de distintos clientes bajo contexto de consultoría.',
+      'Desarrollo de servicios, configuración de despliegues y soporte de servidores para soluciones de distintos clientes en un entorno de consultoría.',
     technologies: ['Python', 'Java', 'Node.js', 'SQL Server', 'PostgreSQL', 'AWS', 'Azure'],
   },
   {
     company: 'Proyectos independientes',
     period: '2022 — 2024',
-    role: 'Desarrollador full stack',
+    role: 'Desarrollador de pila completa',
     summary:
       'Aplicaciones móviles y web para punto de venta, asistencia, clientes y análisis visual con modelos de inteligencia artificial.',
     technologies: ['Ionic', 'Angular', 'NestJS', 'Firebase', 'MySQL', 'TensorFlow'],

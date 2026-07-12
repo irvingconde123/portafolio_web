@@ -6,6 +6,7 @@ export { EXPERIENCES, SKILL_GROUPS } from './portfolio-profile';
 export {
   CASE_STUDIES,
   findCaseStudy,
+  hasValidEvidence,
   hasValidArchitecture,
 } from './case-studies';
 
@@ -17,7 +18,7 @@ export const PROJECTS: ProjectItem[] = [
     summary:
       'Aplicación operativa con captura offline cifrada, caché local, sincronización idempotente y continuidad de sesión.',
     impact: 'El flujo puede continuar sin red y reconciliar cambios sin duplicar información.',
-    ownership: 'Arquitectura integral, experiencia multiplataforma, persistencia offline y pruebas.',
+    ownership: 'Arquitectura integral, experiencia multiplataforma, persistencia sin conexión y pruebas.',
     team: 'Ejecución individual',
     status: 'Producto funcional en evolución',
     solutionFor: 'Operación de campo y laboratorio con conectividad intermitente.',
@@ -28,7 +29,7 @@ export const PROJECTS: ProjectItem[] = [
     preview: 'operations',
     hasDemo: true,
     architectureType: 'Operación sin conexión · Hexagonal · Consistencia eventual',
-    architectureScope: 'C4 nivel contenedores · flujo de escritura offline y reconciliación',
+    architectureScope: 'C4 nivel contenedores · flujo de escritura sin conexión y reconciliación',
     patterns: ['Puertos y adaptadores', 'Bandeja de salida local', 'Clave de idempotencia', 'Repositorio', 'Estrategia de persistencia'],
     qualityAttributes: [
       { name: 'Disponibilidad', mechanism: 'Captura local aunque API o red no estén disponibles.' },
@@ -38,10 +39,10 @@ export const PROJECTS: ProjectItem[] = [
     ],
     failureModes: [
       { trigger: 'Pérdida de red o cierre del proceso', response: 'La bandeja de salida conserva la intención y reanuda por identificador de correlación.' },
-      { trigger: 'Token expira durante un lote', response: 'Se detiene el envío, conserva checkpoints y solicita reautenticación.' },
+      { trigger: 'El token expira durante un lote', response: 'Se detiene el envío, conserva puntos de control y solicita reautenticación.' },
       { trigger: 'Fallo parcial del backend', response: 'La transacción revierte; el cliente consulta estado antes de reintentar.' },
     ],
-    tradeoffs: ['Consistencia eventual a cambio de continuidad offline.', 'Mayor complejidad local para evitar pérdida o duplicidad.', 'La caché es acotada y no sustituye la fuente de verdad.'],
+    tradeoffs: ['Consistencia eventual a cambio de continuidad sin conexión.', 'Mayor complejidad local para evitar pérdida o duplicidad.', 'La caché es acotada y no sustituye la fuente de verdad.'],
     observability: ['Identificador de correlación por operación', 'Estado de la bandeja de salida', 'Métrica de reintentos', 'Auditoría de creador y sincronizador'],
     architecture: [
       { label: 'Cliente híbrido', detail: 'Una interfaz adaptable para web, Android y escritorio.' },
@@ -66,7 +67,7 @@ export const PROJECTS: ProjectItem[] = [
     summary:
       'Landing multi-tenant que consume contenido dinámico desde un CMS y conmuta a un respaldo local mediante un repositorio y adaptadores tipados.',
     impact: 'Una misma aplicación presenta contenido diferente por organización sin recompilar.',
-    ownership: 'Arquitectura frontend, integración CMS con respaldo local y sistema visual.',
+    ownership: 'Arquitectura de la interfaz, integración del CMS con respaldo local y sistema visual.',
     team: 'Ejecución individual',
     status: 'Implementación funcional en evolución visual',
     solutionFor: 'Sitios administrables que deben seguir disponibles cuando el CMS falla.',
@@ -82,7 +83,7 @@ export const PROJECTS: ProjectItem[] = [
     qualityAttributes: [
       { name: 'Modificabilidad', mechanism: 'Nuevos bloques mediante registro sin alterar la estructura principal.' },
       { name: 'Disponibilidad', mechanism: 'Fuente local tipada cuando el CMS público no responde.' },
-      { name: 'Rendimiento', mechanism: 'Activos responsivos, secciones lazy y modelo ya normalizado.' },
+      { name: 'Rendimiento', mechanism: 'Recursos adaptables, secciones con carga diferida y modelo normalizado.' },
       { name: 'Aislamiento', mechanism: 'Contexto de tenant aplicado antes de consultar contenido.' },
     ],
     failureModes: [
@@ -91,7 +92,7 @@ export const PROJECTS: ProjectItem[] = [
       { trigger: 'Media inválida', response: 'Resolver sustituye por placeholder y registra diagnóstico.' },
     ],
     tradeoffs: ['El contrato visual estable limita propiedades arbitrarias.', 'El respaldo mejora la disponibilidad, pero puede mostrar una versión anterior.', 'La composición dinámica exige validación estricta en el CMS.'],
-    observability: ['Tenant resuelto', 'Fuente API/fallback', 'Bloques descartados', 'Core Web Vitals'],
+    observability: ['Organización resuelta', 'Fuente principal o de respaldo', 'Bloques descartados', 'Métricas web esenciales'],
     architecture: [
       { label: 'Navegador', detail: 'Solicita una página sin conocer la fuente que resolverá su contenido.' },
       { label: 'Contexto del sitio', detail: 'Resuelve la organización desde el dominio o la configuración local.' },

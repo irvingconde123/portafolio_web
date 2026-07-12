@@ -21,17 +21,23 @@
 
     <section
       class="demo-stage"
+      [class.demo-stage-desktop]="viewport === 'desktop'"
       [class.demo-stage-tablet]="viewport === 'tablet'"
       [class.demo-stage-mobile]="viewport === 'mobile'"
       aria-label="Previsualización de demostración"
     >
-      <div class="demo-viewport">
+      <div class="demo-viewport" #demoViewport>
+        <span class="device-camera" aria-hidden="true"></span>
+        <span class="device-speaker" aria-hidden="true"></span>
+        <span class="device-side-button device-side-button-top" aria-hidden="true"></span>
+        <span class="device-side-button device-side-button-bottom" aria-hidden="true"></span>
         @switch (slug) {
           @case ('adastra') { <app-adastra-demo [viewport]="viewport" (feedback)="showFeedback($event)"></app-adastra-demo> }
           @case ('landing') { <app-landing-demo (feedback)="showFeedback($event)"></app-landing-demo> }
           @case ('cms') { <app-cms-demo (feedback)="showFeedback($event)"></app-cms-demo> }
           @case ('hostlyc') { <app-hostlyc-demo (feedback)="showFeedback($event)"></app-hostlyc-demo> }
         }
+        <span class="device-home" aria-hidden="true"></span>
       </div>
     </section>
 

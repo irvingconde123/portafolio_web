@@ -2,7 +2,7 @@
 
 [![Build and deploy GitHub Pages](https://github.com/irvingconde123/portafolio_web/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/irvingconde123/portafolio_web/actions/workflows/deploy-pages.yml)
 
-Portafolio profesional construido con Ionic y Angular. Presenta experiencia full stack, proyectos, demos funcionales y revisiones de arquitectura sanitizadas para explicar decisiones técnicas sin exponer sistemas privados.
+Portafolio profesional construido con Ionic y Angular. Presenta experiencia de desarrollo de pila completa, proyectos, demos funcionales y revisiones de arquitectura sanitizadas para explicar decisiones técnicas sin exponer sistemas privados.
 
 **Sitio:** [irvingconde123.github.io/portafolio_web](https://irvingconde123.github.io/portafolio_web/)
 
@@ -61,7 +61,6 @@ El build usa `/portafolio_web/` como ruta base. El workflow copia `index.html` c
 - `src/styles/demo`: estilos desacoplados por demostración.
 - `src/app/architecture`: vistas técnicas por proyecto.
 - `docs/DEMO-COVERAGE.md`: cobertura funcional de las demos.
-- `docs/GOALS.md`: alcance y límites de seguridad.
 
 ## Seguridad
 

@@ -66,6 +66,7 @@ export class AdastraDemoComponent {
     this.appView = view;
     this.mobileMenuOpen = false;
     this.closeReport();
+    this.resetDemoScroll();
   }
 
   protected toggleConnection(): void {
@@ -81,6 +82,7 @@ export class AdastraDemoComponent {
     this.dialogTrigger = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     this.selectedReportId = reportId;
     this.editingReport = false;
+    this.resetDemoScroll();
     setTimeout(() => document.querySelector<HTMLElement>('.report-detail-demo')?.focus());
   }
 
@@ -244,5 +246,11 @@ export class AdastraDemoComponent {
 
   protected notify(message: string): void {
     this.feedback.emit(message);
+  }
+
+  private resetDemoScroll(): void {
+    setTimeout(() => {
+      document.querySelector<HTMLElement>('.operations-demo')?.scrollTo({ top: 0 });
+    });
   }
 }

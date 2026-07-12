@@ -22,3 +22,11 @@
   .hostlyc-demo .hostlyc-footer > div { flex-wrap: wrap; }
 }
 
+/* Keep every landing block in the simulated device's scroll flow. */
+.demo-stage-tablet .hostlyc-demo > *,
+.demo-stage-mobile .hostlyc-demo > * { flex-shrink: 0; }
+.demo-stage-tablet .hostlyc-demo :is(#demo-hostlyc-inicio,#demo-hostlyc-servicios,#demo-hostlyc-proyectos,#demo-hostlyc-nosotros,#demo-hostlyc-proceso,#demo-hostlyc-contacto),
+.demo-stage-mobile .hostlyc-demo :is(#demo-hostlyc-inicio,#demo-hostlyc-servicios,#demo-hostlyc-proyectos,#demo-hostlyc-nosotros,#demo-hostlyc-proceso,#demo-hostlyc-contacto) { scroll-margin-top: 4.3rem; }
+.demo-stage-mobile .hostlyc-demo .hostlyc-hero { flex: 0 0 auto; min-height: 31rem; }
+.demo-stage-mobile .hostlyc-demo .hostlyc-marquee { display: flex; justify-content: flex-start; overflow-x: auto; }
+

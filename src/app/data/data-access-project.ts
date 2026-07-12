@@ -3,7 +3,7 @@ import { ProjectItem } from './portfolio.models';
 export const DATA_ACCESS_PROJECT: ProjectItem = {
   slug: 'cloud-automation',
   name: 'Acceso dinámico y resiliente a datos',
-  kind: 'Servicios backend · Datos',
+  kind: 'Servicios de servidor · Datos',
   summary:
     'Capa de acceso que recibe un recurso lógico y resuelve contexto, entidad, controlador y conexión sin acoplar el dominio a una base física.',
   impact: 'Permite mover recursos entre contextos o motores y aislar una caída sin detener toda la plataforma.',

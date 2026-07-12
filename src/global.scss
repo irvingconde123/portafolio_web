@@ -32,14 +32,55 @@ app-architecture {
   color-scheme: dark;
 }
 
-* { box-sizing: border-box; }
-html, body { background: var(--canvas); color: var(--text); min-height: 100%; overflow-x: hidden; }
-body { font-family: Inter, "Segoe UI", Arial, sans-serif; font-size: 16px; margin: 0; }
-h1, h2, h3, h4, h5, h6, strong, b { color: inherit; }
-::selection { background: #bae6fd; color: var(--text); }
-a, button { -webkit-tap-highlight-color: transparent; }
-a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  background: var(--canvas);
+  color: var(--text);
+  min-height: 100%;
+  overflow-x: hidden;
+  overscroll-behavior-y: none;
+}
+body {
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  font-size: 16px;
+  margin: 0;
+}
+body:has(app-demo),
+body:has(app-architecture) {
+  background: #07111f;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+strong,
+b {
+  color: inherit;
+}
+::selection {
+  background: #bae6fd;
+  color: var(--text);
+}
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; }
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }

@@ -13,9 +13,20 @@ export class HostlycDemoComponent {
   protected jumpToSection(section: string): void {
     this.selectedSection = section;
     this.mobileMenuOpen = false;
-    document
-      .getElementById(`demo-hostlyc-${section.toLowerCase()}`)
-      ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const target = document.getElementById(
+      `demo-hostlyc-${section.toLowerCase()}`,
+    );
+    const scrollContainer = target?.closest<HTMLElement>('.demo-window');
+
+    if (!target || !scrollContainer) return;
+
+    const stickyNavigation =
+      scrollContainer.querySelector<HTMLElement>(':scope > nav');
+    const targetTop = target.offsetTop - (stickyNavigation?.offsetHeight ?? 0);
+    scrollContainer.scrollTo({
+      behavior: 'smooth',
+      top: Math.max(0, targetTop),
+    });
   }
 
   protected notify(message: string): void {

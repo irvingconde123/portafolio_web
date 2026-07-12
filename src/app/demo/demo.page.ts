@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, inject, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PROJECTS, ProjectItem } from '../data/portfolio-content';
 import { DemoFeedback, DemoSlug, DemoViewport } from './demo.models';
@@ -11,6 +11,7 @@ import { DemoFeedback, DemoSlug, DemoViewport } from './demo.models';
   standalone: false,
 })
 export class DemoPage implements OnInit, OnDestroy {
+  @ViewChild('demoViewport') private demoViewport?: ElementRef<HTMLElement>;
   private readonly route = inject(ActivatedRoute);
   private readonly feedbackDuration = 3000;
   private feedbackTimer?: ReturnType<typeof setTimeout>;
@@ -59,5 +60,8 @@ export class DemoPage implements OnInit, OnDestroy {
 
   protected selectViewport(viewport: DemoViewport): void {
     this.viewport = viewport;
+    requestAnimationFrame(() => {
+      this.demoViewport?.nativeElement.querySelector<HTMLElement>('.demo-window')?.scrollTo({ top: 0 });
+    });
   }
 }

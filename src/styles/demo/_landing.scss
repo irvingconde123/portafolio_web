@@ -25,3 +25,27 @@
   .laboratory-demo .lab-contact { margin-inline: 0.85rem; }
 }
 
+/* Preserve the complete desktop story inside both simulated devices. */
+.demo-stage-tablet .laboratory-demo .laboratory-hero figure,
+.demo-stage-mobile .laboratory-demo .laboratory-hero figure { display: block; order: 0; }
+.demo-stage-tablet .laboratory-demo .laboratory-hero { gap: 2rem; padding: 2.5rem; }
+.demo-stage-tablet .laboratory-demo .laboratory-hero img { max-height: none; }
+.demo-stage-tablet .laboratory-demo .lab-service-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+.demo-stage-tablet .laboratory-demo .lab-certifications > div { grid-template-columns: repeat(2,minmax(0,1fr)); }
+.demo-stage-tablet .laboratory-demo .lab-certifications article,
+.demo-stage-tablet .laboratory-demo .lab-certifications article.featured { grid-column: auto; }
+
+.demo-stage-mobile .laboratory-demo .laboratory-hero { gap: 1.5rem; }
+.demo-stage-mobile .laboratory-demo .laboratory-hero figure { margin-inline: 0.25rem; }
+.demo-stage-mobile .laboratory-demo .laboratory-hero img { max-height: none; }
+.demo-stage-mobile .laboratory-demo .laboratory-hero figure figcaption:last-child { bottom: 0.5rem; right: 0.5rem; }
+.demo-stage-mobile .laboratory-demo .lab-service-grid,
+.demo-stage-mobile .laboratory-demo .lab-certifications > div { grid-template-columns: 1fr; }
+.demo-stage-mobile .laboratory-demo .lab-certifications article,
+.demo-stage-mobile .laboratory-demo .lab-certifications article.featured { grid-column: auto; min-height: 0; }
+.demo-stage-mobile .laboratory-demo .lab-mission { grid-template-columns: 1fr; }
+.demo-stage-mobile .laboratory-demo .cell-visual { min-height: 18rem; }
+.demo-stage-mobile .laboratory-demo .lab-footer { gap: 1.75rem; grid-template-columns: 1fr; padding: 2rem 1rem 2.5rem; text-align: center; }
+.demo-stage-mobile .laboratory-demo .lab-footer > strong { align-items: center; flex-direction: column; justify-content: center; }
+.demo-stage-mobile .laboratory-demo .lab-footer > div { justify-items: center; }
+

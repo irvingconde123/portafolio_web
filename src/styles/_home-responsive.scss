@@ -1,6 +1,6 @@
 @media (max-width: 980px) {
   .site-header { gap: .75rem; grid-template-columns: auto 1fr auto; }
-  .menu-toggle { align-items: center; appearance: none; background: var(--surface); border: 1px solid var(--line); border-radius: .55rem; color: var(--text); cursor: pointer; display: grid; gap: 3px; grid-template-columns: 1rem auto; justify-self: end; min-height: 2.75rem; padding: .55rem .7rem; }
+  .menu-toggle { align-items: center; appearance: none; background: var(--surface); border: 1px solid var(--line); border-radius: .55rem; color: var(--text); cursor: pointer; display: grid; gap: 3px; grid-column: 3; grid-row: 1; grid-template-columns: 1rem auto; justify-self: end; min-height: 2.75rem; padding: .55rem .7rem; }
   .menu-toggle span { background: var(--primary); grid-column: 1; height: 1px; width: 1rem; }
   .menu-toggle b { font-size: .75rem; grid-column: 2; grid-row: 1 / span 3; margin-left: .35rem; }
   .site-header nav { align-content: start; background: var(--surface); border: 1px solid var(--line); border-radius: .75rem; box-shadow: 0 1.5rem 4rem rgb(15 23 42 / 18%); display: none; gap: .2rem; left: 1rem; padding: .6rem; position: fixed; right: 1rem; top: 4.8rem; z-index: 22; }
@@ -8,7 +8,7 @@
   .site-header nav button { border-radius: .45rem; color: var(--text); font-size: .9rem; min-height: 2.9rem; padding: .75rem; text-align: left; }
   .site-header nav button:hover { background: var(--soft); }
   .navigation-backdrop { background: rgb(15 23 42 / 35%); border: 0; bottom: 0; display: block; left: 0; position: fixed; right: 0; top: 4.5rem; z-index: 18; }
-  .header-actions { justify-self: end; }
+  .header-actions { grid-column: 2; grid-row: 1; justify-self: end; }
   .section-heading { gap: 1.5rem; grid-template-columns: 1fr; }
   .contact { grid-template-columns: 1fr; }
   .contact-actions { justify-content: flex-start; }

@@ -14,10 +14,12 @@ describe('CaseStudyPage', () => {
     await TestBed.configureTestingModule({
       declarations: [CaseStudyPage],
       imports: [RouterTestingModule],
-      providers: [{
-        provide: ActivatedRoute,
-        useValue: { paramMap: routeParams.asObservable() },
-      }],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: { paramMap: routeParams.asObservable() },
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(CaseStudyPage);
@@ -35,8 +37,9 @@ describe('CaseStudyPage', () => {
     routeParams.next(convertToParamMap({ slug: 'not-published' }));
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.querySelector('.not-found h1').textContent)
-      .toContain('no está publicada');
+    expect(
+      fixture.nativeElement.querySelector('.not-found h1').textContent,
+    ).toContain('no está publicada');
   });
 
   it('exposes all semantic node labels in the architecture map', () => {
@@ -60,7 +63,7 @@ describe('CaseStudyPage', () => {
 
     expect(link.href).toBe(
       'https://github.com/irvingconde123/portafolio_web/blob/main/' +
-      'src/app/demo/adastra-demo.component.html',
+        'src/app/data/code-evidence/hybrid-sync-orchestrator.ts',
     );
     expect(link.rel).toContain('noopener');
     expect(link.getAttribute('aria-label')).toContain('pestaña nueva');
@@ -71,9 +74,12 @@ describe('CaseStudyPage', () => {
       '.architecture-edges table',
     ) as HTMLTableElement;
 
-    expect(table.querySelector('caption')?.textContent)
-      .toContain('Contratos entre elementos');
+    expect(table.querySelector('caption')?.textContent).toContain(
+      'Contratos entre elementos',
+    );
     expect(table.querySelectorAll('thead th[scope="col"]').length).toBe(3);
-    expect(table.querySelectorAll('tbody th[scope="row"]').length).toBeGreaterThan(0);
+    expect(
+      table.querySelectorAll('tbody th[scope="row"]').length,
+    ).toBeGreaterThan(0);
   });
 });

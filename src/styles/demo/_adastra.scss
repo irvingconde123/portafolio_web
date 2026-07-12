@@ -13,7 +13,7 @@
 .connection-card i.offline { background: #f59e0b; }
 .connection-card b { font-size: 0.75rem; }.connection-card small { color: #7b879a; font-size: 0.6rem; line-height: 1.4; }
 .offline-button { background: #fff; border: 1px solid #1f3150; border-radius: 0.5rem; color: #3159d8; font-size: 0.68rem; font-weight: 800; min-height: 2.75rem; }
-.ops-workspace { min-width: 0; position: relative; }
+.ops-workspace { min-height: 100%; min-width: 0; position: relative; }
 .mobile-appbar,.mobile-nav-backdrop,.mobile-nav-panel { display: none; }
 .ops-workspace > header { align-items: center; background: #fff; border-bottom: 1px solid #d9e1ed; display: flex; gap: 1rem; min-height: 5rem; padding: 1rem 1.75rem; }
 .ops-workspace > header > div:first-child { display: grid; gap: 0.2rem; margin-right: auto; }.ops-workspace > header small { color: #7b879a; }.ops-workspace > header b { font-size: 0.9rem; }
@@ -91,4 +91,27 @@
   .operations-demo .report-detail-demo > footer,.operations-demo .report-edit-form > footer { align-items: stretch; flex-direction: column; }
   .operations-demo .sync-audit { grid-template-columns: 1fr; }
 }
+
+/* The preview chooses its viewport with a class instead of the browser width. */
+.demo-stage-tablet .operations-demo,.demo-stage-mobile .operations-demo {
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+.demo-stage-tablet .operations-demo .ops-content,
+.demo-stage-mobile .operations-demo .ops-content { padding-bottom: 2rem; }
+.demo-stage-tablet .operations-demo .report-list-demo > article {
+  grid-template-columns: minmax(0,1fr) minmax(8rem,auto);
+}
+.demo-stage-tablet .operations-demo .report-list-demo > article > button {
+  grid-column: 1 / -1;
+}
+.demo-stage-tablet .operations-demo .draft-list-demo article {
+  grid-template-columns: auto minmax(0,1fr) auto;
+}
+.demo-stage-tablet .operations-demo .draft-list-demo .danger { grid-column: 3; }
+.demo-stage-mobile .operations-demo .metrics { grid-template-columns: 1fr; }
+.demo-stage-mobile .operations-demo .metrics article { min-height: 0; }
+.demo-stage-mobile .operations-demo .draft-list-demo article { grid-template-columns: 1fr; }
+.demo-stage-mobile .operations-demo .draft-list-demo article > div { grid-column: auto; }
+.demo-stage-mobile .operations-demo .draft-list-demo button { width: 100%; }
 
