@@ -118,12 +118,19 @@ test('mobile demo menus overlay content without pushing it down', async ({
     '/demos/hostlyc',
   ] as const) {
     await page.goto(route, { waitUntil: 'networkidle' });
+    await page.evaluate(() => document.fonts.ready);
     await page.getByRole('button', { name: 'Móvil', exact: true }).click();
+    await page.waitForTimeout(120);
 
     const preview = page.locator('.demo-window');
     await preview.evaluate((element) =>
       element.scrollTo({ top: element.scrollHeight }),
     );
+    await page.waitForFunction(() => {
+      const element = document.querySelector<HTMLElement>('.demo-window');
+      if (!element) return false;
+      return element.scrollHeight <= element.clientHeight || element.scrollTop > 0;
+    });
 
     const contentSelector = route.endsWith('adastra')
       ? '.ops-content'
@@ -229,11 +236,20 @@ test('CMS exposes every module through the complete tablet and mobile scroll', a
         .locator('.cms-mobile-menu')
         .getByRole('button', { name: view.name, exact: true })
         .click();
+      await page.waitForFunction(() => {
+        const element = document.querySelector<HTMLElement>('.demo-window');
+        return !!element && element.scrollTop === 0;
+      });
 
       const preview = page.locator('.demo-window');
       await preview.evaluate((element) =>
         element.scrollTo({ top: element.scrollHeight }),
       );
+      await page.waitForFunction(() => {
+        const element = document.querySelector<HTMLElement>('.demo-window');
+        if (!element) return false;
+        return element.scrollTop >= element.scrollHeight - element.clientHeight - 1;
+      });
       const last = page.locator(view.last);
       await expect(last).toBeVisible();
 
