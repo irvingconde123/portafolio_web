@@ -41,7 +41,7 @@ body {
   color: var(--text);
   min-height: 100%;
   overflow-x: hidden;
-  overscroll-behavior-y: none;
+  overscroll-behavior-y: auto;
 }
 body {
   font-family: Inter, "Segoe UI", Arial, sans-serif;
