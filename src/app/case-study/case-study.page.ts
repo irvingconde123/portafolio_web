@@ -58,4 +58,15 @@ export class CaseStudyPage implements OnInit, OnDestroy {
 
     return `https://github.com/irvingconde123/portafolio_web/blob/main/${repositoryPath}`;
   }
+
+  protected architectureSlug(item: CaseStudy): string {
+    const slugs: Record<CaseStudy['slug'], string> = {
+      adastra: 'adastra',
+      'plataforma-contenido': 'landing',
+      'gateway-datos': 'edge-gateway',
+      hostlyc: 'hostlyc',
+    };
+
+    return slugs[item.slug];
+  }
 }

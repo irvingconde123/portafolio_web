@@ -141,6 +141,10 @@
         @for (demo of item.demos; track demo.slug) {
           <a class="primary" [routerLink]="['/demos', demo.slug]">{{ demo.label }}</a>
         }
+        <a
+          class="secondary"
+          [routerLink]="['/arquitecturas', architectureSlug(item)]"
+        >Ver arquitectura técnica</a>
         <a class="secondary" routerLink="/" fragment="projects">Volver al portafolio</a>
       </nav>
     </main>

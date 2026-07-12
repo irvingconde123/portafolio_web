@@ -34,7 +34,9 @@
   .hero-actions { display: grid; grid-template-columns: 1fr 1fr; margin-top: 1.2rem; }
   .hero-actions > * { padding-inline: .7rem; }
   .proof-strip > div { grid-template-columns: 1fr 1fr; padding: 0 1.15rem; }
-  .proof-strip span { border-bottom: 1px solid rgb(255 255 255 / 22%); font-size: .8rem; min-height: 2.8rem; padding: .45rem .7rem; }
+  .proof-strip span { border-bottom: 1px solid rgb(255 255 255 / 22%); min-height: 3.6rem; padding: .55rem .7rem; }
+  .proof-strip b { font-size: .82rem; }
+  .proof-strip small { font-size: .62rem; }
   .proof-strip span:nth-child(2n) { border-right: 1px solid rgb(255 255 255 / 22%); }
   .projects { padding-top: 1.7rem; }
   .case-grid, .skill-groups { grid-template-columns: 1fr; }

@@ -110,8 +110,10 @@ h3 { font-size: 1.3rem; line-height: 1.25; margin: 0; }
   max-width: 76rem;
   padding: 0 clamp(1.25rem, 5vw, 4rem);
 }
-.proof-strip span { align-items: center; border-left: 1px solid rgb(255 255 255 / 22%); display: flex; font-size: .9rem; font-weight: 700; min-height: 5rem; padding: 1rem 1.25rem; }
+.proof-strip span { align-items: flex-start; border-left: 1px solid rgb(255 255 255 / 22%); display: grid; gap: .25rem; min-height: 5rem; padding: 1rem 1.25rem; }
 .proof-strip span:last-child { border-right: 1px solid rgb(255 255 255 / 22%); }
+.proof-strip b { font-size: 1rem; line-height: 1.2; }
+.proof-strip small { color: rgb(255 255 255 / 76%); font-size: .72rem; font-weight: 700; line-height: 1.35; }
 
 .section-heading { align-items: end; display: grid; gap: 3rem; grid-template-columns: minmax(0, 1fr) minmax(18rem, .7fr); margin-bottom: 2rem; }
 .section-heading > p { font-size: 1rem; margin: 0; }

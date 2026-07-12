@@ -9,7 +9,7 @@ export const HOSTLYC_CASE: CaseStudy = {
   problem:
     'Una oferta técnica amplia necesita explicarse sin saturar al visitante y conservar acciones claras en móvil, tableta y escritorio.',
   context:
-    'Trabajo realizado como colaboración independiente. La demostración pública recrea la experiencia con datos sanitizados y no envía formularios a servicios reales.',
+    'Trabajo realizado como colaboración independiente. La demostración pública recrea la experiencia comercial con datos sanitizados y no envía formularios a servicios reales.',
   role: 'Planeación del recorrido, arquitectura de la interfaz, sistema visual adaptable y construcción de la demostración navegable.',
   status: 'Demostración pública sanitizada',
   solution:
@@ -19,20 +19,13 @@ export const HOSTLYC_CASE: CaseStudy = {
     'Priorizar lectura y controles táctiles en móvil.',
     'No publicar información privada de clientes o infraestructura.',
   ],
-  technologies: ['Next.js', 'React', 'TypeScript', 'NestJS', 'Gateway', 'SEO'],
+  technologies: ['Next.js', 'React', 'TypeScript', 'Diseño adaptable', 'SEO'],
   evidence: [
     {
       label: 'Sitio público real usado como referencia visual y comercial',
       source: 'https://hostlyc.com/',
       verified: true,
       verifiedAt: '2026-07-11',
-    },
-    {
-      label:
-        'Resolución sanitizada de rutas, plataformas y scopes del gateway Hostlyc',
-      source: 'src/app/data/code-evidence/hostlyc-gateway-routing.ts',
-      verified: true,
-      verifiedAt: '2026-07-12',
     },
     {
       label: 'Demo navegable con servicios, proyectos, proceso y contacto',

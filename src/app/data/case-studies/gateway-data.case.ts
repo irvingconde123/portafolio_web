@@ -5,19 +5,20 @@ export const GATEWAY_DATA_CASE: CaseStudy = {
   name: 'Gateway y acceso dinámico a datos',
   eyebrow: 'Caso 03 · Frontera y desacoplamiento',
   summary:
-    'Una frontera pública aplica políticas y resuelve recursos lógicos sin entregar a los clientes la topología ni las conexiones físicas.',
+    'Arquitectura de API que aplica políticas, resuelve recursos lógicos y oculta topología, hosts y conexiones físicas.',
   problem:
     'Clientes distintos necesitan consumir servicios y datos sin acoplarse a hosts, motores o contextos internos que pueden cambiar.',
   context:
-    'El caso consolida dos piezas complementarias: admisión y seguridad en el gateway, y resolución gobernada de repositorios en la capa de datos.',
-  role: 'Modelado de límites, políticas de acceso, registro lógico, fábrica de conexiones, aislamiento de fallos y señales operativas.',
-  status: 'Arquitectura sanitizada documentada; sin demo pública',
+    'El front real no se publica por política de privacidad. Lo verificable es la contribución de arquitectura: admisión y seguridad en el gateway, resolución gobernada de repositorios y contratos internos sanitizados.',
+  role: 'Contribución en modelado de límites, políticas de acceso, registro lógico, fábrica de conexiones, aislamiento de fallos y señales operativas.',
+  status: 'Arquitectura de API sanitizada; front privado no publicable',
   solution:
-    'El gateway valida la solicitud y traduce un recurso lógico. La capa de datos consulta un registro permitido, selecciona contexto y driver, y aísla la conexión detrás de un repositorio.',
+    'El gateway valida la solicitud, traduce un recurso lógico y conserva el contrato público estable. La capa de datos consulta un registro permitido, selecciona contexto y driver, y aísla cada conexión detrás de un repositorio.',
   constraints: [
     'No exponer hosts, credenciales o encabezados internos.',
     'Resolver únicamente recursos y entidades registrados.',
     'Bloquear operaciones sensibles si no puede completarse una validación.',
+    'Mostrar solo diagramas y fragmentos sanitizados por restricciones de privacidad.',
   ],
   technologies: [
     'NestJS',
@@ -30,16 +31,22 @@ export const GATEWAY_DATA_CASE: CaseStudy = {
   ],
   evidence: [
     {
-      label: 'Resolución resiliente de repositorios por recurso lógico',
+      label: 'Fragmento sanitizado: resolución resiliente de repositorios por recurso lógico',
       source: 'src/app/data/code-evidence/resilient-data-access.ts',
       verified: true,
       verifiedAt: '2026-07-12',
     },
     {
-      label: 'Modelo de acceso dinámico y recuperación por contexto',
+      label: 'Arquitectura pública: acceso dinámico y recuperación por contexto',
       source: 'src/app/data/data-access-project.ts',
       verified: true,
       verifiedAt: '2026-07-11',
+    },
+    {
+      label: 'Fragmento sanitizado: rutas, plataformas y scopes en gateway',
+      source: 'src/app/data/code-evidence/hostlyc-gateway-routing.ts',
+      verified: true,
+      verifiedAt: '2026-07-12',
     },
   ],
   demos: [],

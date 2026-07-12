@@ -72,7 +72,7 @@ test('demos expose their fictional-data notice and guided workflow', async ({
   for (const route of ROUTES.filter((path) => path.startsWith('/demos/'))) {
     await page.goto(route);
     await expect(
-      page.getByText('DEMOSTRACIÓN CON DATOS FICTICIOS'),
+      page.getByText('DEMO SANITIZADA · DATOS DEMOSTRATIVOS'),
     ).toBeVisible();
     await expect(page.getByText('Recorrido sugerido')).toBeVisible();
   }
@@ -104,6 +104,58 @@ test('mobile demo previews scroll inside the simulated device', async ({
     expect(Math.abs(pageYAfter - pageYBefore)).toBeLessThanOrEqual(1);
     if (preview.scrollHeight > preview.clientHeight) {
       expect(preview.scrollTop).toBeGreaterThan(0);
+    }
+
+    await page.locator('.demo-window').evaluate((element) => {
+      element.scrollTo({ top: 0 });
+    });
+
+    const touchBox = await page.locator('.demo-window').boundingBox();
+    expect(touchBox).not.toBeNull();
+    await page.evaluate(({ x, y }) => {
+      const target = document.elementFromPoint(x, y);
+      if (!target) return;
+
+      target.dispatchEvent(
+        new TouchEvent('touchstart', {
+          bubbles: true,
+          cancelable: true,
+          touches: [
+            new Touch({ clientX: x, clientY: y, identifier: 1, target }),
+          ],
+        }),
+      );
+      target.dispatchEvent(
+        new TouchEvent('touchmove', {
+          bubbles: true,
+          cancelable: true,
+          touches: [
+            new Touch({
+              clientX: x,
+              clientY: y - 220,
+              identifier: 1,
+              target,
+            }),
+          ],
+        }),
+      );
+      target.dispatchEvent(
+        new TouchEvent('touchend', {
+          bubbles: true,
+          cancelable: true,
+          touches: [],
+        }),
+      );
+    }, {
+      x: (touchBox?.x ?? 0) + (touchBox?.width ?? 0) / 2,
+      y: (touchBox?.y ?? 0) + (touchBox?.height ?? 0) / 2,
+    });
+
+    const touchScroll = await page
+      .locator('.demo-window')
+      .evaluate((element) => element.scrollTop);
+    if (preview.scrollHeight > preview.clientHeight) {
+      expect(touchScroll).toBeGreaterThan(0);
     }
   }
 });
