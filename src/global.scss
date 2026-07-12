@@ -52,6 +52,21 @@ body:has(app-demo),
 body:has(app-architecture) {
   background: #07111f;
 }
+html:has(app-demo),
+html:has(app-architecture) {
+  background: #07111f;
+  overscroll-behavior-y: none;
+}
+body:has(app-demo),
+body:has(app-architecture),
+body:has(app-demo) app-root,
+body:has(app-architecture) app-root,
+app-demo,
+app-architecture {
+  background: #07111f;
+  display: block;
+  min-height: 100svh;
+}
 h1,
 h2,
 h3,
