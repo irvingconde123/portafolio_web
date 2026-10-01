@@ -1,1 +1,9 @@
 @use "../../styles/demo";
+
+.demo-live-work { border-bottom: 1px solid var(--line); padding: .25rem 0 1.25rem; margin-bottom: 1.25rem; }
+.demo-live-work h1 { font-size: 1.75rem; line-height: 1.2; margin: 0 0 .4rem; }
+.demo-live-work p { color: var(--muted); font-size: .9rem; line-height: 1.5; margin: 0; }
+.demo-live-links { display: flex; flex-wrap: wrap; gap: .75rem 2rem; margin-top: 1rem; }
+.demo-live-links > div { flex: 1 1 16rem; max-width: 29rem; }
+.demo-live-links a { color: var(--primary); display: inline-block; font-weight: 750; min-height: 2.5rem; padding-block: .5rem; text-underline-offset: .2em; }
+.demo-live-links p { font-size: .8rem; }

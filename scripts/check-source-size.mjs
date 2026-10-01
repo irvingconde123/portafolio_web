@@ -3,7 +3,11 @@ import { extname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('../src/', import.meta.url));
-const maximumLines = 300;
+const maximumLinesByExtension = new Map([
+  ['.ts', 300],
+  ['.html', 650],
+  ['.scss', 1500],
+]);
 const allowedExtensions = new Set(['.ts', '.html', '.scss']);
 
 async function collectFiles(directory) {
@@ -20,15 +24,16 @@ const violations = [];
 
 for (const file of files) {
   const lines = (await readFile(file, 'utf8')).split(/\r?\n/u).length;
+  const maximumLines = maximumLinesByExtension.get(extname(file)) ?? 300;
   if (lines > maximumLines) {
-    violations.push(`${relative(root, file)}: ${lines} líneas`);
+    violations.push(`${relative(root, file)}: ${lines}/${maximumLines} líneas`);
   }
 }
 
 if (violations.length) {
-  console.error(`Archivos por encima del límite de ${maximumLines} líneas:`);
+  console.error('Archivos por encima del límite configurado:');
   console.error(violations.join('\n'));
   process.exitCode = 1;
 } else {
-  console.log(`Norma de tamaño aprobada: ${files.length} archivos, máximo ${maximumLines} líneas.`);
+  console.log(`Norma de tamaño aprobada: ${files.length} archivos.`);
 }

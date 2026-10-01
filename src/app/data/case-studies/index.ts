@@ -1,7 +1,4 @@
-import {
-  ArchitectureNodeKind,
-  CaseStudy,
-} from '../portfolio.models';
+import { ArchitectureNodeKind, CaseStudy } from '../portfolio.models';
 import { ADASTRA_CASE } from './adastra.case';
 import { CONTENT_PLATFORM_CASE } from './content-platform.case';
 import { GATEWAY_DATA_CASE } from './gateway-data.case';
@@ -16,6 +13,29 @@ export const CASE_STUDIES: CaseStudy[] = [
 
 export function findCaseStudy(slug: string | null): CaseStudy | undefined {
   return CASE_STUDIES.find((item) => item.slug === slug);
+}
+
+const REPOSITORY_SOURCE =
+  /^src\/app\/(?:data|demo)\/[a-z0-9./-]+\.(?:ts|html)$/;
+const PUBLIC_SOURCE = /^https:\/\/[a-z0-9.-]+(?:\/[^\s]*)?$/i;
+const ARCHITECTURE_DOCUMENT = /^docs\/architecture\/[a-z0-9-]+\.md$/;
+const INVALID_LOCAL_SEGMENT = /(?:^|\/)\.{1,2}(?:\/|$)/;
+
+export function hasValidEvidence(caseStudy: CaseStudy): boolean {
+  return (
+    caseStudy.evidence.length > 0 &&
+    caseStudy.evidence.every(
+      (item) =>
+        item.label.trim().length > 0 &&
+        item.source === item.source.trim() &&
+        ((!INVALID_LOCAL_SEGMENT.test(item.source) &&
+          (REPOSITORY_SOURCE.test(item.source) ||
+            ARCHITECTURE_DOCUMENT.test(item.source))) ||
+          PUBLIC_SOURCE.test(item.source)) &&
+        item.verified &&
+        /^\d{4}-\d{2}-\d{2}$/.test(item.verifiedAt ?? ''),
+    )
+  );
 }
 
 const ARCHITECTURE_NODE_KINDS = new Set<ArchitectureNodeKind>([

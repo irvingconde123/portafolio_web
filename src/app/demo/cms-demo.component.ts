@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostListener, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, inject, Output } from '@angular/core';
 import {
   INITIAL_CMS_BLOCKS,
   INITIAL_CMS_MEDIA,
@@ -15,6 +15,8 @@ import { CmsPageItem, CmsSiteItem, CmsView } from './demo.models';
 })
 export class CmsDemoComponent {
   @Output() readonly feedback = new EventEmitter<string>();
+
+  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
 
   protected cmsView: CmsView = 'Resumen';
   protected mobileMenuOpen = false;
@@ -37,6 +39,7 @@ export class CmsDemoComponent {
     this.cmsView = view;
     this.mobileMenuOpen = false;
     this.closeCmsEditor();
+    this.resetScroll();
   }
 
   protected publishCms(): void {
@@ -47,6 +50,7 @@ export class CmsDemoComponent {
   protected selectSite(site: CmsSiteItem): void {
     this.activeSiteSlug = site.slug;
     this.cmsView = 'Resumen';
+    this.resetScroll();
     this.notify(`Contexto cambiado a ${site.name}. Los módulos visibles se resolvieron por negocio.`);
   }
 
@@ -98,5 +102,11 @@ export class CmsDemoComponent {
 
   protected notify(message: string): void {
     this.feedback.emit(message);
+  }
+
+  private resetScroll(): void {
+    requestAnimationFrame(() => {
+      this.host.nativeElement.querySelector<HTMLElement>('.demo-window')?.scrollTo({ top: 0 });
+    });
   }
 }

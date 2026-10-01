@@ -1,48 +1,54 @@
 <div class="case-shell">
   <header class="case-header">
     <a routerLink="/" fragment="projects">← Casos seleccionados</a>
-    <span>Caso técnico · datos sanitizados</span>
+    <span>Proyecto y decisiones de desarrollo</span>
   </header>
 
   @if (caseStudy; as item) {
     <main class="case-page">
       <section class="case-hero">
-        <p>{{ item.eyebrow }}</p>
-        <h1>{{ item.name }}</h1>
-        <strong>{{ item.summary }}</strong>
+        <h1>{{ item.displayName ?? item.name }}</h1>
+        <strong>{{ item.displaySummary ?? item.summary }}</strong>
         <div class="case-tags">
           @for (technology of item.technologies; track technology) {
             <span>{{ technology }}</span>
           }
         </div>
+        @if (item.liveLinks?.length) {
+          <div class="live-projects" aria-label="Sitios reales de Hostlyc">
+            @for (link of item.liveLinks; track link.url) {
+              <div><a [href]="link.url" target="_blank" rel="noopener noreferrer"
+                [attr.aria-label]="link.label + ' (abre en una pestaña nueva)'">{{ link.label }} ↗</a><p>{{ link.description }}</p></div>
+            }
+          </div>
+        }
+        @if (item.flows?.length) {
+          <nav class="case-actions" aria-label="Explorar arquitectura de Hostlyc">
+            <a class="secondary" [routerLink]="['/casos', item.slug]" fragment="arquitectura">Ver componentes y contratos</a>
+            <a class="secondary" [routerLink]="['/casos', item.slug]" fragment="recorridos">Explorar publicación y renderizado</a>
+          </nav>
+        }
       </section>
 
       <section class="case-overview" aria-label="Contexto del caso">
         <article>
-          <span>Problema</span>
+          <h2>El reto</h2>
           <p>{{ item.problem }}</p>
+          <p class="case-context">{{ item.context }}</p>
         </article>
         <article>
-          <span>Contexto</span>
-          <p>{{ item.context }}</p>
-        </article>
-        <article>
-          <span>Responsabilidad</span>
+          <h2>Mi participación</h2>
           <p>{{ item.role }}</p>
-        </article>
-        <article>
-          <span>Estado verificable</span>
-          <p>{{ item.status }}</p>
+          <p class="case-context">{{ item.status }}</p>
         </article>
       </section>
 
       <section class="case-section solution">
-        <p class="section-label">Solución</p>
-        <h2>Cómo se aborda el problema</h2>
+        <h2>La solución</h2>
         <p>{{ item.solution }}</p>
         <div class="constraint-list">
           @for (constraint of item.constraints; track constraint) {
-            <span>✓ {{ constraint }}</span>
+            <span>{{ constraint }}</span>
           }
         </div>
       </section>
@@ -50,14 +56,16 @@
       <section id="arquitectura" class="architecture-section">
         <header>
           <div>
-            <p class="section-label">Arquitectura de solución</p>
-            <h2>Límites, responsabilidades y contratos</h2>
+            <h2>Arquitectura y contratos</h2>
           </div>
           <span [class.invalid]="!architectureIsValid">
             {{ architectureIsValid ? 'Modelo consistente' : 'Modelo por revisar' }}
           </span>
         </header>
 
+        @if (item.architectureNote) {
+          <p class="architecture-scope">{{ item.architectureNote }}</p>
+        }
         <p class="architecture-mobile-hint">Desliza para recorrer componentes y contratos →</p>
 
         <div class="architecture-nodes" tabindex="0" aria-label="Componentes de la arquitectura; recorrido horizontal en pantallas pequeñas">
@@ -66,6 +74,7 @@
               <small>{{ kindLabel(node.kind) }}</small>
               <h3>{{ node.label }}</h3>
               <p>{{ node.detail }}</p>
+              @if (node.boundary) { <span class="node-boundary">{{ node.boundary }}</span> }
               @if (node.technology) { <code>{{ node.technology }}</code> }
             </article>
           }
@@ -84,7 +93,7 @@
             <tbody tabindex="0" aria-label="Contratos de la arquitectura; recorrido horizontal en pantallas pequeñas">
               @for (edge of item.edges; track edge.from + edge.to) {
                 <tr>
-                  <th scope="row">{{ edge.from }} → {{ edge.to }}</th>
+                  <th scope="row">{{ nodeLabel(edge.from) }} → {{ nodeLabel(edge.to) }}</th>
                   <td><code>{{ edge.protocol }}</code></td>
                   <td>{{ edge.purpose }}</td>
                 </tr>
@@ -94,9 +103,32 @@
         </div>
       </section>
 
+      @if (item.flows?.length) {
+        <section id="recorridos" class="case-section architecture-flows" aria-labelledby="flows-title">
+          <h2 id="flows-title">Recorridos de publicación y renderizado</h2>
+          <div class="flow-selector" role="group" aria-label="Elegir recorrido de Hostlyc">
+            @for (flow of item.flows; track flow.id) {
+              <button type="button" [attr.aria-pressed]="activeFlowId === flow.id"
+                aria-controls="architecture-flow-detail" (click)="activeFlowId = flow.id">{{ flow.label }}</button>
+            }
+          </div>
+          @if (activeFlow; as flow) {
+            <section id="architecture-flow-detail" class="flow-detail" aria-labelledby="flow-title">
+              <h3 id="flow-title">{{ flow.title }}</h3>
+              <p>{{ flow.summary }}</p>
+              <ol>
+                @for (step of flow.steps; track $index) {
+                  <li><span>{{ step.from }} → {{ step.to }}</span><p>{{ step.action }}</p></li>
+                }
+              </ol>
+              <p class="flow-note">{{ flow.note }}</p>
+            </section>
+          }
+        </section>
+      }
+
       <section class="case-section">
-        <p class="section-label">Atributos de calidad</p>
-        <h2>Comportamiento ante escenarios concretos</h2>
+        <h2>Cómo responde el sistema</h2>
         <div class="scenario-grid">
           @for (scenario of item.qualityScenarios; track scenario.attribute) {
             <article>
@@ -110,12 +142,11 @@
       </section>
 
       <section class="case-section">
-        <p class="section-label">Decisiones</p>
-        <h2>Compensaciones explícitas</h2>
+        <h2>Decisiones y sus costos</h2>
         <div class="decision-list">
           @for (decision of item.decisions; track decision.id) {
             <article>
-              <header><code>{{ decision.id }}</code><span>{{ decision.status }}</span></header>
+              <header><code>{{ decision.id }}</code><span [attr.data-status]="decision.status">{{ decisionStatus(decision.status) }}</span></header>
               <p><b>Contexto:</b> {{ decision.context }}</p>
               <p><b>Decisión:</b> {{ decision.decision }}</p>
               <p><b>Consecuencias:</b> {{ decision.consequences }}</p>
@@ -125,12 +156,10 @@
       </section>
 
       <section class="case-section evidence-section">
-        <p class="section-label">Evidencia pública</p>
-        <h2>Qué puede verificarse en este repositorio</h2>
+        <h2>Fuentes y evidencia</h2>
         <div>
           @for (evidence of item.evidence; track evidence.source) {
             <article>
-              <span aria-hidden="true">✓</span>
               <p><b>{{ evidence.label }}</b><a [href]="evidenceUrl(evidence.source)" target="_blank" rel="noopener noreferrer" [attr.aria-label]="'Ver fuente pública: ' + evidence.label + ' (abre en una pestaña nueva)'">Ver fuente ↗</a></p>
             </article>
           }
@@ -138,9 +167,16 @@
       </section>
 
       <nav class="case-actions" aria-label="Acciones del caso">
-        @for (demo of item.demos; track demo.slug) {
-          <a class="primary" [routerLink]="['/demos', demo.slug]">{{ demo.label }}</a>
+        @for (link of item.liveLinks ?? []; track link.url) {
+          <a class="primary" [href]="link.url" target="_blank" rel="noopener noreferrer">{{ link.label }} ↗</a>
         }
+        @for (demo of item.demos; track demo.slug) {
+          <a [class.primary]="!item.liveLinks?.length" [class.secondary]="item.liveLinks?.length" [routerLink]="['/demos', demo.slug]">{{ demo.label }}</a>
+        }
+        <a
+          class="secondary"
+          [routerLink]="['/arquitecturas', architectureSlug(item)]"
+        >Ver arquitectura técnica</a>
         <a class="secondary" routerLink="/" fragment="projects">Volver al portafolio</a>
       </nav>
     </main>

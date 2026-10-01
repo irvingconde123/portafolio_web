@@ -1,0 +1,388 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-01T22:46:35.004Z",
+  "title": "Sistema de diseño: Portafolio de Irving Conde",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Azul de acción",
+        "tonalRamp": [
+          "oklch(15.0% 0.1065 250.21)",
+          "oklch(26.4% 0.1065 250.21)",
+          "oklch(37.9% 0.1065 250.21)",
+          "oklch(49.3% 0.1065 250.21)",
+          "oklch(60.7% 0.1065 250.21)",
+          "oklch(72.1% 0.1065 250.21)",
+          "oklch(83.6% 0.1065 250.21)",
+          "oklch(95.0% 0.1065 250.21)"
+        ]
+      },
+      "primary-hover": {
+        "role": "primary",
+        "displayName": "Azul profundo al pasar el puntero",
+        "tonalRamp": [
+          "oklch(15.0% 0.0914 250.69)",
+          "oklch(26.4% 0.0914 250.69)",
+          "oklch(37.9% 0.0914 250.69)",
+          "oklch(49.3% 0.0914 250.69)",
+          "oklch(60.7% 0.0914 250.69)",
+          "oklch(72.1% 0.0914 250.69)",
+          "oklch(83.6% 0.0914 250.69)",
+          "oklch(95.0% 0.0914 250.69)"
+        ]
+      },
+      "accent": {
+        "role": "primary",
+        "displayName": "Cian de foco",
+        "tonalRamp": [
+          "oklch(15.0% 0.0936 223.13)",
+          "oklch(26.4% 0.0936 223.13)",
+          "oklch(37.9% 0.0936 223.13)",
+          "oklch(49.3% 0.0936 223.13)",
+          "oklch(60.7% 0.0936 223.13)",
+          "oklch(72.1% 0.0936 223.13)",
+          "oklch(83.6% 0.0936 223.13)",
+          "oklch(95.0% 0.0936 223.13)"
+        ]
+      },
+      "canvas": {
+        "role": "neutral",
+        "displayName": "Lienzo frío",
+        "tonalRamp": [
+          "oklch(15.0% 0.0034 247.86)",
+          "oklch(26.4% 0.0034 247.86)",
+          "oklch(37.9% 0.0034 247.86)",
+          "oklch(49.3% 0.0034 247.86)",
+          "oklch(60.7% 0.0034 247.86)",
+          "oklch(72.1% 0.0034 247.86)",
+          "oklch(83.6% 0.0034 247.86)",
+          "oklch(95.0% 0.0034 247.86)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Superficie blanca",
+        "tonalRamp": [
+          "oklch(15.0% 0.0000 89.88)",
+          "oklch(26.4% 0.0000 89.88)",
+          "oklch(37.9% 0.0000 89.88)",
+          "oklch(49.3% 0.0000 89.88)",
+          "oklch(60.7% 0.0000 89.88)",
+          "oklch(72.1% 0.0000 89.88)",
+          "oklch(83.6% 0.0000 89.88)",
+          "oklch(95.0% 0.0000 89.88)"
+        ]
+      },
+      "soft": {
+        "role": "neutral",
+        "displayName": "Superficie suave",
+        "tonalRamp": [
+          "oklch(15.0% 0.0084 236.56)",
+          "oklch(26.4% 0.0084 236.56)",
+          "oklch(37.9% 0.0084 236.56)",
+          "oklch(49.3% 0.0084 236.56)",
+          "oklch(60.7% 0.0084 236.56)",
+          "oklch(72.1% 0.0084 236.56)",
+          "oklch(83.6% 0.0084 236.56)",
+          "oklch(95.0% 0.0084 236.56)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Línea",
+        "tonalRamp": [
+          "oklch(15.0% 0.0198 252.89)",
+          "oklch(26.4% 0.0198 252.89)",
+          "oklch(37.9% 0.0198 252.89)",
+          "oklch(49.3% 0.0198 252.89)",
+          "oklch(60.7% 0.0198 252.89)",
+          "oklch(72.1% 0.0198 252.89)",
+          "oklch(83.6% 0.0198 252.89)",
+          "oklch(95.0% 0.0198 252.89)"
+        ]
+      },
+      "line-strong": {
+        "role": "neutral",
+        "displayName": "Línea fuerte",
+        "tonalRamp": [
+          "oklch(15.0% 0.0351 256.79)",
+          "oklch(26.4% 0.0351 256.79)",
+          "oklch(37.9% 0.0351 256.79)",
+          "oklch(49.3% 0.0351 256.79)",
+          "oklch(60.7% 0.0351 256.79)",
+          "oklch(72.1% 0.0351 256.79)",
+          "oklch(83.6% 0.0351 256.79)",
+          "oklch(95.0% 0.0351 256.79)"
+        ]
+      },
+      "text": {
+        "role": "neutral",
+        "displayName": "Texto",
+        "tonalRamp": [
+          "oklch(15.0% 0.0398 265.75)",
+          "oklch(26.4% 0.0398 265.75)",
+          "oklch(37.9% 0.0398 265.75)",
+          "oklch(49.3% 0.0398 265.75)",
+          "oklch(60.7% 0.0398 265.75)",
+          "oklch(72.1% 0.0398 265.75)",
+          "oklch(83.6% 0.0398 265.75)",
+          "oklch(95.0% 0.0398 265.75)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Texto secundario",
+        "tonalRamp": [
+          "oklch(15.0% 0.0374 257.28)",
+          "oklch(26.4% 0.0374 257.28)",
+          "oklch(37.9% 0.0374 257.28)",
+          "oklch(49.3% 0.0374 257.28)",
+          "oklch(60.7% 0.0374 257.28)",
+          "oklch(72.1% 0.0374 257.28)",
+          "oklch(83.6% 0.0374 257.28)",
+          "oklch(95.0% 0.0374 257.28)"
+        ]
+      },
+      "success": {
+        "role": "semantic",
+        "displayName": "Estado aceptado",
+        "tonalRamp": [
+          "oklch(15.0% 0.1371 150.07)",
+          "oklch(26.4% 0.1371 150.07)",
+          "oklch(37.9% 0.1371 150.07)",
+          "oklch(49.3% 0.1371 150.07)",
+          "oklch(60.7% 0.1371 150.07)",
+          "oklch(72.1% 0.1371 150.07)",
+          "oklch(83.6% 0.1371 150.07)",
+          "oklch(95.0% 0.1371 150.07)"
+        ]
+      },
+      "preview-selected": {
+        "role": "secondary",
+        "displayName": "Azul de selección del marco",
+        "tonalRamp": [
+          "oklch(15.0% 0.0811 254.61)",
+          "oklch(26.4% 0.0811 254.61)",
+          "oklch(37.9% 0.0811 254.61)",
+          "oklch(49.3% 0.0811 254.61)",
+          "oklch(60.7% 0.0811 254.61)",
+          "oklch(72.1% 0.0811 254.61)",
+          "oklch(83.6% 0.0811 254.61)",
+          "oklch(95.0% 0.0811 254.61)"
+        ]
+      },
+      "hostlyc-red": {
+        "role": "secondary",
+        "displayName": "Rojo Hostlyc",
+        "tonalRamp": [
+          "oklch(15.0% 0.2124 20.66)",
+          "oklch(26.4% 0.2124 20.66)",
+          "oklch(37.9% 0.2124 20.66)",
+          "oklch(49.3% 0.2124 20.66)",
+          "oklch(60.7% 0.2124 20.66)",
+          "oklch(72.1% 0.2124 20.66)",
+          "oklch(83.6% 0.2124 20.66)",
+          "oklch(95.0% 0.2124 20.66)"
+        ]
+      },
+      "laboratory-yellow": {
+        "role": "secondary",
+        "displayName": "Amarillo laboratorio",
+        "tonalRamp": [
+          "oklch(15.0% 0.1806 94.02)",
+          "oklch(26.4% 0.1806 94.02)",
+          "oklch(37.9% 0.1806 94.02)",
+          "oklch(49.3% 0.1806 94.02)",
+          "oklch(60.7% 0.1806 94.02)",
+          "oklch(72.1% 0.1806 94.02)",
+          "oklch(83.6% 0.1806 94.02)",
+          "oklch(95.0% 0.1806 94.02)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display-home": {
+        "displayName": "Título del inicio",
+        "purpose": "Introducción del portafolio; tiene una variante móvil propia."
+      },
+      "display-case": {
+        "displayName": "Título del caso",
+        "purpose": "Nombre breve del proyecto."
+      },
+      "headline-home": {
+        "displayName": "Sección del inicio",
+        "purpose": "Orientación de proyectos, experiencia, capacidades y contacto."
+      },
+      "headline-case": {
+        "displayName": "Sección técnica",
+        "purpose": "Narración del caso y contratos de arquitectura."
+      },
+      "headline-demo-hero": {
+        "displayName": "Hero del ejemplo",
+        "purpose": "Titular dentro de las landings simuladas, con interlínea específica por proyecto."
+      },
+      "title-home": {
+        "displayName": "Título de proyecto",
+        "purpose": "Nombre de tarjeta o cargo en la trayectoria."
+      },
+      "body": {
+        "displayName": "Lectura principal",
+        "purpose": "Texto narrativo; los resúmenes y notas tienen variantes más pequeñas."
+      },
+      "navigation": {
+        "displayName": "Navegación",
+        "purpose": "Enlaces del encabezado del inicio."
+      }
+    },
+    "shadows": [
+      {
+        "name": "home-menu",
+        "value": "0 1.5rem 4rem rgb(15 23 42 / 18%)",
+        "purpose": "Menú superpuesto del inicio; las tarjetas permanecen planas."
+      },
+      {
+        "name": "cms-menu",
+        "value": "0 .8rem 2rem rgb(15 23 42 / 18%)",
+        "purpose": "Menú de la aplicación CMS simulada."
+      }
+    ],
+    "motion": [
+      {
+        "name": "preview-width",
+        "value": "max-width 0.2s ease",
+        "purpose": "Cambio de ancho del marco de previsualización."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "transition-duration: 0.01ms; scroll-behavior: auto",
+        "purpose": "Regla global cuando el visitante solicita movimiento reducido."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "home-navigation",
+        "value": "980px"
+      },
+      {
+        "name": "home-single-column",
+        "value": "700px"
+      },
+      {
+        "name": "home-small-controls",
+        "value": "390px"
+      },
+      {
+        "name": "case-mobile",
+        "value": "760px"
+      },
+      {
+        "name": "demo-guide-stack",
+        "value": "1120px"
+      },
+      {
+        "name": "demo-navigation",
+        "value": "800px"
+      },
+      {
+        "name": "demo-small-shell",
+        "value": "560px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Acción principal",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Acceso al trabajo o contacto desde el inicio.",
+      "html": "<button class=\"ds-btn-primary\" type=\"button\">Explorar proyectos</button>",
+      "css": ".ds-btn-primary{font-family:Inter,\"Segoe UI\",Arial,sans-serif;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--primary,#0f4c81);border-radius:.65rem;font-size:.875rem;font-weight:750;min-height:2.75rem;padding:.7rem 1rem;cursor:pointer;text-decoration:none;background:var(--primary,#0f4c81);color:#fff}.ds-btn-primary:hover{background:#0b3c68}.ds-btn-primary:focus-visible{outline:3px solid var(--accent,#0e7490);outline-offset:3px;}"
+    },
+    {
+      "name": "Acción secundaria",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Acción alternativa junto al botón principal.",
+      "html": "<a class=\"ds-btn-secondary\" href=\"mailto:Irving.CondeM@gmail.com\">Contactar</a>",
+      "css": ".ds-btn-secondary{font-family:Inter,\"Segoe UI\",Arial,sans-serif;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--primary,#0f4c81);border-radius:.65rem;font-size:.875rem;font-weight:750;min-height:2.75rem;padding:.7rem 1rem;cursor:pointer;text-decoration:none;background:var(--surface,#fff);color:var(--primary,#0f4c81)}.ds-btn-secondary:hover{background:var(--soft,#eef4f8)}.ds-btn-secondary:focus-visible{outline:3px solid var(--accent,#0e7490);outline-offset:3px;}"
+    },
+    {
+      "name": "Tecnologías",
+      "kind": "chip",
+      "refersTo": "technology-tag",
+      "description": "Datos informativos de tecnologías, sin estado de selección.",
+      "html": "<div class=\"ds-tags\"><span>Angular</span><span>Ionic</span><span>NestJS</span></div>",
+      "css": ".ds-tags{font-family:Inter,\"Segoe UI\",Arial,sans-serif;display:flex;flex-wrap:wrap;gap:.375rem}.ds-tags span{background:var(--soft,#eef4f8);border-radius:.35rem;color:var(--muted,#475569);font-size:.75rem;line-height:1.4;padding:.3rem .5rem}"
+    },
+    {
+      "name": "Proyecto",
+      "kind": "card",
+      "refersTo": "project-card",
+      "description": "Tarjeta plana con resumen y acceso al caso.",
+      "html": "<article class=\"ds-project-card\"><h3>Adastra · laboratorio</h3><p>Registra el trabajo de laboratorio sin conexión y sincroniza los cambios al recuperar la red.</p><a href=\"#caso\">Ver caso</a></article>",
+      "css": ".ds-project-card{font-family:Inter,\"Segoe UI\",Arial,sans-serif;background:var(--surface,#fff);border:1px solid var(--line,#cbd5e1);border-radius:.8rem;color:var(--text,#0f172a);padding:1.25rem}.ds-project-card:hover{border-color:var(--line-strong,#94a3b8)}.ds-project-card h3{font-size:1.15rem;font-weight:750;line-height:1.35;margin:0}.ds-project-card p{color:var(--muted,#475569);font-size:.9375rem;line-height:1.6;margin:.5rem 0 .875rem}.ds-project-card a{display:inline-flex;align-items:center;color:var(--primary,#0f4c81);font-size:.8125rem;font-weight:750;min-height:2.75rem;text-decoration:none}.ds-project-card a:hover{color:var(--accent,#0e7490);text-decoration:underline;text-underline-offset:.25em}.ds-project-card a:focus-visible{outline:3px solid var(--accent,#0e7490);outline-offset:3px;}"
+    },
+    {
+      "name": "Navegación del inicio",
+      "kind": "nav",
+      "description": "Enlaces breves dentro del encabezado claro.",
+      "html": "<nav class=\"ds-navigation\" aria-label=\"Navegación principal\"><button type=\"button\">Casos</button><button type=\"button\">Experiencia</button><button type=\"button\">Capacidades</button><button type=\"button\">Contacto</button></nav>",
+      "css": ".ds-navigation{font-family:Inter,\"Segoe UI\",Arial,sans-serif;display:flex;flex-wrap:wrap;gap:clamp(.5rem,2vw,1.5rem);justify-content:center;background:var(--surface,#fff)}.ds-navigation button{font-family:Inter,\"Segoe UI\",Arial,sans-serif;appearance:none;background:none;border:0;color:var(--muted,#475569);cursor:pointer;display:inline-flex;align-items:center;font-size:.875rem;min-height:2.75rem;padding:.65rem .25rem}.ds-navigation button:hover{color:var(--primary,#0f4c81)}.ds-navigation button:focus-visible{outline:3px solid var(--accent,#0e7490);outline-offset:3px;}"
+    },
+    {
+      "name": "Campo comercial local",
+      "kind": "input",
+      "description": "Entrada con etiqueta dentro del ejemplo de Hostlyc.",
+      "html": "<label class=\"ds-local-field\" for=\"ds-business\">Negocio<input id=\"ds-business\" type=\"text\" placeholder=\"Nombre de tu negocio\"></label>",
+      "css": ".ds-local-field{font-family:Inter,\"Segoe UI\",Arial,sans-serif;color:#536071;display:grid;font-size:.8rem;gap:.35rem}.ds-local-field input{font-family:Inter,\"Segoe UI\",Arial,sans-serif;background:#fff;border:1px solid #bdc9d8;border-radius:.35rem;color:#172033;font-size:.85rem;min-height:2.75rem;padding:.6rem;caret-color:#ac0029}.ds-local-field input::placeholder{color:#667386;opacity:1}.ds-local-field input:focus-visible{outline:2px solid #ac0029;outline-offset:3px}"
+    },
+    {
+      "name": "Tamaño de previsualización",
+      "kind": "custom",
+      "description": "Botones que exponen el estado elegido con aria-pressed.",
+      "html": "<div class=\"ds-preview-toggle\" aria-label=\"Cambiar tamaño de previsualización\"><span>Tamaño</span><button type=\"button\" aria-pressed=\"true\">Escritorio</button><button type=\"button\" aria-pressed=\"false\">Tablet</button><button type=\"button\" aria-pressed=\"false\">Móvil</button></div>",
+      "css": ".ds-preview-toggle{font-family:Inter,\"Segoe UI\",Arial,sans-serif;align-items:center;background:#edf2f7;border-radius:.65rem;display:flex;gap:.2rem;padding:.25rem;width:max-content}.ds-preview-toggle span{color:#47627e;font-size:.75rem;margin-inline:.5rem .25rem}.ds-preview-toggle button{font-family:Inter,\"Segoe UI\",Arial,sans-serif;background:transparent;border:0;border-radius:.45rem;color:#31506f;cursor:pointer;font-size:.75rem;font-weight:700;min-height:2.5rem;padding:0 .75rem}.ds-preview-toggle button:hover{background:#dce7f2}.ds-preview-toggle button[aria-pressed=\"true\"]{background:#2c4e78;color:#fff}.ds-preview-toggle button:focus-visible{outline:2px solid #2c4e78;outline-offset:2px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Portafolio profesional compacto",
+    "overview": "Este registro describe el diseño implementado: superficies claras, azul en las acciones y una jerarquía moderada que permite leer proyectos y trayectoria sin recorrer grandes zonas vacías. Conserva la identidad del portafolio y la hace consistente entre inicio, casos y marcos de demostración.\n\nEl marco recede frente al contenido. Los ejemplos conservan sus acentos de proyecto —rojo en Hostlyc y amarillo en el laboratorio— dentro de superficies claras. La densidad se obtiene con composición y espaciado; no exige reducir todos los textos al tamaño de una etiqueta.",
+    "keyCharacteristics": [
+      "Títulos breves con una escala contenida.",
+      "Superficies blancas y separadores suaves.",
+      "Acciones distinguibles, foco visible y contenido adaptable.",
+      "Estilos del inicio limitados a su propia página."
+    ],
+    "rules": [
+      {
+        "name": "Continuidad",
+        "body": "El marco de una demo y la arquitectura activa usan superficies claras de la misma familia que el inicio. El color de un proyecto no sustituye el tema del portafolio.",
+        "section": "colors"
+      },
+      {
+        "name": "Jerarquía moderada",
+        "body": "Un título de sección debe orientar al lector sin dominar una pantalla completa. No reintroducir rótulos ornamentales encima de los títulos del portafolio.",
+        "section": "typography"
+      },
+      {
+        "name": "Espacio útil",
+        "body": "Una columna o región reservada debe tener contenido que ayude a evaluar el trabajo. Eliminar espacios de relleno sin comprimir la lectura ni las áreas de interacción.",
+        "section": "layout"
+      }
+    ],
+    "dos": [
+      "**Do** usar la paleta y escala de cada superficie sin introducir reglas globales que se filtren a las demos.",
+      "**Do** mantener foco visible, controles reales y estados seleccionados accesibles.",
+      "**Do** comprobar lectura y navegación en escritorio, tablet y móvil después de cambiar densidad o tamaños.",
+      "**Do** mantener la distinción visual y textual entre trabajo público, producto en desarrollo y ejemplo local."
+    ],
+    "donts": [
+      "**Don't** restaurar grandes zonas vacías del hero ni aumentar títulos para compensar falta de contenido.",
+      "**Don't** añadir rótulos ornamentales en mayúsculas a cada sección del portafolio.",
+      "**Don't** usar un marco negro o una carcasa decorativa pesada para presentar las demos claras.",
+      "**Don't** eliminar etiquetas de campos reales al simplificar la presentación profesional.",
+      "**Don't** documentar una fuente cargada, un despliegue o una función como comprobados a partir de una declaración CSS o un modelo conceptual."
+    ]
+  }
+}
