@@ -1,13 +1,13 @@
 <section class="demo-window hostlyc-demo">
   <nav aria-label="Secciones de Hostlyc">
-    <strong><i aria-hidden="true">✦</i> Hostlyc</strong
+    <strong>Hostlyc</strong
     ><button
       class="landing-menu-toggle"
       type="button"
       [attr.aria-expanded]="mobileMenuOpen"
       (click)="mobileMenuOpen = !mobileMenuOpen"
     >
-      ☰ Menú
+      Menú
     </button>
     <div class="landing-nav-links" [class.open]="mobileMenuOpen">
       <button
@@ -67,7 +67,6 @@
     </button>
   </nav>
   <section id="demo-hostlyc-inicio" class="hostlyc-hero">
-    <small>— AGENCIA DIGITAL EN MÉXICO —</small>
     <h2>Tu negocio,<br /><mark>visible</mark> y creciendo.</h2>
     <p>
       Creamos páginas web, tiendas en línea y presencia digital para marcas que
@@ -84,7 +83,6 @@
         Ver proyectos →
       </button>
     </div>
-    <footer><b>★★★★★</b><span>Calidad garantizada</span></footer>
   </section>
   <div class="hostlyc-marquee">
     <span>Páginas web profesionales</span><i>•</i><span>Tiendas en línea</span
@@ -93,7 +91,6 @@
     ><span>Atención personalizada</span>
   </div>
   <section id="demo-hostlyc-servicios" class="hostlyc-section">
-    <p>LO QUE HACEMOS</p>
     <h2>Soluciones digitales que hacen avanzar tu negocio.</h2>
     <div class="hostlyc-services">
       @for (
@@ -107,8 +104,6 @@
         let index = $index
       ) {
         <article>
-          <span>0{{ index + 1 }}</span
-          ><i>{{ ["⌘", "↗", "✉", "⚙"][$index] }}</i>
           <h3>{{ service }}</h3>
           <p>
             {{
@@ -132,7 +127,6 @@
     </div>
   </section>
   <section id="demo-hostlyc-proyectos" class="hostlyc-section hostlyc-projects">
-    <p>PROYECTOS</p>
     <h2>Productos diseñados para resolver, crecer y medir.</h2>
     <div>
       <article class="large">
@@ -195,7 +189,6 @@
   </section>
   <section id="demo-hostlyc-nosotros" class="hostlyc-impact">
     <div>
-      <p>CAPACIDAD DEMOSTRADA</p>
       <h2>Tecnología conectada a objetivos de negocio.</h2>
       <span
         >La demostración cubre narrativa, evidencia, proceso y dos rutas de
@@ -220,7 +213,6 @@
     </div>
   </section>
   <section id="demo-hostlyc-proceso" class="hostlyc-section hostlyc-process">
-    <p>CÓMO TRABAJAMOS</p>
     <h2>De una idea clara a un producto en producción.</h2>
     <div>
       @for (
@@ -254,7 +246,6 @@
   </section>
   <section id="demo-hostlyc-contacto" class="hostlyc-contact-section">
     <div>
-      <p>HABLEMOS</p>
       <h2>¿Qué quieres hacer crecer?</h2>
       <span
         >Cuéntanos el reto. Te ayudamos a convertirlo en una ruta técnica y
@@ -301,7 +292,7 @@
     </form>
   </section>
   <footer class="hostlyc-footer">
-    <strong><i>✦</i> Hostlyc</strong
+    <strong>Hostlyc</strong
     ><span>Soluciones digitales para negocios que quieren crecer.</span>
     <div>
       <button type="button" (click)="jumpToSection('Servicios')">

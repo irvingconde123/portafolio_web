@@ -61,7 +61,7 @@ export const SKILL_GROUPS: SkillGroup[] = [
     description: 'Decisiones para continuidad, evolución y límites de confianza.',
     skills: [
       { name: 'Operación sin conexión', evidence: 'Bandeja de salida cifrada', projectSlug: 'adastra' },
-      { name: 'Multi-tenant', evidence: 'Tenant por dominio', projectSlug: 'plataforma-contenido' },
+      { name: 'Contenido por organización', evidence: 'Contexto por dominio', projectSlug: 'plataforma-contenido' },
       { name: 'Gateway', evidence: 'Rutas y políticas', projectSlug: 'gateway-datos' },
       { name: 'Acceso dinámico a datos', evidence: 'Registro lógico', projectSlug: 'gateway-datos' },
     ],

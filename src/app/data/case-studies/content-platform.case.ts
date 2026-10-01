@@ -2,8 +2,10 @@ import { CaseStudy } from '../portfolio.models';
 
 export const CONTENT_PLATFORM_CASE: CaseStudy = {
   slug: 'plataforma-contenido',
+  displayName: 'Gestión de contenido',
+  displaySummary: 'Permite editar y publicar sitios desde un panel, con contenido separado para cada organización.',
   name: 'Plataforma de contenido · CMS y landing',
-  eyebrow: 'Caso 02 · Publicación multi-tenant',
+  eyebrow: 'Contenido para varias organizaciones',
   summary:
     'CMS editorial y landing dinámica unidos por un contrato de contenido estable, con resolución por organización y respaldo local.',
   problem:

@@ -9,7 +9,7 @@
       [attr.aria-expanded]="mobileMenuOpen"
       (click)="mobileMenuOpen = !mobileMenuOpen"
     >
-      ☰ Menú
+      Menú
     </button>
     <div class="landing-nav-links" [class.open]="mobileMenuOpen">
       <button
@@ -62,7 +62,6 @@
     class="laboratory-hero full-landing-section"
   >
     <div>
-      <small>● LABORATORIO AMBIENTAL ACREDITADO</small>
       <h2>Ad Astra<br />Professional <mark>Labs</mark></h2>
       <p>
         Laboratorio mexicano especializado en análisis ambientales certificados
@@ -107,7 +106,6 @@
     ><span>ISO/IEC 17025<small>Estándar de calidad</small></span>
   </div>
   <section id="demo-landing-servicios" class="lab-section">
-    <p>ÁREAS DE ANÁLISIS</p>
     <h2>Capacidad analítica integral</h2>
     <span
       >Equipamiento de última generación y personal técnico certificado para
@@ -127,7 +125,6 @@
         let index = $index
       ) {
         <article>
-          <i>0{{ index + 1 }}</i>
           <h3>{{ service }}</h3>
           <p>
             {{
@@ -157,7 +154,6 @@
       <figcaption><b>80+</b> CIENTÍFICOS CERTIFICADOS</figcaption>
     </figure>
     <div>
-      <p>NUESTRA MISIÓN</p>
       <h2>Rigor científico al servicio del medio ambiente</h2>
       <span
         >Fundado en 2007, AD ASTRA Professional Labs nació con la visión de
@@ -175,7 +171,6 @@
     id="demo-landing-acreditaciones"
     class="lab-section lab-certifications"
   >
-    <p>CERTIFICACIONES</p>
     <h2>Acreditaciones y normas vigentes</h2>
     <span
       >Procedimientos alineados a estándares internacionales y normativa
@@ -183,7 +178,7 @@
     >
     <div>
       <article class="featured">
-        <i>♜</i><small>EMA · AC-017</small>
+        <small>EMA · AC-017</small>
         <h3>Acreditación EMA</h3>
         <p>
           Laboratorio acreditado para ensayos ambientales y métodos
@@ -191,7 +186,7 @@
         </p>
       </article>
       <article class="featured">
-        <i>◈</i><small>ISO/IEC 17025:2017</small>
+        <small>ISO/IEC 17025:2017</small>
         <h3>Norma internacional</h3>
         <p>Competencia técnica, calibración y gestión de calidad.</p>
       </article>
@@ -200,7 +195,6 @@
         track cert
       ) {
         <article>
-          <i>✓</i><small>NORMA VIGENTE</small>
           <h3>{{ cert }}</h3>
           <p>Aplicación de métodos reconocidos y criterios regulatorios.</p>
         </article>

@@ -9,7 +9,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PROJECTS, ProjectItem } from '../data/portfolio-content';
+import { findCaseStudy, PROJECTS, ProjectItem } from '../data/portfolio-content';
 import { DemoFeedback, DemoSlug, DemoViewport } from './demo.models';
 
 @Component({
@@ -33,12 +33,20 @@ export class DemoPage implements OnInit, AfterViewInit, OnDestroy {
   protected feedback?: DemoFeedback;
   protected viewport: DemoViewport = 'desktop';
 
+  protected get demoTitle(): string {
+    return { adastra: 'Adastra', landing: 'Sitio de laboratorio', cms: 'Gestión de contenido', hostlyc: 'Hostlyc · ejemplo local' }[this.slug];
+  }
+
+  protected get liveLinks() {
+    return this.slug === 'hostlyc' ? findCaseStudy('hostlyc')?.liveLinks : undefined;
+  }
+
   protected get suggestedJourney(): string {
     const journeys: Record<DemoSlug, string> = {
       adastra: 'Cambia de módulo, edita un reporte y prueba la sincronización sin red.',
       landing: 'Recorre una landing alimentada por CMS con respaldo local.',
       cms: 'Edita un bloque, cambia de módulo y publica una versión simulada.',
-      hostlyc: 'Explora servicios, proyectos y rutas de contacto verificables.',
+      hostlyc: 'Prueba la navegación de este ejemplo local de la landing comercial.',
     };
     return journeys[this.slug];
   }

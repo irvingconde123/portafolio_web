@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import {
   ArchitectureNodeKind,
+  ArchitectureFlow,
   CaseStudy,
   findCaseStudy,
   hasValidArchitecture,
@@ -20,6 +21,7 @@ export class CaseStudyPage implements OnInit, OnDestroy {
 
   protected caseStudy?: CaseStudy;
   protected architectureIsValid = false;
+  protected activeFlowId?: string;
 
   private readonly kindLabels: Record<ArchitectureNodeKind, string> = {
     actor: 'Actor',
@@ -36,6 +38,7 @@ export class CaseStudyPage implements OnInit, OnDestroy {
       this.architectureIsValid = this.caseStudy
         ? hasValidArchitecture(this.caseStudy)
         : false;
+      this.activeFlowId = this.caseStudy?.flows?.[0]?.id;
     });
   }
 
@@ -45,6 +48,18 @@ export class CaseStudyPage implements OnInit, OnDestroy {
 
   protected kindLabel(kind: ArchitectureNodeKind): string {
     return this.kindLabels[kind];
+  }
+
+  protected nodeLabel(id: string): string {
+    return this.caseStudy?.nodes.find((node) => node.id === id)?.label ?? id;
+  }
+
+  protected get activeFlow(): ArchitectureFlow | undefined {
+    return this.caseStudy?.flows?.find((flow) => flow.id === this.activeFlowId);
+  }
+
+  protected decisionStatus(status: CaseStudy['decisions'][number]['status']): string {
+    return { accepted: 'Documentada', proposed: 'Propuesta', superseded: 'Sustituida' }[status];
   }
 
   protected evidenceUrl(source: string): string {
