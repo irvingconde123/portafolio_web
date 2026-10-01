@@ -2,6 +2,8 @@ import { CaseStudy } from '../portfolio.models';
 
 export const GATEWAY_DATA_CASE: CaseStudy = {
   slug: 'gateway-datos',
+  displayName: 'Servicios y datos',
+  displaySummary: 'Conecta aplicaciones con sus datos, controla los permisos y mantiene privada la infraestructura interna.',
   name: 'Gateway y acceso dinámico a datos',
   eyebrow: 'Caso 03 · Frontera y desacoplamiento',
   summary:

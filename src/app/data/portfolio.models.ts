@@ -84,9 +84,27 @@ export interface CaseDemoLink {
   slug: 'adastra' | 'landing' | 'cms' | 'hostlyc';
 }
 
+export interface ArchitectureFlow {
+  id: string;
+  label: string;
+  title: string;
+  summary: string;
+  steps: SequenceStep[];
+  note: string;
+}
+
+export interface LiveProjectLink {
+  label: string;
+  url: string;
+  description: string;
+}
+
 export interface CaseStudy {
   slug: 'adastra' | 'plataforma-contenido' | 'gateway-datos' | 'hostlyc';
   name: string;
+  displayName?: string;
+  displaySummary?: string;
+  liveLinks?: LiveProjectLink[];
   eyebrow: string;
   summary: string;
   problem: string;
@@ -100,6 +118,8 @@ export interface CaseStudy {
   demos: CaseDemoLink[];
   nodes: ArchitectureNode[];
   edges: ArchitectureEdge[];
+  architectureNote?: string;
+  flows?: ArchitectureFlow[];
   qualityScenarios: QualityScenario[];
   decisions: DecisionRecord[];
 }

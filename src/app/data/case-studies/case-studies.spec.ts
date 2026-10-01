@@ -105,6 +105,53 @@ describe('CASE_STUDIES', () => {
     expect(CASE_STUDIES.every(hasValidEvidence)).toBeTrue();
   });
 
+  it('accepts architecture documents and retains repository and HTTPS sources', () => {
+    const sources = [
+      'docs/architecture/hostlyc-plantillas.md',
+      'src/app/data/code-evidence/hybrid-sync-orchestrator.ts',
+      'https://example.com/architecture',
+    ];
+
+    for (const source of sources) {
+      expect(
+        hasValidEvidence({
+          ...CASE_STUDIES[0],
+          evidence: [{
+            label: 'Guía pública de arquitectura', source, verified: true,
+            verifiedAt: '2026-10-01',
+          }],
+        }),
+      ).withContext(source).toBeTrue();
+    }
+  });
+
+  it('rejects document traversal and paths outside the public whitelist', () => {
+    const sources = [
+      'docs/architecture/../secret.md',
+      'docs/architecture/./hostlyc-plantillas.md',
+      'docs/architecture/%2e%2e/secret.md',
+      'src/app/data/../../secret.ts',
+      'src/app/data/./code-evidence/hybrid-sync-orchestrator.ts',
+      'docs\\architecture\\hostlyc-plantillas.md',
+      'docs/internal/hostlyc-plantillas.md',
+      'docs/architecture/nested/hostlyc-plantillas.md',
+      'docs/architecture/hostlyc-plantillas.html',
+      'docs/architecture/hostlyc-plantillas.md?raw=true',
+    ];
+
+    for (const source of sources) {
+      expect(
+        hasValidEvidence({
+          ...CASE_STUDIES[0],
+          evidence: [{
+            label: 'Documento', source, verified: true,
+            verifiedAt: '2026-10-01',
+          }],
+        }),
+      ).withContext(source).toBeFalse();
+    }
+  });
+
   it('rejects undated, insecure or malformed evidence sources', () => {
     const caseStudy = CASE_STUDIES[0];
 

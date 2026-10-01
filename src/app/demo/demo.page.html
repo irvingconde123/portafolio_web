@@ -1,21 +1,36 @@
 <div class="demo-shell">
   <header class="demo-header">
     <a routerLink="/">← Portafolio</a>
-    <span>Demostración interactiva · demo sanitizada</span>
+    <span>Explora el funcionamiento del producto</span>
   </header>
 
   <main class="demo-page">
+    @if (liveLinks?.length) {
+      <section class="demo-live-work" aria-labelledby="live-work-title">
+        <div><h1 id="live-work-title">Hostlyc</h1><p>Consulta el trabajo publicado y la versión del producto en desarrollo.</p></div>
+        <div class="demo-live-links">
+          @for (link of liveLinks; track link.url) {
+            <div><a [href]="link.url" target="_blank" rel="noopener noreferrer"
+              [attr.aria-label]="link.label + ' (abre en una pestaña nueva)'">{{ link.label }} ↗</a><p>{{ link.description }}</p></div>
+          }
+        </div>
+      </section>
+    }
     <section class="demo-guide" aria-labelledby="demo-title">
       <div>
-        <small>DEMO SANITIZADA · DATOS DEMOSTRATIVOS</small>
-        <h1 id="demo-title">{{ project?.name }}</h1>
+        @if (slug === 'hostlyc') {
+          <h2 id="demo-title">Ejemplo interactivo local</h2>
+        } @else {
+          <h1 id="demo-title">{{ demoTitle }}</h1>
+        }
+        <small class="demo-data-notice">Ejemplo interactivo · datos ficticios</small>
       </div>
       <p><b>Recorrido sugerido</b><span>{{ suggestedJourney }}</span></p>
       <div class="demo-view-toggle" aria-label="Cambiar tamaño de previsualización">
         <span>Tamaño</span>
-        <button type="button" [class.active]="viewport === 'desktop'" (click)="selectViewport('desktop')">Escritorio</button>
-        <button type="button" [class.active]="viewport === 'tablet'" (click)="selectViewport('tablet')">Tablet</button>
-        <button type="button" [class.active]="viewport === 'mobile'" (click)="selectViewport('mobile')">Móvil</button>
+        <button type="button" [class.active]="viewport === 'desktop'" [attr.aria-pressed]="viewport === 'desktop'" (click)="selectViewport('desktop')">Escritorio</button>
+        <button type="button" [class.active]="viewport === 'tablet'" [attr.aria-pressed]="viewport === 'tablet'" (click)="selectViewport('tablet')">Tablet</button>
+        <button type="button" [class.active]="viewport === 'mobile'" [attr.aria-pressed]="viewport === 'mobile'" (click)="selectViewport('mobile')">Móvil</button>
       </div>
     </section>
 

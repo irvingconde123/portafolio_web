@@ -12,9 +12,14 @@ import {
 })
 export class HomePage {
   protected readonly experiences = EXPERIENCES;
+  protected readonly currentExperiences = EXPERIENCES.slice(0, 2);
   protected readonly caseStudies = CASE_STUDIES;
   protected readonly skillGroups = SKILL_GROUPS;
   protected mobileMenuOpen = false;
+
+  protected skillLabel(name: string): string {
+    return name === 'Multi-tenant' ? 'Contenido por organización' : name;
+  }
 
   protected toggleMobileMenu(): void {
     this.mobileMenuOpen = !this.mobileMenuOpen;

@@ -13,8 +13,8 @@
       <button type="button" (click)="scrollTo('contact')">Contacto</button>
     </nav>
     <div class="header-actions">
-      <a href="https://github.com/irvingconde123" target="_blank" rel="noreferrer" aria-label="Abrir GitHub de Irving Conde">GitHub</a>
-      <a href="https://www.linkedin.com/in/irving-rafael-conde-marin-4a173b198" target="_blank" rel="noreferrer" aria-label="Abrir LinkedIn de Irving Conde">LinkedIn</a>
+      <a href="https://github.com/irvingconde123" target="_blank" rel="noopener noreferrer" aria-label="Abrir GitHub de Irving Conde">GitHub</a>
+      <a href="https://www.linkedin.com/in/irving-rafael-conde-marin-4a173b198" target="_blank" rel="noopener noreferrer" aria-label="Abrir LinkedIn de Irving Conde">LinkedIn</a>
       <a class="header-cv" href="assets/Irving_Conde_CV.pdf" download>Descargar CV</a>
     </div>
   </header>
@@ -24,43 +24,53 @@
 
   <main id="top">
     <section class="hero section" aria-labelledby="hero-title">
-      <p class="eyebrow">Full Stack Engineer · Angular · Ionic · NestJS</p>
-      <h1 id="hero-title">Construyo productos que siguen operando cuando la red falla.</h1>
-      <p class="hero-copy">
-        Desarrollo aplicaciones web y móviles, APIs y plataformas de contenido. Mi enfoque conecta experiencia de usuario, seguridad, persistencia y operación mantenible.
-      </p>
-      <div class="hero-actions">
-        <button class="primary" type="button" (click)="scrollTo('projects')">Ver casos de estudio</button>
-        <a class="secondary" href="mailto:Irving.CondeM@gmail.com">Contactar</a>
+      <div class="hero-intro">
+        <h1 id="hero-title">Desarrollo web y móvil con visión de producto.</h1>
+        <p class="hero-copy">
+          Soy Irving Conde, Full Stack Engineer. Desarrollo interfaces, servicios y herramientas de publicación, con atención a la experiencia de uso y a la operación del producto.
+        </p>
+        <p class="hero-stack">Angular · Ionic · NestJS · Python</p>
+        <div class="hero-actions">
+          <button class="primary" type="button" (click)="scrollTo('projects')">Explorar proyectos</button>
+          <a class="secondary" href="mailto:Irving.CondeM@gmail.com">Contactar</a>
+        </div>
       </div>
-    </section>
-
-    <section class="proof-strip" aria-label="Áreas de experiencia demostradas">
-      <div>
-        <span><b>3</b><small>plataformas híbridas</small></span>
-        <span><b>offline-first</b><small>captura y sincronización</small></span>
-        <span><b>API Gateway</b><small>arquitectura sanitizada</small></span>
-        <span><b>CMS multi-tenant</b><small>publicación sin despliegue</small></span>
-      </div>
+      <aside class="hero-experience" aria-labelledby="current-experience-title">
+        <h2 id="current-experience-title">Experiencia actual</h2>
+        <div class="current-experience">
+          @for (item of currentExperiences; track item.company) {
+            <article>
+              <h3>{{ item.company }}</h3>
+              <p>{{ item.role }}</p>
+              <span>{{ item.period }}</span>
+            </article>
+          }
+        </div>
+        <button class="text-action" type="button" (click)="scrollTo('experience')">Ver trayectoria completa</button>
+      </aside>
     </section>
 
     <section id="projects" class="section projects" aria-labelledby="projects-title">
       <header class="section-heading">
-        <div><p class="eyebrow">Trabajo seleccionado</p><h2 id="projects-title">Cuatro soluciones, explicadas desde el problema.</h2></div>
-        <p>Casos sanitizados con contexto, decisiones técnicas, fallos contemplados y demostraciones navegables cuando están disponibles.</p>
+        <h2 id="projects-title">Proyectos seleccionados</h2>
+        <p>Qué resuelve cada proyecto, cómo lo construí y dónde puedes explorarlo.</p>
       </header>
       <div class="case-grid">
         @for (caseStudy of caseStudies; track caseStudy.slug) {
           <article class="case-card">
-            <div class="case-topline"><span>{{ caseStudy.eyebrow }}</span><small>{{ caseStudy.status }}</small></div>
-            <h3>{{ caseStudy.name }}</h3>
-            <p>{{ caseStudy.summary }}</p>
+            <h3>{{ caseStudy.displayName ?? caseStudy.name }}</h3>
+            <p>{{ caseStudy.displaySummary ?? caseStudy.summary }}</p>
             <div class="tags" aria-label="Tecnologías principales">
               @for (technology of caseStudy.technologies.slice(0, 4); track technology) { <span>{{ technology }}</span> }
             </div>
             <div class="case-actions">
-              <a class="case-link" [routerLink]="['/casos', caseStudy.slug]">Ver caso <span>→</span></a>
-              @for (demo of caseStudy.demos; track demo.slug) { <a class="demo-link" [routerLink]="['/demos', demo.slug]">{{ demo.label }}</a> }
+              @for (liveLink of caseStudy.liveLinks ?? []; track liveLink.url) {
+                <a class="live-link" [href]="liveLink.url" target="_blank" rel="noopener noreferrer" [title]="liveLink.description">{{ liveLink.label }}</a>
+              }
+              <a class="case-link" [routerLink]="['/casos', caseStudy.slug]">Ver caso</a>
+              @for (demo of caseStudy.demos; track demo.slug) {
+                <a class="demo-link" [routerLink]="['/demos', demo.slug]">{{ demo.label }}</a>
+              }
               @if (caseStudy.slug === 'gateway-datos') {
                 <a class="demo-link" [routerLink]="['/arquitecturas', 'edge-gateway']">Ver arquitectura</a>
               }
@@ -72,8 +82,8 @@
 
     <section id="experience" class="section experience" aria-labelledby="experience-title">
       <header class="section-heading compact-heading">
-        <div><p class="eyebrow">Trayectoria</p><h2 id="experience-title">Experiencia profesional</h2></div>
-        <p>Desarrollo de producto, integración y continuidad operativa en equipos y colaboraciones independientes.</p>
+        <h2 id="experience-title">Experiencia profesional</h2>
+        <p>Desarrollo de producto e integración de servicios, en equipos y colaboraciones independientes.</p>
       </header>
       <div class="timeline">
         @for (item of experiences; track item.company) {
@@ -87,14 +97,24 @@
 
     <section id="skills" class="section skills" aria-labelledby="skills-title">
       <header class="section-heading compact-heading">
-        <div><p class="eyebrow">Capacidades</p><h2 id="skills-title">Herramientas conectadas a decisiones.</h2></div>
-        <p>El detalle técnico y la evidencia verificable viven dentro de cada caso de estudio.</p>
+        <h2 id="skills-title">Capacidades técnicas</h2>
+        <p>Herramientas aplicadas a problemas concretos. Cada enlace lleva a un proyecto relacionado.</p>
       </header>
       <div class="skill-groups">
         @for (group of skillGroups; track group.name) {
           <article>
             <h3>{{ group.name }}</h3><p>{{ group.description }}</p>
-            <div>@for (skill of group.skills; track skill.name) { <span>{{ skill.name }}</span> }</div>
+            <ul class="skill-evidence">
+              @for (skill of group.skills; track skill.name) {
+                <li>
+                  @if (skill.projectSlug) {
+                    <a [routerLink]="['/casos', skill.projectSlug]"><strong>{{ skillLabel(skill.name) }}</strong><span>{{ skill.evidence }}</span></a>
+                  } @else {
+                    <div><strong>{{ skillLabel(skill.name) }}</strong><span>{{ skill.evidence }}</span></div>
+                  }
+                </li>
+              }
+            </ul>
           </article>
         }
       </div>
@@ -102,14 +122,13 @@
 
     <section id="contact" class="section contact" aria-labelledby="contact-title">
       <div>
-        <p class="eyebrow">Contacto</p>
-        <h2 id="contact-title">¿Necesitas convertir un flujo complejo en un producto mantenible?</h2>
+        <h2 id="contact-title">Hablemos de tu próximo proyecto</h2>
         <p>Orizaba, Veracruz · Modalidad remota · Inglés intermedio · Disponible para oportunidades Full Stack y proyectos de producto.</p>
       </div>
       <div class="contact-actions">
         <a class="primary" href="mailto:Irving.CondeM@gmail.com">Enviar correo</a>
-        <a class="secondary" href="https://github.com/irvingconde123" target="_blank" rel="noreferrer">Ver GitHub</a>
-        <a class="secondary" href="https://www.linkedin.com/in/irving-rafael-conde-marin-4a173b198" target="_blank" rel="noreferrer">Ver LinkedIn</a>
+        <a class="secondary" href="https://github.com/irvingconde123" target="_blank" rel="noopener noreferrer">Ver GitHub</a>
+        <a class="secondary" href="https://www.linkedin.com/in/irving-rafael-conde-marin-4a173b198" target="_blank" rel="noopener noreferrer">Ver LinkedIn</a>
       </div>
     </section>
   </main>

@@ -2,6 +2,8 @@ import { CaseStudy } from '../portfolio.models';
 
 export const ADASTRA_CASE: CaseStudy = {
   slug: 'adastra',
+  displayName: 'Adastra · laboratorio',
+  displaySummary: 'Registra el trabajo de laboratorio sin conexión y sincroniza los cambios al recuperar la red.',
   name: 'Adastra · operación híbrida de laboratorio',
   eyebrow: 'Caso 01 · Continuidad operativa',
   summary:

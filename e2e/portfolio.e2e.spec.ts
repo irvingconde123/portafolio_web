@@ -33,6 +33,53 @@ test('all public routes fit the viewport and pass critical accessibility checks'
       `${route} should not overflow horizontally`,
     ).toBeLessThanOrEqual(dimensions.viewport);
 
+    const presentation = await page.evaluate((path) => {
+      function backgroundBrightness(element: Element | null): number {
+        if (!element) return 1;
+        const styles = getComputedStyle(element);
+        const blend = (color: string, behind: number) => {
+          const channels = color.match(/[\d.]+/g)?.map(Number) ?? [];
+          if (channels.length < 3) return behind;
+          const alpha = channels[3] ?? 1;
+          const brightness = (0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2]) / 255;
+          return alpha * brightness + (1 - alpha) * behind;
+        };
+        const base = blend(styles.backgroundColor, backgroundBrightness(element.parentElement));
+        const gradientColors = styles.backgroundImage.match(/rgba?\([^)]+\)/g) ?? [];
+        return gradientColors.length ? Math.min(...gradientColors.map((color) => blend(color, base))) : base;
+      }
+      const selectors = path === '/'
+        ? ['body', '.page-shell']
+        : path.startsWith('/casos/')
+          ? ['body', '.case-shell', '.architecture-section', '.architecture-nodes article']
+          : ['body', '.demo-shell', '.demo-header', '.demo-stage', '.demo-window'];
+
+      return {
+        surfaces: selectors.map((selector) => {
+          const element = document.querySelector(selector);
+          if (!element) return { selector, brightness: 0, colorScheme: '' };
+          const styles = getComputedStyle(element);
+          return {
+            selector,
+            brightness: backgroundBrightness(element),
+            colorScheme: styles.colorScheme,
+          };
+        }),
+        headings: Array.from(document.querySelectorAll('main h1, main h2')).map(
+          (element) => ({ tag: element.tagName, size: parseFloat(getComputedStyle(element).fontSize) }),
+        ),
+      };
+    }, route);
+
+    for (const surface of presentation.surfaces) {
+      expect(surface.brightness, `${route} ${surface.selector} stays light`).toBeGreaterThan(0.7);
+      expect(surface.colorScheme, `${route} ${surface.selector} uses light controls`).toBe('light');
+    }
+    for (const heading of presentation.headings) {
+      const maximum = heading.tag === 'H1' || route.startsWith('/demos/') ? 48 : 36;
+      expect(heading.size, `${route} ${heading.tag} remains moderate`).toBeLessThan(maximum);
+    }
+
     const results = await new AxeBuilder({ page }).analyze();
     const blockers = results.violations.filter(
       ({ impact }) => impact === 'critical' || impact === 'serious',
@@ -49,17 +96,29 @@ test('home keeps the selected work close to the first viewport', async ({
   await page.goto('/', { waitUntil: 'networkidle' });
   const layout = await page.evaluate(() => {
     return {
-      projectsTop: (document.querySelector('#projects') as HTMLElement)
-        .offsetTop,
+      firstProjectTop: document.querySelector('.case-card')?.getBoundingClientRect().top ?? Infinity,
+      heroHeight: document.querySelector('.hero')?.getBoundingClientRect().height ?? Infinity,
       scrollHeight: Math.max(
         document.documentElement.scrollHeight,
         document.body.scrollHeight,
       ),
       viewportHeight: window.innerHeight,
+      viewportWidth: window.innerWidth,
     };
   });
 
-  expect(layout.projectsTop).toBeLessThanOrEqual(layout.viewportHeight * 2);
+  if (layout.viewportWidth >= 700) {
+    expect(layout.heroHeight, 'the introduction leaves room for selected work').toBeLessThanOrEqual(
+      layout.viewportHeight * 0.55,
+    );
+    expect(layout.firstProjectTop, 'the first project enters the initial viewport').toBeLessThan(
+      layout.viewportHeight * 0.9,
+    );
+  } else {
+    expect(layout.firstProjectTop, 'selected work follows the mobile introduction').toBeLessThan(
+      layout.viewportHeight * 1.25,
+    );
+  }
   const maximumScreens = layout.viewportHeight <= 800 ? 7.5 : 7.25;
   expect(layout.scrollHeight).toBeLessThanOrEqual(
     layout.viewportHeight * maximumScreens,
@@ -71,10 +130,38 @@ test('demos expose their fictional-data notice and guided workflow', async ({
 }) => {
   for (const route of ROUTES.filter((path) => path.startsWith('/demos/'))) {
     await page.goto(route);
-    await expect(
-      page.getByText('DEMO SANITIZADA · DATOS DEMOSTRATIVOS'),
-    ).toBeVisible();
+    const notice = page.locator('.demo-data-notice');
+    await expect(notice).toBeVisible();
+    await expect(notice).toContainText(/datos ficticios/i);
     await expect(page.getByText('Recorrido sugerido')).toBeVisible();
+  }
+});
+
+test('Hostlyc exposes its real sites separately from the local example', async ({
+  page,
+}) => {
+  for (const route of ['/', '/casos/hostlyc']) {
+    await page.goto(route, { waitUntil: 'networkidle' });
+    const liveSites = route === '/'
+      ? page.locator('main .case-card')
+      : page.locator('.case-hero .live-projects');
+
+    for (const url of ['https://hostlyc.com/', 'https://hostlyc-parent-web.vercel.app/']) {
+      const link = liveSites.locator(`a[href="${url}"]`);
+      await expect(link).toHaveCount(1);
+      await link.scrollIntoViewIfNeeded();
+      await expect(link).toBeInViewport();
+      await expect(link).toHaveAttribute('target', '_blank');
+      await expect(link).toHaveAttribute('rel', /(?:^|\s)noopener(?:\s|$)/);
+      await expect(link).toHaveAttribute('rel', /(?:^|\s)noreferrer(?:\s|$)/);
+    }
+
+    const localExample = page.locator(route === '/'
+      ? 'main .case-card a[href="/demos/hostlyc"]'
+      : 'main > .case-actions a[href="/demos/hostlyc"]');
+    await expect(localExample).toHaveCount(1);
+    await expect(localExample).toHaveAccessibleName(/ejemplo|interactivo/i);
+    await expect(localExample).not.toHaveAttribute('target', '_blank');
   }
 });
 
@@ -237,7 +324,10 @@ test('forced demo overscroll keeps the simulated device geometry stable', async 
     await page.goto(route, { waitUntil: 'networkidle' });
 
     for (const viewport of ['Escritorio', 'Tablet', 'Móvil'] as const) {
-      await page.getByRole('button', { name: viewport, exact: true }).click();
+      const sizeButton = page.getByRole('button', { name: viewport, exact: true });
+      await sizeButton.press('Enter');
+      await expect(sizeButton).toHaveAttribute('aria-pressed', 'true');
+      await expect(page.locator('.demo-view-toggle button[aria-pressed="true"]')).toHaveCount(1);
       await page.waitForTimeout(260);
       const frame = page.locator('.demo-viewport');
       const before = await frame.boundingBox();

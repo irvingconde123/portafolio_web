@@ -8,7 +8,7 @@ export const SEO_ROUTES: Readonly<Record<string, SeoRouteConfig>> = {
   '/': {
     title: 'Irving Conde · Full Stack Engineer',
     description:
-      'Portafolio de Irving Conde: aplicaciones offline-first, Angular, Ionic y APIs NestJS.',
+      'Portafolio de Irving Conde: desarrollo web y móvil, servicios e interfaces de producto. Proyectos, experiencia y trabajo publicado.',
     type: 'profile',
   },
   '/casos/adastra': {
@@ -20,7 +20,7 @@ export const SEO_ROUTES: Readonly<Record<string, SeoRouteConfig>> = {
   '/casos/plataforma-contenido': {
     title: 'CMS y landing · Caso de estudio',
     description:
-      'Plataforma de contenido multi-tenant con CMS, landing dinámica y respaldo local tipado.',
+      'Gestión de sitios desde un panel, publicación por organización y respaldo local para conservar el contenido disponible.',
     type: 'website',
   },
   '/casos/gateway-datos': {
@@ -32,7 +32,7 @@ export const SEO_ROUTES: Readonly<Record<string, SeoRouteConfig>> = {
   '/casos/hostlyc': {
     title: 'Hostlyc · Caso de estudio',
     description:
-      'Experiencia web responsive para presentar servicios de infraestructura y alojamiento.',
+      'Plantillas editables por tienda: manifiesto e hidratación versionados, publicación autorizada y renderizado en Hostlyc.',
     type: 'website',
   },
   '/demos/adastra': {

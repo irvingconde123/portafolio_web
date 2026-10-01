@@ -18,6 +18,8 @@ export function findCaseStudy(slug: string | null): CaseStudy | undefined {
 const REPOSITORY_SOURCE =
   /^src\/app\/(?:data|demo)\/[a-z0-9./-]+\.(?:ts|html)$/;
 const PUBLIC_SOURCE = /^https:\/\/[a-z0-9.-]+(?:\/[^\s]*)?$/i;
+const ARCHITECTURE_DOCUMENT = /^docs\/architecture\/[a-z0-9-]+\.md$/;
+const INVALID_LOCAL_SEGMENT = /(?:^|\/)\.{1,2}(?:\/|$)/;
 
 export function hasValidEvidence(caseStudy: CaseStudy): boolean {
   return (
@@ -26,7 +28,9 @@ export function hasValidEvidence(caseStudy: CaseStudy): boolean {
       (item) =>
         item.label.trim().length > 0 &&
         item.source === item.source.trim() &&
-        (REPOSITORY_SOURCE.test(item.source) ||
+        ((!INVALID_LOCAL_SEGMENT.test(item.source) &&
+          (REPOSITORY_SOURCE.test(item.source) ||
+            ARCHITECTURE_DOCUMENT.test(item.source))) ||
           PUBLIC_SOURCE.test(item.source)) &&
         item.verified &&
         /^\d{4}-\d{2}-\d{2}$/.test(item.verifiedAt ?? ''),
